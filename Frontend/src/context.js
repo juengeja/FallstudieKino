@@ -10,34 +10,32 @@ class MovieProvider extends Component{
         sortedMovies: [],
         featuredMovies: [],
         loading: true,
-        genre: 'all',
+        genre: 'Alle',
+        free_seats: 0,
         minSeats: 0,
         maxSeats: 0,
-        price: 0,
-        minPrice: 0,
-        maxPrice: 0,
-        minSize: 0,
-        maxSize: 0,
-        breakfast: false,
-        pets: false
+        duration: 0,
+        minDuration: 0,
+        maxDuration: 0,
+        menu: false,
+        night_event: false
     };
-    // getData
 
     componentDidMount(){
         // this.getData
         let movies = this.formatData(items);
         let featuredMovies = movies.filter(movie => movie.featured === true);
         let maxSeats = Math.max(...movies.map(item => item.free_seats));
-        let maxPrice = Math.max(...movies.map(item => item.price));
-        let maxSize = Math.max(...movies.map(item => item.size));
+        let maxDuration = Math.max(...movies.map(item => item.duration));
         this.setState({
             movies,
             featuredMovies, 
             sortedMovies: movies,
             loading: false,
-            price: maxPrice,
-            maxPrice,
-            maxSize
+            free_seats: maxSeats,
+            maxSeats,
+            duration: maxDuration,
+            maxDuration,
         });
     }
 
@@ -65,35 +63,30 @@ class MovieProvider extends Component{
     };
 
     filterMovies = () => {
-        let{movies, genre, capacity, price, minSize, maxSize, breakfast, pets} = this.state;
+        let{movies, genre, free_seats, duration, menu, night_event} = this.state;
         let tempMovies = [...movies];
         //transform value
-        capacity = parseInt(capacity);
-        price = parseInt(price);
+        free_seats = parseInt(free_seats);
+        duration = parseInt(duration);
 
         //filter by genre
-        if(genre !== 'all'){
+        if(genre !== 'Alle'){
             tempMovies = tempMovies.filter(movie => movie.genre === genre);
         }
 
-        //filter by capacity
-        if(capacity !== 1){
-            tempMovies = tempMovies.filter(movie => movie.capacity >= capacity);
+        //filter by Seats
+        tempMovies = tempMovies.filter(movie => movie.free_seats <= free_seats);
+
+        //filter by Duration
+        tempMovies = tempMovies.filter(movie => movie.duration <= duration);
+
+        //filter by menu
+        if(menu){
+            tempMovies = tempMovies.filter(movie => movie.menu === true);
         }
-
-        //filter by price
-        tempMovies = tempMovies.filter(movie => movie.price <= price);
-
-        //filter by size
-        tempMovies = tempMovies.filter(movie => movie.size >= minSize && movie.size <= maxSize);
-
-        //filter by breakfast
-        if(breakfast){
-            tempMovies = tempMovies.filter(movie => movie.breakfast === true);
-        }
-        //filter by pets
-        if(pets){
-            tempMovies = tempMovies.filter(movie => movie.pets === true);
+        //filter by night_event
+        if(night_event){
+            tempMovies = tempMovies.filter(movie => movie.night_event === true);
         }
 
         //change state

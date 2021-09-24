@@ -3,13 +3,13 @@ import {Link} from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 export default function Movie({movie}) {
-    const{name,slug,images,price} = movie;
+    const{name,slug,images,duration} = movie;
     return (
         <article className="movie">
             <div className="img-container">
                 <img src={images[0]} alt="Empfohlener Film" />
-                <div className="price-top">
-                    <h6>{price}€</h6>
+                <div className="duration-top">
+                    <h6>{duration} min</h6>
                 </div>
                 <Link to={`/program/${slug}`} className="btn-primary movie-link">
                     Details
