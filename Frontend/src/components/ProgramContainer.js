@@ -12,8 +12,8 @@ function ProgramContainer({context}){
 
     return (
         <>
-        <MovieList movies={sortedMovies}/>
         <MovieFilter movies={movies}/>
+        <MovieList movies={sortedMovies}/>
         </>
     );
 }

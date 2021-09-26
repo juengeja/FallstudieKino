@@ -301,6 +301,7 @@ h6 {
 .movie {
   box-shadow: var(--lightShadow);
   transition: var(--mainTransition);
+  background: var(--darkGrey);
 }
 .movie:hover {
   box-shadow: var(--darkShadow);
