@@ -1,13 +1,22 @@
 package com.example.kinoticketreservierungssystem.entity;
 
-import java.text.DateFormat;
+import java.time.LocalDate;
 
 public class Person {
 
+    private int personID;
     private String lastName;
     private String firstName;
-    private DateFormat dateOfBirth;
-    private int phoneNumber;
+    private LocalDate dateOfBirth;
+    private String phoneNumber;
+
+    public int getPersonID() {
+        return personID;
+    }
+
+    public void setPersonID(int personID) {
+        this.personID = personID;
+    }
 
     public String getLastName() {
         return lastName;
@@ -25,19 +34,19 @@ public class Person {
         this.firstName = firstName;
     }
 
-    public DateFormat getDateOfBirth() {
+    public LocalDate getDateOfBirth() {
         return dateOfBirth;
     }
 
-    public void setDateOfBirth(DateFormat dateOfBirth) {
+    public void setDateOfBirth(LocalDate dateOfBirth) {
         this.dateOfBirth = dateOfBirth;
     }
 
-    public int getPhoneNumber() {
+    public String getPhoneNumber() {
         return phoneNumber;
     }
 
-    public void setPhoneNumber(int phoneNumber) {
+    public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
 }
