@@ -1,0 +1,80 @@
+.a{
+    margin-left: 630px;
+}
+
+.btn{
+    margin-top: 100px;
+    background-color: white;
+}
+
+.section{
+    margin-top: 10px;
+    display: grid;
+    grid-template-columns: repeat(6, 100px);
+    padding: 10px 20px;
+}
+
+.grid2{
+
+}
+
+.section > div {
+    border: 1px solid darkred;
+}
+
+.section > div:hover {
+    cursor: pointer;
+}
+
+.disabled {
+    background-color: grey;
+}
+
+.booked {
+    background-color: #19a0d9;
+}
+
+.section .disabled:hover {
+    cursor: not-allowed;
+}
+
+.button {
+    background-position: bottom ;
+    background-color: crimson;
+    padding: 10px 20px;
+    margin-top: 20px;
+    margin-left: 260px;
+}
+
+
+
+/*
+.section {
+    margin-top: 20px;
+    display: grid;
+    grid-template-columns: repeat(10, 200px);
+}
+
+.section > div {
+    border: 1px solid black;
+}
+
+.section > div:hover {
+    cursor: pointer;
+}
+
+.disabled {
+    background-color: grey;
+}
+
+.booked {
+    background-color: #19a0d9;
+}
+
+.section .disabled:hover {
+    cursor: not-allowed;
+}
+
+button {
+    margin-top: 10px;
+}*/
