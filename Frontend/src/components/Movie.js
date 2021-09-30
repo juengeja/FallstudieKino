@@ -7,7 +7,8 @@ export default function Movie({movie}) {
     return (
         <article className="movie">
             <div className="img-container">
-                <img src={images[0]} alt="Empfohlener Film" />
+                {/* <img src={images[0]} alt="Empfohlener Film" /> */}
+                <img src='' alt="Empfohlener Film" />
                 <div className="duration-top">
                     <h6>{duration} min</h6>
                 </div>

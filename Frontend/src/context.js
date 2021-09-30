@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import items from './data';
-import MovieRestServices from './components/MovieRestServices';
+import axios from 'axios';
 
 const MovieContext = React.createContext();
 // <MovieContext.Provider value={'hello'}
@@ -31,8 +31,9 @@ class MovieProvider extends Component{
 
 
     componentDidMount(){
-        MovieRestServices.getMovies().then((Response) => {
-            let movies = this.formatData(Response.data);
+        axios.get('https://jsonplaceholder.typicode.com/posts')
+        .then((response) => {
+            let movies = response.data;
             let featuredMovies = movies.filter(movie => movie.featured === true);
             let maxSeats = Math.max(...movies.map(item => item.free_seats));
             let maxDuration = Math.max(...movies.map(item => item.duration));
@@ -65,7 +66,7 @@ class MovieProvider extends Component{
         return movie;
     };
 
-    /*
+  /*  
     componentDidMount(){
         // this.getData
         let movies = this.formatData(items);
@@ -100,8 +101,8 @@ class MovieProvider extends Component{
         const movie = tempMovies.find((movie)=>movie.slug === slug);
         return movie;
     };
-    */
-
+    
+*/
 
     handleChange = event => {
         const target = event.target;
