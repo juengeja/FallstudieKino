@@ -11,7 +11,7 @@ export default class SingleMovie extends Component {
         super(props);
         //console.log(this.props);
         this.state = {
-            slug: this.props.match.params.slug,
+            domain: this.props.match.params.domain,
             defaultBcg
         };
     }
@@ -19,7 +19,7 @@ export default class SingleMovie extends Component {
     //componentDidMount(){}
     render() {
         const {getMovie} = this.context;
-        const movie = getMovie(this.state.slug);
+        const movie = getMovie(this.state.domain);
         if(!movie){
             return <div className="error">
                 <h3>Der Film konnte nicht gefunden werden</h3>

@@ -33,7 +33,7 @@ class MovieProvider extends Component{
     componentDidMount(){
         axios.get('https://jsonplaceholder.typicode.com/posts')
         .then((response) => {
-            let movies = response.data;
+            let movies = this.formatData(response.data);
             let featuredMovies = movies.filter(movie => movie.featured === true);
             let maxSeats = Math.max(...movies.map(item => item.free_seats));
             let maxDuration = Math.max(...movies.map(item => item.duration));
@@ -52,9 +52,11 @@ class MovieProvider extends Component{
 
     formatData(items){
         let tempItems = items.map(item  =>{
-        let id = item.sys.id;
-        let images = item.fields.images.map(image => image.fields.file.url);
-        let movie = {...item.fields, images, id};
+        let id = item.id;
+        let name = item.title;
+        let domain = name;
+        //let img = item.img
+        let movie = {...item.fields, domain, name, id};
         return movie;
     });
     return tempItems;

@@ -3,16 +3,16 @@ import {Link} from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 export default function Movie({movie}) {
-    const{name,slug,images,duration} = movie;
+    const{name,domain,img,duration} = movie;
     return (
         <article className="movie">
             <div className="img-container">
                 {/* <img src={images[0]} alt="Empfohlener Film" /> */}
-                <img src='' alt="Empfohlener Film" />
+                <img src={img} alt="Empfohlener Film" />
                 <div className="duration-top">
                     <h6>{duration} min</h6>
                 </div>
-                <Link to={`/program/${slug}`} className="btn-primary movie-link">
+                <Link to={`/program/${domain}`} className="btn-primary movie-link">
                     Details
                 </Link>
             </div>
@@ -24,7 +24,7 @@ export default function Movie({movie}) {
 Movie.propTypes = {
     movie: PropTypes.shape({
         name:PropTypes.string.isRequired,
-        slug:PropTypes.string.isRequired,
+        domain:PropTypes.string.isRequired,
         images:PropTypes.arrayOf(PropTypes.string).isRequired,
         price:PropTypes.number.isRequired
     })
