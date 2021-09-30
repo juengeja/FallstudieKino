@@ -8,20 +8,25 @@ public class Movie {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int movieId;
-    private String title;
-    private int length;
+    private String name;
+    private String genre;
+    private int duration;
     private LocalDate dateOfPublish;
     @Column(length = 1000)
     private String description;
 
 
-    public int getLength() {
-        return length;
+    public int getDuration() {
+        return duration;
     }
 
-    public void setLength(int length) {
-        this.length = length;
+    public void setDuration(int length) {
+        this.duration = length;
     }
+
+    public String getGenre() { return genre; }
+
+    public void setGenre(String genre) { this.genre = genre; }
 
     public LocalDate getDateOfPublish() {
         return dateOfPublish;
@@ -47,11 +52,11 @@ public class Movie {
         this.movieId = movieId;
     }
 
-    public String getTitle() {
-        return title;
+    public String getName() {
+        return name;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public void setName(String title) {
+        this.name = title;
     }
 }
