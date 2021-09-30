@@ -8,7 +8,9 @@ import api from '../api';
 
 function ProgramContainer({context}){
     const {loading, sortedMovies, movies} = context;
+
     const [backendMovies, setBackendMovies] = useState([])
+    
     useEffect(() => {
         api.get(`/movies/getAll`)
             .then(res => {
@@ -19,6 +21,9 @@ function ProgramContainer({context}){
     useEffect(() => {
         console.log("Hui", backendMovies)
     }, [backendMovies])
+
+
+
     if(loading) {
         return <Loading />
     }
