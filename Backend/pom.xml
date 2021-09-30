@@ -48,6 +48,12 @@
         </dependency>
     </dependencies>
 
+<dependency> 
+    <groupId>com.microsoft.azure</groupId> 
+    <artifactId>spring-data-cosmosdb</artifactId> 
+    <version>2.3.0</version> 
+</dependency>
+
     <build>
         <plugins>
             <plugin>
