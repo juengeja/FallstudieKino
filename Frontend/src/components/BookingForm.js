@@ -21,7 +21,7 @@ class BookingForm extends Component {
 
     handleSubmit =(e) => {
         e.preventDefault()
-        axios.post('https://jsonplaceholder.typicode.com/posts', this.state)
+        axios.post('http://loalhost:4000/api/booking', this.state)
         .then(response =>{
             console.log(response)
         })
