@@ -1,30 +1,34 @@
 package com.example.kinoticketreservierungssystem.entity;
 
+import javax.persistence.*;
 import java.time.LocalDate;
 
+@Entity
 public class Movie {
-
-    private int movieID;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private int movieId;
     private String title;
+    private int length;
+    private LocalDate dateOfPublish;
+    @Column(length = 1000)
     private String description;
-    private int fsk;
-    private int duration;
-    private LocalDate releaseDate;
 
-    public int getMovieID() {
-        return movieID;
+
+    public int getLength() {
+        return length;
     }
 
-    public void setMovieID(int movieID) {
-        this.movieID = movieID;
+    public void setLength(int length) {
+        this.length = length;
     }
 
-    public String getTitle() {
-        return title;
+    public LocalDate getDateOfPublish() {
+        return dateOfPublish;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public void setDateOfPublish(LocalDate dateOfPublish) {
+        this.dateOfPublish = dateOfPublish;
     }
 
     public String getDescription() {
@@ -35,27 +39,19 @@ public class Movie {
         this.description = description;
     }
 
-    public int getFsk() {
-        return fsk;
+    public int getMovieId() {
+        return movieId;
     }
 
-    public void setFsk(int fsk) {
-        this.fsk = fsk;
+    public void setMovieId(int movieId) {
+        this.movieId = movieId;
     }
 
-    public int getDuration() {
-        return duration;
+    public String getTitle() {
+        return title;
     }
 
-    public void setDuration(int duration) {
-        this.duration = duration;
-    }
-
-    public LocalDate getReleaseDate() {
-        return releaseDate;
-    }
-
-    public void setReleaseDate(LocalDate releaseDate) {
-        this.releaseDate = releaseDate;
+    public void setTitle(String title) {
+        this.title = title;
     }
 }
