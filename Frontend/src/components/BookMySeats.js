@@ -66,7 +66,7 @@ const BookMySeats = () => {
     return (
         <React.Fragment>
             <p className="btn">Wie viele Sitze würden Sie gerne buchen?</p>
-            <input value={numberOfSeats} onChange={(ev) => setNumberOfSeats(ev.target.value)}/>
+            <input className="eingabe" value={numberOfSeats} onChange={(ev) => setNumberOfSeats(ev.target.value)}/>
             <Seats values={premiumSeats}
                    availableSeats={availableSeats}
                    bookedSeats={bookedSeats}
@@ -77,7 +77,7 @@ const BookMySeats = () => {
                    addSeat={addSeat}/>
 
             <button className={"button"} onClick={confirmBooking}>Sitze buchen</button>
-            <p>{bookedStatus}</p>
+            <p className="gebucht">{bookedStatus}</p>
         </React.Fragment>
 
     );
