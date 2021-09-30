@@ -1,15 +1,22 @@
 import React, { Component } from 'react';
 import items from './data';
+import MovieRestServices from './components/MovieRestServices';
 
 const MovieContext = React.createContext();
 // <MovieContext.Provider value={'hello'}
 
+
+
 class MovieProvider extends Component{
-    state={
+
+    constructor(props){
+        super(props)
+    this.state={
         movies: [],
         sortedMovies: [],
         featuredMovies: [],
-        loading: true,
+        //temporär auf false
+        loading: false,
         genre: 'Alle',
         free_seats: 0,
         minSeats: 0,
@@ -19,8 +26,46 @@ class MovieProvider extends Component{
         maxDuration: 0,
         menu: false,
         night_event: false
+    }
     };
 
+
+    componentDidMount(){
+        MovieRestServices.getMovies().then((Response) => {
+            let movies = this.formatData(Response.data);
+            let featuredMovies = movies.filter(movie => movie.featured === true);
+            let maxSeats = Math.max(...movies.map(item => item.free_seats));
+            let maxDuration = Math.max(...movies.map(item => item.duration));
+            this.setState({ 
+                movies,
+                featuredMovies, 
+                sortedMovies: movies,
+                loading: false,
+                free_seats: maxSeats,
+                maxSeats,
+                duration: maxDuration,
+                maxDuration,
+            })
+        });
+     };
+
+    formatData(items){
+        let tempItems = items.map(item  =>{
+        let id = item.sys.id;
+        let images = item.fields.images.map(image => image.fields.file.url);
+        let movie = {...item.fields, images, id};
+        return movie;
+    });
+    return tempItems;
+    };
+     
+    getMovie = (domain) =>{
+        let tempMovies = [...this.state.movies];
+        const movie = tempMovies.find((movie)=>movie.domain === domain);
+        return movie;
+    };
+
+    /*
     componentDidMount(){
         // this.getData
         let movies = this.formatData(items);
@@ -38,6 +83,7 @@ class MovieProvider extends Component{
             maxDuration,
         });
     }
+  
 
     formatData(items){
             let tempItems = items.map(item  =>{
@@ -54,6 +100,8 @@ class MovieProvider extends Component{
         const movie = tempMovies.find((movie)=>movie.slug === slug);
         return movie;
     };
+    */
+
 
     handleChange = event => {
         const target = event.target;
