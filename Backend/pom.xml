@@ -91,6 +91,11 @@
             <version>3.21.0</version>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>com.azure</groupId>
+            <artifactId>azure-spring-data-cosmos</artifactId>
+            <version>3.9.0</version>
+        </dependency>
     </dependencies>
 
     <build>

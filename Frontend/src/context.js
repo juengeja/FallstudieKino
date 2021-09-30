@@ -31,7 +31,7 @@ class MovieProvider extends Component{
 
 
     componentDidMount(){
-        axios.get('https://jsonplaceholder.typicode.com/posts')
+        axios.get('http://loalhost:4000/api/moviedata')
         .then((response) => {
             let movies = this.formatData(response.data);
             let featuredMovies = movies.filter(movie => movie.featured === true);
@@ -53,10 +53,12 @@ class MovieProvider extends Component{
     formatData(items){
         let tempItems = items.map(item  =>{
         let id = item.id;
-        let name = item.title;
-        let domain = name;
-        //let img = item.img
-        let movie = {...item.fields, domain, name, id};
+        let name = item.name;
+        let domain = item.domain;
+        let genre = item.genre;
+        let duration = item.duration;
+        let img = item.img;
+        let movie = {...item.fields, img, duration, genre, domain, name, id};
         return movie;
     });
     return tempItems;
