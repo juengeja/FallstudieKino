@@ -49,11 +49,11 @@ export default function ProgramContainer({movies}) {
             <div className="form-group">
                 <div className="single-extra">
                     <input type="checkbox" name="menu" id="menu" checked={menu} onChange={handleChange}/>
-                    <label htmlFor="menu">Menü verfügbar</label>
+                    <label htmlFor="menu">Im Menü</label>
                 </div>
                 <div className="single-extra">
                     <input type="checkbox" name="night_event" id="night_event" checked={night_event} onChange={handleChange}/>
-                    <label htmlFor="night_event">Nachtaufführung vorhanden</label>
+                    <label htmlFor="night_event">Nachtaufführung</label>
                 </div>
             </div>
             {/* end extras */}
