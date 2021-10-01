@@ -11,10 +11,11 @@
     <groupId>com.example</groupId>
     <artifactId>Kinoticketreservierungssystem</artifactId>
     <version>0.0.1-SNAPSHOT</version>
+    <packaging>war</packaging>
     <name>Kinoticketreservierungssystem</name>
     <description>Kinoticketreservierungssystem</description>
     <properties>
-        <java.version>11</java.version>
+        <java.version>1.8</java.version>
         <azure.version>3.6.1</azure.version>
     </properties>
     <dependencies>
