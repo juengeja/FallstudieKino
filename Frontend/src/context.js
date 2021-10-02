@@ -15,8 +15,7 @@ class MovieProvider extends Component{
         movies: [],
         sortedMovies: [],
         featuredMovies: [],
-        //temporär auf false
-        loading: false,
+        loading: true,
         genre: 'Alle',
         free_seats: 0,
         minSeats: 0,
@@ -54,19 +53,27 @@ class MovieProvider extends Component{
         let tempItems = items.map(item  =>{
         let id = item.id;
         let name = item.name;
-        let domain = item.domain;
+        //let domain = item.domain;
+        let domain = name;
         let genre = item.genre;
         let duration = item.duration;
+        let dateOfPublish = item.dateOfPublish;
+        let menu = item.menu;
+        let night_event = item.night_event;
+        let featured = item.featured;
+        let description = item.description;
+        let extras = item.extras;
+        let trailer = item.trailer;
         let img = item.img;
-        let movie = {...item.fields, img, duration, genre, domain, name, id};
+        let movie = {img, trailer, extras, description, featured, night_event, menu, dateOfPublish, duration, genre, domain, name, id};
         return movie;
     });
     return tempItems;
     };
      
-    getMovie = (domain) =>{
+    getMovie = domain =>{
         let tempMovies = [...this.state.movies];
-        const movie = tempMovies.find((movie)=>movie.domain === domain);
+        const movie = tempMovies.find(movie => movie.domain === domain);
         return movie;
     };
 

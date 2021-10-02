@@ -11,7 +11,7 @@ export default class SingleMovie extends Component {
         super(props);
         //console.log(this.props);
         this.state = {
-            domain: this.props.match.params.domain,
+            slug: this.props.match.params.slug,
             defaultBcg
         };
     }
@@ -19,7 +19,7 @@ export default class SingleMovie extends Component {
     //componentDidMount(){}
     render() {
         const {getMovie} = this.context;
-        const movie = getMovie(this.state.domain);
+        const movie = getMovie(this.state.slug);
         if(!movie){
             return <div className="error">
                 <h3>Der Film konnte nicht gefunden werden</h3>
@@ -28,7 +28,7 @@ export default class SingleMovie extends Component {
                 </Link>
             </div>
         }
-        const {name,description,free_seats,release_date,duration,extras,menu,night_event,trailer,images} = movie;
+        const {name,description,free_seats,release_date,duration,extras,menu,night_event,trailer,img} = movie;
         return (
             <>
         <Hero hero = 'programHero'>
@@ -40,7 +40,7 @@ export default class SingleMovie extends Component {
         </Hero>
             <section className="single-movie">             
                 <div class="single-movie-info">
-                    <img src={images[0]} alt={name} className="single-movie-cover-image"/>
+                    <img src={img} alt={name} className="single-movie-cover-image"/>
                     <article className="info">
                         <h3>Infos</h3>
                         <h6>Länge : {duration}min</h6>
@@ -63,9 +63,12 @@ export default class SingleMovie extends Component {
             <section className="movie-extras">  
                 <h6>Extras</h6>
                 <ul className="extras">
+                    {extras}
+                    {/*
                     {extras.map((item, index) =>{
                         return <li key={index}>- {item}</li>
                     })}
+                */}
                 </ul>
             </section>
 
