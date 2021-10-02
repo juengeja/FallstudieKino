@@ -31,7 +31,7 @@ class MovieProvider extends Component{
 
 
     componentDidMount(){
-        axios.get('http://loalhost:4000/api/moviedata')
+        axios.get('http://5.45.107.109:4000/api/moviedata')
         .then((response) => {
             let movies = this.formatData(response.data);
             let featuredMovies = movies.filter(movie => movie.featured === true);
