@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import defaultBcg from '../images/room-1.jpeg';
 import Hero from '../components/Hero';
 import Banner from '../components/Banner';
 import {Link} from 'react-router-dom';
@@ -9,10 +8,9 @@ import Title from '../components/Title';
 export default class SingleMovie extends Component {
     constructor(props){
         super(props);
-        //console.log(this.props);
+        console.log(this.props);
         this.state = {
             slug: this.props.match.params.slug,
-            defaultBcg
         };
     }
     static contextType = MovieContext;
@@ -42,13 +40,14 @@ export default class SingleMovie extends Component {
                 <div class="single-movie-info">
                     <img src={img} alt={name} className="single-movie-cover-image"/>
                     <article className="info">
+                        {this.state.slug}
                         <h3>Infos</h3>
                         <h6>Länge : {duration}min</h6>
                         <h6>Erscheinungsdatum : {release_date}</h6>
                         <h6>Freie Plätze : {free_seats}</h6>
                         <h6>{night_event ? "Diesen Film gibt es auch als Nachtvorstellung" : "Diesen Film gibt es nicht als Nachtvorstellung"}</h6>
                         <h6>{menu ? "Für diesen Film existiert ein spezielles Menü" : "Für diesen Film existiert kein spezielles Menü"}</h6>
-                        <Link to='/booking' className="btn-primary">
+                        <Link to={`/booking/${this.state.slug}`} className="btn-primary">
                             Buchen
                         </Link>
                     </article>
