@@ -5,8 +5,6 @@ import axios from 'axios';
 const MovieContext = React.createContext();
 // <MovieContext.Provider value={'hello'}
 
-
-
 class MovieProvider extends Component{
 
     constructor(props){
@@ -27,7 +25,6 @@ class MovieProvider extends Component{
         night_event: false
     }
     };
-
 
     componentDidMount(){
         axios.get('http://5.45.107.109:4000/api/moviedata')
@@ -51,13 +48,12 @@ class MovieProvider extends Component{
 
     formatData(items){
         let tempItems = items.map(item  =>{
-        let id = item.id;
+        let id = item.movieId;
         let name = item.name;
-        //let domain = item.domain;
-        let domain = name;
+        let domain = item.domain;
         let genre = item.genre;
         let duration = item.duration;
-        let dateOfPublish = item.dateOfPublish;
+        let release_date = item.release_date;
         let menu = item.menu;
         let night_event = item.night_event;
         let featured = item.featured;
@@ -65,7 +61,7 @@ class MovieProvider extends Component{
         let extras = item.extras;
         let trailer = item.trailer;
         let img = item.img;
-        let movie = {img, trailer, extras, description, featured, night_event, menu, dateOfPublish, duration, genre, domain, name, id};
+        let movie = {img, trailer, extras, description, featured, night_event, menu, release_date, duration, genre, domain, name, id};
         return movie;
     });
     return tempItems;
