@@ -1,14 +1,3 @@
-/*import React, { Component } from 'react';
-import BookingForm from '../components/BookingForm'
-
-export default function Booking() {
-    return (
-        <>
-        <BookingForm/>
-        </>
-    );
-}
-*/
 import axios from 'axios';
 import React, {Component} from 'react'
 import BookMySeats from '../components/BookMySeats';
@@ -53,15 +42,27 @@ export default class Booking extends Component {
                 <h3>Die Filmdaten konnten nicht geladen werden</h3>
             </div>
         }
-        const {name,description,free_seats,release_date,duration,extras,menu,night_event,trailer,img} = movie;
+        const {name, presentation_date} = movie;
         return (
             <>
             <Hero hero = 'programHero'>
                 <Banner title={`${name}`}>
                 </Banner>
             </Hero>
-            <BookMySeats/>
-            <div>
+
+            <div className="movie-extras">
+            <h6>Vorführungsdatum</h6>
+                <ul className="extras">
+                    {presentation_date.map((item, index) =>{
+                        return <li key={index}> <button class="btn-primary">{item}</button></li>
+                    })}
+                </ul>
+
+                <BookMySeats/>
+            </div>
+
+            
+            <div className="movie-extras">
                 <form onSubmit={this.handleSubmit}>
                     <div>
                         <label>Buchungs ID</label>

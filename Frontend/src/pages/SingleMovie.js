@@ -40,7 +40,6 @@ export default class SingleMovie extends Component {
                 <div class="single-movie-info">
                     <img src={img} alt={name} className="single-movie-cover-image"/>
                     <article className="info">
-                        {this.state.slug}
                         <h3>Infos</h3>
                         <h6>Länge : {duration}min</h6>
                         <h6>Erscheinungsdatum : {release_date}</h6>
