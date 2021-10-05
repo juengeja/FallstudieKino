@@ -24,6 +24,7 @@ export default class Services extends Component {
     };
     render() {
         return(
+            <div data-testid="services-1">
             <section className="services">
                 <Title title="services" />
                 <div className="services-center">
@@ -38,6 +39,7 @@ export default class Services extends Component {
                     })}
                 </div>
             </section>
+            </div>
         );
     }
 }
