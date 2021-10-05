@@ -4,8 +4,9 @@ import Home from './pages/Home';
 import Program from './pages/Progam';
 import SingleMovie from './pages/SingleMovie';
 import Error from './pages/Error';
-import Booking from './pages/Booking';
+import AddToShoppingCart from './pages/AddToShoppingCart';
 import Contact from './pages/Contact';
+import ShoppingCart from './pages/ShoppingCart'
 
 import {Route, Switch} from 'react-router-dom';
 
@@ -20,7 +21,8 @@ function App() {
         <Route exact path="/program" component={Program}/>
         <Route exact path="/contact" component={Contact}/>
         <Route exact path="/program/:slug" component={SingleMovie}/>
-        <Route exact path="/booking/:slug" component={Booking}/>
+        <Route exact path="/addToShoppingCart/:slug" component={AddToShoppingCart}/>
+        <Route exact path="/shoppingCart" component={ShoppingCart}/>
         <Route component={Error} />
       </Switch>
   </>

@@ -77,7 +77,7 @@ export default class Booking extends Component {
                         <input type="text" name="last_name" value={lastName} onChange={this.handleChange}></input>
                     </div>
                     <div>
-                        <button type="submit">Abschicken</button>
+                        <button type="submit">Zum Warenkorb hinzufügen</button>
                     </div>
                 </form>
             </div> 

@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import logo from '../images/logo.svg'
 import {FaAlignRight} from 'react-icons/fa'
+import {FaShoppingCart} from 'react-icons/fa'
 import {Link} from 'react-router-dom'
 
 export default class Navbar extends Component {
@@ -19,7 +20,7 @@ export default class Navbar extends Component {
                     </Link>
                     <button type="button" className="nav-btn" onClick={this.handleToggle}>
                         <FaAlignRight className="nav-icon" />
-                    </button>
+                    </button>    
                 </div>
                 <ul className={this.state.isOpen ? "nav-links show-nav" : "nav-links"}>
                     <li>
@@ -30,6 +31,9 @@ export default class Navbar extends Component {
                     </li>
                     <li>
                         <Link to="/contact">Kontakt</Link>
+                    </li>
+                    <li>
+                        <Link to="/shoppingCart"><FaShoppingCart className="nav-icon-shoppingCart"/></Link>
                     </li>
                 </ul>
            </div>

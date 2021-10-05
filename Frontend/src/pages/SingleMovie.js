@@ -46,7 +46,7 @@ export default class SingleMovie extends Component {
                         <h6>Freie Plätze : {free_seats}</h6>
                         <h6>{night_event ? "Diesen Film gibt es auch als Nachtvorstellung" : "Diesen Film gibt es nicht als Nachtvorstellung"}</h6>
                         <h6>{menu ? "Für diesen Film existiert ein spezielles Menü" : "Für diesen Film existiert kein spezielles Menü"}</h6>
-                        <Link to={`/booking/${this.state.slug}`} className="btn-primary">
+                        <Link to={`/addToShoppingCart/${this.state.slug}`} className="btn-primary">
                             Buchen
                         </Link>
                     </article>

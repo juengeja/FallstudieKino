@@ -153,6 +153,12 @@ h6 {
     margin: 0 1rem;
     padding: 0.5rem 0;
   }
+  .nav-icon-shoppingCart {
+    font-size: 1.5rem;
+    color: var(--primaryColor);
+    position: fixed;
+    right: 2rem;
+  }
 }
 /* end of navbar */
 /* Hero */
