@@ -1,6 +1,4 @@
 import React, {useState} from 'react';
-import classes from './BookMySeats.css';
-import './BookMySeats.css'
 import Seats from './Seats';
 
 const createSeats = (rows, startIndex) => {
@@ -76,7 +74,7 @@ const BookMySeats = () => {
                    bookedSeats={bookedSeats}
                    addSeat={addSeat}/>
 
-            <button className={"button"} onClick={confirmBooking}>Sitze buchen</button>
+            <button className="btn-primary" onClick={confirmBooking}>Sitze buchen</button>
             <p className="gebucht">{bookedStatus}</p>
         </React.Fragment>
 

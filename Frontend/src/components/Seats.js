@@ -1,5 +1,5 @@
 import React from 'react';
-import classes from './BookMySeats.css';
+import classes from '../App.css';
 
 const Seats = (props) => {
 

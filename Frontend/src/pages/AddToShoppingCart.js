@@ -80,12 +80,12 @@ export default class Booking extends Component {
             <h6>Vorführungsdatum</h6>
             {/*}
                 {events_for_selected_movie.map((item, index) =>{
-                    return <li key={index}>- {item}</li>
+                    return <button class="btn-primary" key={index}>- {item}</button>
                 })}
             */}
             
                 {presentation_date.map((item, index) =>{
-                    return <li key={index}>- {item}</li>
+                    return <button class="btn-primary" key={index}>- {item}</button>
                 })}
 
                 <BookMySeats/>

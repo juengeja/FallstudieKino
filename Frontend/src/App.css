@@ -528,3 +528,67 @@ h6 {
   }
 }
 /* end of movies fitler*/
+/* Seats */
+.a{
+  margin-left: 630px;
+}
+
+.btn{
+  margin-top: 40px;
+  margin-left: 70px;
+  color: black;
+  font-size: x-large;
+}
+
+.eingabe{
+  margin-top: 10px;
+  font-size: x-large;
+  margin-left: 170px;
+  margin-bottom: 10px;
+}
+
+.section{
+  margin-top: 10px;
+  display: grid;
+  grid-template-columns: repeat(6, 100px);
+  padding: 10px 20px;
+}
+
+.section > div {
+  border: 2px solid darkred;
+  font-family: SansSerif;
+
+}
+
+.section > div:hover {
+  cursor: pointer;
+}
+
+.disabled {
+  background-color: grey;
+}
+
+.booked {
+  background-color: #19a0d9;
+}
+
+.gebucht {
+  margin-top: 30px;
+  color: black;
+  font-size: x-large;
+  margin-left: 50px;
+}
+
+.section .disabled:hover {
+  cursor: not-allowed;
+}
+
+.button {
+  font-size: x-large;
+  background-position: bottom ;
+  background-color: crimson;
+  padding: 10px 20px;
+  margin-top: 20px;
+  margin-left: 230px;
+}
+/* End of Seats */
