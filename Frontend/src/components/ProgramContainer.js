@@ -9,6 +9,7 @@ import api from '../api';
 function ProgramContainer({context}){
     const {loading, sortedMovies, movies} = context;
 
+    /*
     const [backendMovies, setBackendMovies] = useState([])
     
     useEffect(() => {
@@ -22,7 +23,7 @@ function ProgramContainer({context}){
         console.log("Hui", backendMovies)
     }, [backendMovies])
 
-
+*/
 
     if(loading) {
         return <Loading />
