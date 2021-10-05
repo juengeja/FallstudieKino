@@ -31,7 +31,7 @@ class BookingForm extends Component {
     render() {
         const {bookingId, fistName, lastName} = this.state
         return (
-            <div>
+            <div data-testid="booking-1">
                 <form onSubmit={this.handleSubmit}>
                     <div>
                         <label>Buchungs ID</label>
