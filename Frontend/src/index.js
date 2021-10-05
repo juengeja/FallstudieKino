@@ -4,7 +4,7 @@ import ReactDOM from 'react-dom';
 import { BrowserRouter as Router } from 'react-router-dom';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import {MovieProvider} from './context'
+import {MovieProvider} from './MovieContext'
 
 ReactDOM.render(
     <MovieProvider>

@@ -1,6 +1,6 @@
 import React from 'react';
 import { useContext } from 'react';
-import { MovieContext } from '../context';
+import { MovieContext } from '../MovieContext';
 import Title from '../components/Title';
 
 // get all unique values

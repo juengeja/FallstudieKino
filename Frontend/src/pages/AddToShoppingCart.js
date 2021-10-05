@@ -1,9 +1,9 @@
-import React, {Component} from 'react'
-import BookMySeats from '../components/BookMySeats';
+import React, {Component} from 'react';
+import { MovieContext } from '../MovieContext';
+import axios from 'axios';
 import Hero from '../components/Hero';
 import Banner from '../components/Banner';
-import { MovieContext } from '../context';
-import axios from 'axios';
+import BookMySeats from '../components/BookMySeats';
 
 export default class Booking extends Component {
     constructor(props){
@@ -12,18 +12,17 @@ export default class Booking extends Component {
         this.state = {
             slug: this.props.match.params.slug,
             movie_events: [],
-            events_for_selected_movie: [],
         };
     }
 
-
+    //Get Events
     componentDidMount(){
-        axios.get('http://5.45.107.109:4000/api/movieevents')
+        axios.get('http://5.45.107.109:4000/api/moviedata')
+        //axios.get('http://5.45.107.109:4000/api/movieevents')
         .then((response) => {
             let movie_events = this.formatData(response.data);
             this.setState({ 
                 movie_events,
-                events_for_selected_movie: movie_events,
             })
         });
      };
@@ -38,7 +37,7 @@ export default class Booking extends Component {
 
     getEventforMovie = movieName =>{
         let tempMovies = [...this.state.movie_events];
-        let events = tempMovies.find(events => events.movieName === movieName);
+        let events = tempMovies.find(events => events.name === movieName);
         return events
     };
 
@@ -60,37 +59,37 @@ export default class Booking extends Component {
         let events_for_selected_movie = this.getEventforMovie({name});
 
         /*
-        if (!this.state.events_for_selected_movie.length){
+        if (!events_for_selected_movie.length){
             return (
                 <div className="error">
                     <h3>Keine Vorstellungen zu diesem Film gefunden</h3>
                 </div>
                 );
         }
-        */
-
+*/
         return (
             <>
             <Hero hero = 'programHero'>
                 <Banner title={name}>
                 </Banner>
-            </Hero>
-
+            </Hero>   
+                
             <div className="movie-extras">
-            <h6>Vorführungsdatum</h6>
-            {/*}
-                {events_for_selected_movie.map((item, index) =>{
-                    return <button class="btn-primary" key={index}>- {item}</button>
+                <h6>Vorführungsdatum</h6>
+
+                
+                     {presentation_date.map((item, index) =>{
+                         return <button class="btn-primary" key={index}>- {item}</button>
+                        })}
+                {/*}
+                {this.state.events_for_selected_movie.map((item, index) =>{
+                    return <button class="btn-primary" key={index}>{item}</button>
                 })}
-            */}
-            
-                {presentation_date.map((item, index) =>{
-                    return <button class="btn-primary" key={index}>- {item}</button>
-                })}
+*/}
 
                 <BookMySeats/>
-
-                <button type="submit" class="btn-primary">Zum Warenkorb hinzufügen</button>
+                <button class="btn-primary">Zum Warenkorb hinzufügen</button>
+                
             </div>
             </> 
         );

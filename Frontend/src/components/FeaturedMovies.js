@@ -1,5 +1,5 @@
 import React, {Component, Copmonent} from 'react';
-import { MovieContext } from '../context';
+import { MovieContext } from '../MovieContext';
 import Loading from './Loading';
 import Movie from './Movie';
 import Title from './Title';

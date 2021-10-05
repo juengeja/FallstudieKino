@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import Hero from '../components/Hero';
 import Banner from '../components/Banner';
 import {Link} from 'react-router-dom';
-import { MovieContext } from '../context';
+import { MovieContext } from '../MovieContext';
 import Title from '../components/Title';
 
 export default class SingleMovie extends Component {

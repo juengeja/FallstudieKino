@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 
 import MovieFilter from './MovieFilter';
 import MovieList from './MovieList';
-import {withMovieConsumer} from '../context';
+import {withMovieConsumer} from '../MovieContext';
 import Loading from './Loading';
 import api from '../api';
 
