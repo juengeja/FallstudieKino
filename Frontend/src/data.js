@@ -47,7 +47,13 @@ export default [
             }
           }
         }
-      ]
+      ],
+      presentation_date: [
+        "Montag 04.10.21 - 13:00",
+        "Montag 04.10.21 - 17:00",
+        "Dienstag 05.10.21 - 17:00",
+        "Diesntag 05.10.21 - 21:00",
+     ]
     }
   },
   {
@@ -81,7 +87,13 @@ export default [
             }
           }
         }
-      ]
+      ],
+      presentation_date: [
+        "Montag 04.10.21 - 13:00",
+        "Montag 04.10.21 - 17:00",
+        "Dienstag 05.10.21 - 17:00",
+        "Diesntag 05.10.21 - 21:00",
+     ]
     }
   },
   {
@@ -115,7 +127,13 @@ export default [
             }
           }
         }
-      ]
+      ],
+      presentation_date: [
+        "Montag 04.10.21 - 13:00",
+        "Montag 04.10.21 - 17:00",
+        "Dienstag 05.10.21 - 17:00",
+        "Diesntag 05.10.21 - 21:00",
+     ]
     }
   },
   {
@@ -149,7 +167,13 @@ export default [
             }
           }
         }
-      ]
+      ],
+      presentation_date: [
+        "Montag 04.10.21 - 13:00",
+        "Montag 04.10.21 - 17:00",
+        "Dienstag 05.10.21 - 17:00",
+        "Diesntag 05.10.21 - 21:00",
+     ]
     }
   },
   {
@@ -183,7 +207,13 @@ export default [
             }
           }
         }
-      ]
+      ],
+      presentation_date: [
+        "Montag 04.10.21 - 13:00",
+        "Montag 04.10.21 - 17:00",
+        "Dienstag 05.10.21 - 17:00",
+        "Diesntag 05.10.21 - 21:00",
+     ]
     }
   },
   {

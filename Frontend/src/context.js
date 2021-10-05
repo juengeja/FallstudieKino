@@ -49,6 +49,7 @@ class MovieProvider extends Component{
     formatData(items){
         let tempItems = items.map(item  =>{
         let id = item.movieId;
+        /*
         let name = item.name;
         let domain = item.domain;
         let genre = item.genre;
@@ -61,7 +62,10 @@ class MovieProvider extends Component{
         let extras = item.extras;
         let trailer = item.trailer;
         let img = item.img;
-        let movie = {img, trailer, extras, description, featured, night_event, menu, release_date, duration, genre, domain, name, id};
+        let presentation_date = item.presentation_date;
+        let movie = {img, trailer, presentation_date, extras, description, featured, night_event, menu, release_date, duration, genre, domain, name, id};
+        */
+        let movie = {...item, id};
         return movie;
     });
     return tempItems;
@@ -73,7 +77,7 @@ class MovieProvider extends Component{
         return movie;
     };
 
-  /*  
+   /*
     componentDidMount(){
         // this.getData
         let movies = this.formatData(items);
@@ -96,20 +100,20 @@ class MovieProvider extends Component{
     formatData(items){
             let tempItems = items.map(item  =>{
             let id = item.sys.id;
+            let domain = item.slug;
             let images = item.fields.images.map(image => image.fields.file.url);
-            let movie = {...item.fields, images, id};
+            let movie = {...item.fields, domain, images, id};
             return movie;
         });
         return tempItems;
     };
 
-    getMovie = (slug) =>{
+    getMovie = (domain) =>{
         let tempMovies = [...this.state.movies];
-        const movie = tempMovies.find((movie)=>movie.slug === slug);
+        const movie = tempMovies.find((movie)=>movie.domain === slug);
         return movie;
     };
-    
-*/
+    */
 
     handleChange = event => {
         const target = event.target;
@@ -147,7 +151,7 @@ class MovieProvider extends Component{
 
         //change state
         this.setState({
-            sortedMovies: tempMovies
+            sortedMovies: tempMovies,
         });
     };
 
