@@ -7,6 +7,7 @@ import Error from './pages/Error';
 import AddToShoppingCart from './pages/AddToShoppingCart';
 import Contact from './pages/Contact';
 import ShoppingCart from './pages/ShoppingCart'
+import Booking from './pages/Booking'
 
 import {Route, Switch} from 'react-router-dom';
 
@@ -23,6 +24,7 @@ function App() {
         <Route exact path="/program/:slug" component={SingleMovie}/>
         <Route exact path="/addToShoppingCart/:slug" component={AddToShoppingCart}/>
         <Route exact path="/shoppingCart" component={ShoppingCart}/>
+        <Route exact path="/booking" component={Booking}/>
         <Route component={Error} />
       </Switch>
   </>
