@@ -13,24 +13,15 @@ const cartReducer= (state = initState,action)=>{
     //INSIDE HOME COMPONENT
     if(action.type === ADD_TO_CART){
         let addedItem = state.items.find(item=> item.id === action.id)
-          //check if the action id exists in the addedItems
-        let existed_item= state.addedItems.some(item=> item.id === action.id)
-         if(existed_item)
-         {
-            alert('Die Bestellung ist bereits im Warenkorb')             
-        }
-         else{
-            //calculating the total
-            let newTotal = state.total + addedItem.price 
+        let newTotal = state.total + addedItem.price 
             
-            return{
-                ...state,
-                addedItems: [...state.addedItems, addedItem],
-                total : newTotal
-            }
-            
-        }
+        return{
+            ...state,
+            addedItems: [...state.addedItems, addedItem],
+            total : newTotal
+        }    
     }
+    
     if(action.type === ADD_ITEM){
         return { 
             ...state,

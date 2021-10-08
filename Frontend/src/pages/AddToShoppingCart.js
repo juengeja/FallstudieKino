@@ -81,7 +81,7 @@ import { Link } from 'react-router-dom'
         const {name, presentation_date, img} = movie;
 
         //Change Hardcoded values
-        var entry = { id: this.props.items.length, event: this.state.cart_entry_event, movie: name, seats: "2A", price: "8", img: img}
+        var entry = { id: this.props.items.length, event: this.state.cart_entry_event, movie: name, seats: "2A", price: 8, img: img}
         return (
            <>
             
