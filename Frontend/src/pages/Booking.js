@@ -1,6 +1,5 @@
 import axios from 'axios';
 import React, {Component} from 'react'
-import BookMySeats from '../components/BookMySeats';
 import Hero from '../components/Hero';
 import Banner from '../components/Banner';
 
@@ -10,7 +9,7 @@ export default class Booking extends Component {
         super(props);
 
         this.state = {         
-            id: '',
+            bookingId: '',
             fist_name: '',
             last_name:  '',
         };
@@ -41,20 +40,18 @@ export default class Booking extends Component {
             
             <div className="movie-extras">
 
-            <BookMySeats/>
-
                 <form onSubmit={this.handleSubmit}>
                     <div>
                         <label>Buchungs ID</label>
-                        <input type="text" name="id" value={bookingId} onChange={this.handleChange}></input>
+                        <input type="text" name="id" value={this.state.bookingId} onChange={this.handleChange}></input>
                     </div>
                     <div>
                         <label>Vorname</label>
-                        <input type="text" name="fist_name" value={fistName} onChange={this.handleChange}></input>
+                        <input type="text" name="fist_name" value={this.state.fistName} onChange={this.handleChange}></input>
                     </div>
                     <div>
                         <label>Nachname</label>
-                        <input type="text" name="last_name" value={lastName} onChange={this.handleChange}></input>
+                        <input type="text" name="last_name" value={this.state.lastName} onChange={this.handleChange}></input>
                     </div>
 
                     <h6>Ihre Bestellung</h6>

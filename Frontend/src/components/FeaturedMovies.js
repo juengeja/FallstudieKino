@@ -1,4 +1,4 @@
-import React, {Component, Copmonent} from 'react';
+import React, {Component} from 'react';
 import { MovieContext } from '../MovieContext';
 import Loading from './Loading';
 import Movie from './Movie';

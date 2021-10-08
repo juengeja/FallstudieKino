@@ -1,52 +1,73 @@
 import React, {Component} from 'react';
 import { MovieContext } from '../MovieContext';
-import axios from 'axios';
 import Hero from '../components/Hero';
 import Banner from '../components/Banner';
 import BookMySeats from '../components/BookMySeats';
+import { connect } from 'react-redux';
+import { addToCart,addItem} from '../components/actions/cartActions';
+import axios from 'axios';
+import { Link } from 'react-router-dom'
 
-export default class Booking extends Component {
+ class AddToShoppingCart extends Component {
     constructor(props){
         super(props);
 
         this.state = {
             slug: this.props.match.params.slug,
-            movie_events: [],
+            events: [],
+            cart_entry_event: '',
+            showPopup: false,
         };
     }
 
-    //Get Events
+    
     componentDidMount(){
-        axios.get('http://5.45.107.109:4000/api/moviedata')
-        //axios.get('http://5.45.107.109:4000/api/movieevents')
-        .then((response) => {
-            let movie_events = this.formatData(response.data);
-            this.setState({ 
-                movie_events,
-            })
-        });
-     };
-
+            //xios.get('http://5.45.107.109:4000/api/eventdata')
+            axios.get('http://5.45.107.109:4000/api/moviedata')
+            .then((response) => {
+                let events = this.formatData(response.data);
+                this.setState({
+                    events,
+                })
+            });
+    };
+        
     formatData(items){
-        let tempItems = items.map(item  =>{
-        let event = {...item};
-        return event;
-    });
+            let tempItems = items.map(item  =>{
+            let id = item.movieId;
+            let event = {...item, id};
+            return event;
+        });
     return tempItems;
+    }
+    
+    handleAddItem = (id)=>{
+        this.props.addItem(id);
+    }
+
+    handleAddToCart = (id)=>{
+      this.props.addToCart(id); 
+  }
+
+    handleEventPicker(newEvent){
+        this.setState(prevState => {
+            let cart_entry_event = Object.assign({}, prevState.cart_entry_event);
+            cart_entry_event = newEvent;                                    
+            return { cart_entry_event };                         
+          })
     };
 
-    getEventforMovie = movieName =>{
-        let tempMovies = [...this.state.movie_events];
-        let events = tempMovies.find(events => events.name === movieName);
-        return events
-    };
+    togglePopup() {
+        this.setState({
+          showPopup: !this.state.showPopup
+        });
+      }
 
     static contextType = MovieContext;
 
     render() {
         const {getMovie} = this.context;
         const movie = getMovie(this.state.slug);
-
         if(!movie){
             return (
             <div className="error">
@@ -54,44 +75,67 @@ export default class Booking extends Component {
             </div>
             );
         }
-        
-        const {name, presentation_date} = movie;
-        let events_for_selected_movie = this.getEventforMovie({name});
+    
+        const {name, presentation_date, img} = movie;
 
-        /*
-        if (!events_for_selected_movie.length){
-            return (
-                <div className="error">
-                    <h3>Keine Vorstellungen zu diesem Film gefunden</h3>
-                </div>
-                );
-        }
-*/
+        //Change Hardcoded values
+        var entry = { id: this.props.items.length, event: this.state.cart_entry_event, movie: name, seats: "2A", price: "8", img: img}
         return (
-            <>
+           <>
+            
             <Hero hero = 'programHero'>
                 <Banner title={name}>
                 </Banner>
             </Hero>   
-                
+     
             <div className="movie-extras">
-                <h6>Vorführungsdatum</h6>
-
-                
-                     {presentation_date.map((item, index) =>{
-                         return <button class="btn-primary" key={index}>- {item}</button>
-                        })}
-                {/*}
-                {this.state.events_for_selected_movie.map((item, index) =>{
-                    return <button class="btn-primary" key={index}>{item}</button>
+                <h6>Vorführungsdatum - Bitte auswählen!</h6>
+ 
+                {presentation_date.map((item) =>{
+                         return <button class="btn-primary" value={item} onClick={ () => { this.handleEventPicker(item)}  }>- {item}</button>
                 })}
-*/}
 
                 <BookMySeats/>
-                <button class="btn-primary">Zum Warenkorb hinzufügen</button>
-                
+        
+                <h6>Zusammenfassung der Auswahl</h6>  
+                <h6>Event: {entry.event}</h6>
+                <h6>Film: {entry.movie}</h6>
+                <h6>Sitze: {entry.seats}</h6>
+
+                <button onClick={()=>{this.handleAddItem(entry); this.handleAddToCart(entry.id); this.togglePopup(this)}} class="btn-primary">Zum Warenkorb hinzufügen</button>
+                {this.state.showPopup ? <Popup/> : null}
             </div>
-            </> 
+            </>
         );
     }
 }
+const mapStateToProps = (state)=>{
+    return {
+      items: state.items
+    }
+  }
+const mapDispatchToProps= (dispatch)=>{
+    
+    return{
+        addToCart: (id)=>{dispatch(addToCart(id))},
+        addItem: (id)=>{dispatch(addItem(id))}
+    }
+}
+
+export default connect(mapStateToProps,mapDispatchToProps)(AddToShoppingCart)
+
+class Popup extends Component {
+  render() {
+    return (
+      <div className='popup'>
+        <div className='popup_inner'>
+          <h6>Die Auswahl wurde erfolgreich zum Warenkorb hinzugefügt!</h6>
+          <Link to='/shoppingCart' className="btn-primary">Zum Warenkorb</Link>
+          <Link to='/program' className="btn-primary">Weiteren Film hinzufügen</Link>
+        </div>
+      </div>
+    );
+  }
+}
+
+

@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
-import items from './data';
 import axios from 'axios';
 
 const MovieContext = React.createContext();
-// <MovieContext.Provider value={'hello'}
 
 class MovieProvider extends Component{
 
@@ -49,22 +47,6 @@ class MovieProvider extends Component{
     formatData(items){
         let tempItems = items.map(item  =>{
         let id = item.movieId;
-        /*
-        let name = item.name;
-        let domain = item.domain;
-        let genre = item.genre;
-        let duration = item.duration;
-        let release_date = item.release_date;
-        let menu = item.menu;
-        let night_event = item.night_event;
-        let featured = item.featured;
-        let description = item.description;
-        let extras = item.extras;
-        let trailer = item.trailer;
-        let img = item.img;
-        let presentation_date = item.presentation_date;
-        let movie = {img, trailer, presentation_date, extras, description, featured, night_event, menu, release_date, duration, genre, domain, name, id};
-        */
         let movie = {...item, id};
         return movie;
     });
@@ -76,44 +58,6 @@ class MovieProvider extends Component{
         const movie = tempMovies.find(movie => movie.domain === domain);
         return movie;
     };
-
-   /*
-    componentDidMount(){
-        // this.getData
-        let movies = this.formatData(items);
-        let featuredMovies = movies.filter(movie => movie.featured === true);
-        let maxSeats = Math.max(...movies.map(item => item.free_seats));
-        let maxDuration = Math.max(...movies.map(item => item.duration));
-        this.setState({
-            movies,
-            featuredMovies, 
-            sortedMovies: movies,
-            loading: false,
-            free_seats: maxSeats,
-            maxSeats,
-            duration: maxDuration,
-            maxDuration,
-        });
-    }
-  
-
-    formatData(items){
-            let tempItems = items.map(item  =>{
-            let id = item.sys.id;
-            let domain = item.slug;
-            let images = item.fields.images.map(image => image.fields.file.url);
-            let movie = {...item.fields, domain, images, id};
-            return movie;
-        });
-        return tempItems;
-    };
-
-    getMovie = (domain) =>{
-        let tempMovies = [...this.state.movies];
-        const movie = tempMovies.find((movie)=>movie.domain === slug);
-        return movie;
-    };
-    */
 
     handleChange = event => {
         const target = event.target;
