@@ -17,6 +17,7 @@ import { Link } from 'react-router-dom'
             events: [],
             cart_entry_event: '',
             showPopup: false,
+            error: false
         };
     }
 
@@ -41,13 +42,20 @@ import { Link } from 'react-router-dom'
     return tempItems;
     }
     
-    handleAddItem = (id)=>{
-        this.props.addItem(id);
-    }
-
-    handleAddToCart = (id)=>{
-      this.props.addToCart(id); 
+    handleSubmit = (entry)=>{
+      if(entry.event === '' || entry.seats === ''){
+        alert('Nicht alles ausgefüllt')
+      }else if(this.props.items.find(item=> item.movie === entry.movie && item.event === entry.event)){
+        alert('Diese Vorstellung mit diesem Film befindet sich bereits im Warenkorb')
+      }else{
+        this.props.addItem(entry);
+        this.props.addToCart(entry.id);
+        this.setState({
+          showPopup: !this.state.showPopup
+        })
+      }
   }
+
 
     handleEventPicker(newEvent){
         this.setState(prevState => {
@@ -56,12 +64,6 @@ import { Link } from 'react-router-dom'
             return { cart_entry_event };                         
           })
     };
-
-    togglePopup() {
-        this.setState({
-          showPopup: !this.state.showPopup
-        });
-      }
 
     static contextType = MovieContext;
 
@@ -102,18 +104,20 @@ import { Link } from 'react-router-dom'
                 <h6>Film: {entry.movie}</h6>
                 <h6>Sitze: {entry.seats}</h6>
 
-                <button onClick={()=>{this.handleAddItem(entry); this.handleAddToCart(entry.id); this.togglePopup(this)}} class="btn-primary">Zum Warenkorb hinzufügen</button>
+                <button onClick={()=>{this.handleSubmit(entry)}} class="btn-primary">Zum Warenkorb hinzufügen</button>      
                 {this.state.showPopup ? <Popup/> : null}
             </div>
             </>
         );
     }
 }
+
 const mapStateToProps = (state)=>{
     return {
       items: state.items
     }
   }
+
 const mapDispatchToProps= (dispatch)=>{
     
     return{
