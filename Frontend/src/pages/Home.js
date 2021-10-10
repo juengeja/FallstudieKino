@@ -4,6 +4,7 @@ import Banner from '../components/Banner';
 import { Link } from 'react-router-dom';
 import Services from '../components/Services';
 import FeaturedMovies from '../components/FeaturedMovies';
+import Slideshow from '../components/slideshow';
 
 
 export default function Home() {
@@ -18,6 +19,7 @@ export default function Home() {
         </Hero>
     <FeaturedMovies />
     <Services />
+    <Slideshow />
     </>
     );
 }

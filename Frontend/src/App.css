@@ -651,3 +651,19 @@ h6 {
   background: white;
 }
 /* End of add to shopping Cart */
+/* Slideshow */
+.each-slide > div {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-size: cover;
+  height: 500px;
+
+}
+.slide-show{
+  width: 70%;
+  padding:5rem 0;
+  margin-left: auto;
+  margin-right: auto;
+}
+/*Ende Slideshow */
