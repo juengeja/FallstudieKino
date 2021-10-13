@@ -41,7 +41,7 @@ import { Link } from 'react-router-dom'
         });
     return tempItems;
     }
-    
+
     handleSubmit = (entry)=>{
       if(entry.event === '' || entry.seats === ''){
         alert('Nicht alles ausgefüllt')
@@ -50,6 +50,12 @@ import { Link } from 'react-router-dom'
       }else{
         this.props.addItem(entry);
         this.props.addToCart(entry.id);
+        const seat_reservation_post= {seats: entry.seats}
+        axios.post('https://httpbin.org/post', seat_reservation_post)
+        .then(res => {
+          console.log(res);
+          console.log(res.data);
+        })
         this.setState({
           showPopup: !this.state.showPopup
         })
