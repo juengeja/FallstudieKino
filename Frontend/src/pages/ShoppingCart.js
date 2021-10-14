@@ -20,7 +20,6 @@ class ShoppingCart extends Component {
             (
                 this.props.items.map(item => {
                     return (
-                        <>
                             <li class="li-container" key={item.id}>
                                 <div class="">
                                     <img src={item.img} alt={item.img} class="cart-entry-img" />
@@ -34,9 +33,6 @@ class ShoppingCart extends Component {
                                 </div>
                                 <button className="btn-primary" onClick={() => { this.handleRemove(item.id) }}>Löschen</button>
                             </li>
-
-                            <Recipe />
-                        </>
                     )
                 })
             ) :
@@ -50,6 +46,8 @@ class ShoppingCart extends Component {
                 </>
             )
 
+
+            let showRecipe = this.props.items.length ? <Recipe /> : null
         return (
             <>
                 <Hero hero='programHero'>
@@ -58,7 +56,8 @@ class ShoppingCart extends Component {
                 <section class="movielist">
                     <div class="cart-entry-container">
                         <ul class="collection">
-                            {addedItems}
+                            {addedItems} 
+                            {showRecipe}
                         </ul>
 
                     </div>

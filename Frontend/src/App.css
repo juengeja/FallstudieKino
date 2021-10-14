@@ -640,15 +640,22 @@ h6 {
   bottom: 0;
   margin: auto;
   background-color: rgba(0,0,0, 0.5);
+
 }
 .popup_inner {
   position: absolute;
-  left: 25%;
-  right: 25%;
-  top: 25%;
-  bottom: 25%;
+  left: 30%;
+  right: 30%;
+  top: 33%;
+  bottom: 33%;
   margin: auto;
-  background: white;
+  padding: 2%;
+  text-align: center;
+  background: #ffffff;
+  -webkit-box-shadow: 9px 13px 25px 0px rgba(0, 0, 0, 0.18);
+  -moz-box-shadow: 9px 13px 25px 0px rgba(0, 0, 0, 0.18);
+  box-shadow: 9px 13px 25px 0px rgba(0, 0, 0, 0.18);
+  
 }
 /* End of add to shopping Cart */
 /* Slideshow */
