@@ -595,7 +595,7 @@ h6 {
 /* Shopping Cart*/
 .cart-entry-container{
   width: 60vw;
-  margin: 0 auto;
+  margin: auto;
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(60vw, 1fr));
   grid-row-gap: 2rem;
@@ -603,30 +603,46 @@ h6 {
 }
 .li-container{
   justify-content: center;
-  display: flex;
-  background: rgba(138, 138, 138, 0.5);
+  display: inline-block;
+  background: linear-gradient(to bottom right, rgb(97, 97, 97), rgb(161, 161, 161));
+  border-radius: 7px;
   color: var(--mainWhite);
-  padding: 2rem 1rem;
+  padding: 1rem;
   text-align: center;
   text-transform: capitalize;
   letter-spacing: var(--mainSpacing);
   margin-bottom : 1rem;
+  -webkit-box-shadow: 9px 13px 25px 0px rgba(0, 0, 0, 0.18);
+  -moz-box-shadow: 9px 13px 25px 0px rgba(0, 0, 0, 0.18);
+  box-shadow: 9px 13px 25px 0px rgba(0, 0, 0, 0.18);
+  
 }
 .cart-entry-img{
-  width: 25%;
+  width: 20%;
   float: left;
+  padding: 1rem;
 }
 .cart-entry-details{
-  float: right;
+  width: 60%;
+  float: left;
+  padding: 1rem;
 }
 .cart-entry-buttons{
+  width: 20%;
   float: right;
+  padding: 1rem;
+  margin: auto;
+  margin-top: 5rem
 }
 .title{
-  font-size: 1em;
+  font-size: 1.5em;
   font-weight: bold;
   margin-bottom: 1.5em;
   color: var(--primaryColor);
+}
+
+.recipe{
+text-align: center;
 }
 /* End of Shopping Cart */
 /* Add to ShoppingCart */
@@ -676,7 +692,7 @@ h6 {
 /*Ende Slideshow */
 /*Booking Form */
 .booking-wrapper {
-  padding:5rem 0;
+  padding:3rem 0;
   margin-left: auto;
   margin-right: auto;
   margin-top: 4%;
@@ -687,7 +703,8 @@ h6 {
   -webkit-box-shadow: 9px 13px 25px 0px rgba(0, 0, 0, 0.18);
   -moz-box-shadow: 9px 13px 25px 0px rgba(0, 0, 0, 0.18);
   box-shadow: 9px 13px 25px 0px rgba(0, 0, 0, 0.18);
-  background-color:#9999997e;
+  background: linear-gradient(to bottom right, rgb(97, 97, 97), rgb(161, 161, 161));
+  border-radius: 7px;
 }
 .booking-container {
   width: 65%;
@@ -700,8 +717,7 @@ h6 {
   border: 0;
   font-size: 1rem;
   letter-spacing: .15rem;
-  font-family: Verdana, Geneva, Tahoma, sans-serif;
-  margin-top: 5px;
+  margin-bottom: 4%;
   border-radius: 4px;
 }
 
@@ -720,5 +736,9 @@ h6 {
   font-size: 24px;
   line-height: 10px;
   letter-spacing: 1px;
+}
+.booking-cart-entry-container{
+  float: left;
+  padding: 1rem;
 }
 /* End Booking Form */

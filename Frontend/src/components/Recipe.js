@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
-//import { addShipping } from './actions/cartActions'
 
 class Recipe extends Component{
     
@@ -27,7 +26,7 @@ class Recipe extends Component{
                     <li className="collection-item">
                             <label>
                                 <input type="checkbox" ref="shipping" onChange= {this.handleChecked} />
-                                <span>Per Post zustellen (+4€)</span>
+                                <span>Ticket per Post zustellen (+4€)</span>
                             </label>
                         </li>
                         <li className="collection-item"><b>Gesamtsumme: {this.props.total} €</b></li>

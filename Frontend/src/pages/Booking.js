@@ -19,8 +19,10 @@ class Booking extends Component {
             zip: '',
             email: '',
             pay_method: 'Kreditkarte',
+            ShoppingCart: this.props.items,
         }
     };
+
 
     handleChange = (e) => {
         this.setState({
@@ -40,16 +42,12 @@ class Booking extends Component {
 
     render() {
         
-        let ShoppingCart = this.props.items.length ?
+        let ShoppingCart = this.state.ShoppingCart.length ?
         ( 
             this.props.items.map(item=>{
                     return(
-                        <li class="li-container" key={item.id}>
-                                    <div class=""> 
-                                        <img src={item.img} alt={item.img} class="cart-entry-img"/>
-                                    </div>
-                                
-                                    <div className="cart-entry-details">
+                        <li class="li-container" key={item.id}>                                
+                                    <div className="booking-cart-entry-container">
                                         <h6 className="title">{item.movie}</h6>
                                         <h6>{item.event}</h6>
                                         <h6>Preis: {item.price}€</h6> 
@@ -60,8 +58,7 @@ class Booking extends Component {
                 })
                 ):
 
-                (
-                   
+                ( 
                    <h6>Ein Fehler ist aufgetreten</h6>
                 )
 

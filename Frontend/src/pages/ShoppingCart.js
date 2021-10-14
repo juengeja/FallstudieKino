@@ -20,34 +20,40 @@ class ShoppingCart extends Component {
             (
                 this.props.items.map(item => {
                     return (
+                        <>
                             <li class="li-container" key={item.id}>
-                                <div class="">
-                                    <img src={item.img} alt={item.img} class="cart-entry-img" />
+                                <div class="cart-entry-img">
+                                    <img src={item.img} alt={item.img} width="100%" />
                                 </div>
 
                                 <div className="cart-entry-details">
                                     <h6 className="title">{item.movie}</h6>
                                     <h6>{item.event}</h6>
-                                    <h6>Preis: {item.price}€</h6>
                                     <h6>Gewählte Sitze: {item.seats}</h6>
+                                    <h6>Preis: {item.price}€</h6>         
                                 </div>
+                                <div class="cart-entry-buttons">
                                 <button className="btn-primary" onClick={() => { this.handleRemove(item.id) }}>Löschen</button>
+                                </div>
                             </li>
+                        </>
                     )
                 })
             ) :
 
             (
                 <>
+                <div class="recipe">
                     <h6>Keine Filme im Warenkorb</h6>
                     <Link to='/program' className="btn-primary">
                         Zum Programm
                     </Link>
+                </div>
                 </>
             )
 
 
-            let showRecipe = this.props.items.length ? <Recipe /> : null
+        let showRecipe = this.props.items.length ? <Recipe /> : null
         return (
             <>
                 <Hero hero='programHero'>
@@ -56,10 +62,11 @@ class ShoppingCart extends Component {
                 <section class="movielist">
                     <div class="cart-entry-container">
                         <ul class="collection">
-                            {addedItems} 
-                            {showRecipe}
+                            {addedItems}                           
                         </ul>
-
+                        <div class="recipe">
+                            {showRecipe}
+                        </div>
                     </div>
                 </section>
             </>
