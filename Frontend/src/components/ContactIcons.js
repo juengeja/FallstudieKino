@@ -29,7 +29,7 @@ export default class Contact extends Component {
         return(
             <div data-testid="services-1">
             <section className="services">
-                <Title title="services" />
+                <Title title="Kontaktdaten" />
                 <div className="services-center">
                     {this.state.services.map((item,index) => {
                         return (

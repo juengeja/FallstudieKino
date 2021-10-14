@@ -687,7 +687,7 @@ h6 {
   padding: 5% 10%;
 }
 
-input {
+.booking_input {
   width: 100%;
   min-height: 30px;
   border: 0;
