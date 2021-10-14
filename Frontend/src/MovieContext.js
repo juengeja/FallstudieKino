@@ -62,7 +62,7 @@ class MovieProvider extends Component{
     handleChange = event => {
         const target = event.target;
         const value = target.type === 'checkbox' ? target.checked : target.value;
-        const name = event.target.name;
+        const name = target.name;
         this.setState({[name]: value}, this.filterMovies);
     };
 
@@ -77,10 +77,10 @@ class MovieProvider extends Component{
         if(genre !== 'Alle'){
             tempMovies = tempMovies.filter(movie => movie.genre === genre);
         }
-
+/*gibt es noch nicht 
         //filter by Seats
         tempMovies = tempMovies.filter(movie => movie.free_seats <= free_seats);
-
+*/
         //filter by Duration
         tempMovies = tempMovies.filter(movie => movie.duration <= duration);
 
@@ -92,7 +92,7 @@ class MovieProvider extends Component{
         if(night_event){
             tempMovies = tempMovies.filter(movie => movie.night_event === true);
         }
-
+        
         //change state
         this.setState({
             sortedMovies: tempMovies,
