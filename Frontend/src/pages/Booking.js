@@ -11,103 +11,85 @@ class Booking extends Component {
         super(props);
 
         this.state = {
-            bookingID: "booking2021",
+            bookingID: '',
             customerInfo: {
                 customerID: null,
-                lastName: "Fitzke",
-                firstName: "Tobias",
+                lastName: null,
+                firstName: null,
                 dateOfBirth: null,
                 email: null,
                 phoneNumber: null,
                 user: null,
                 username: null,
                 password: null
-                },
-            showEventInfo: "secondEvent",
-            seatInfo: [],
-            paymentMethod: null
-            }
+            },
+            showEventInfo: '',
+            paymentMethod: 'Kreditkarte'
+        }
     };
 
 
     handleChange = (e) => {
-        this.setState({
-            [e.target.name]: e.target.value
-        });
+        if (e.target.name === "paymentMethod") {
+            this.setState({
+                [e.target.name]: e.target.value
+            })
+        }else {
+            var entry = `${e.target.value}`
+            this.setState(prevState => ({
+                customerInfo: {
+                    ...prevState.customerInfo,
+                    [e.target.name]: entry
+                }
+            }))
+        }
     }
 
-
-
-
+    handleID = () => {
+        
+        (this.props.items).map(item => {
+        this.setState({
+            bookingID: [...this.state.bookingID, item.bookingID],
+            showEventInfo: [...this.state.showEventInfo, item.eventID]
+        });
+    })
+    }
 
     handleSubmit = event => {
         event.preventDefault();
-        
-        const test = {
-            bookingID: "booking2021",
-            customerInfo: {
-                customerID: null,
-                lastName: "Fitzke",
-                firstName: "Tobias",
-                dateOfBirth: null,
-                email: null,
-                phoneNumber: "0123456",
-                user: null,
-                username: null,
-                password: null
-                },
-            showEventInfo: "secondEvent",
-            paymentMethod: null
-            }
-/*
-const test = {
-    "bookingID": "booking2021",
-    "customerInfo": {
-        "customerID": null,
-        "lastName": "Fitzke",
-        "firstName": "Tobias",
-        "dateOfBirth": null,
-        "email": null,
-        "phoneNumber": null,
-        "user": null,
-        "username": null,
-        "password": null
-        },
-    "showEventInfo": "secondEvent",
-    "seatInfo": ["AstraC12"],
-    "paymentMethod": null
-    }
-*/
 
-        axios.put('http://5.45.107.109:4000/api/reservation/successfulpayment', test)
+        axios.put('http://5.45.107.109:4000/api/reservation/successfulpayment', this.state)
             .then(res => {
                 if (res.data != null) {
                     alert("hat funktioniert")
-                  }
+                    console.log(res.data)
+                }
             })
     }
 
+
+
     render() {
-        
+
         let ShoppingCart = this.props.items.length ?
-        ( 
-            this.props.items.map(item=>{
-                    return(
-                        <li class="li-container" key={item.id}>                                
-                                    <div className="booking-cart-entry-container">
-                                        <h6 className="title">{item.movie}</h6>
-                                        <h6>{item.event}</h6>
-                                        <h6>Preis: {item.price}€</h6> 
-                                        <h6>Gewählte Sitze: {item.seats}</h6> 
-                                    </div>                                   
-                                </li>
+            (
+                this.props.items.map(item => {
+                    return (
+                        <li class="li-container" key={item.id}>
+                            <div className="booking-cart-entry-container">
+                                <h6 className="title">{item.movie}</h6>
+                                <h6>{item.event}</h6>
+                                <h6>Preis: {item.price}€</h6>
+                                <h6>Gewählte Sitze: {item.seats}</h6>
+                            </div>
+                        </li>
                     )
                 })
-                ):
+            ) :
 
-                ( 
-                   <h6>Ein Fehler ist aufgetreten</h6>
-                )
+            (
+                <h6>Ein Fehler ist aufgetreten</h6>
+            )
 
         return (
             <>
@@ -123,13 +105,14 @@ const test = {
                                 <FaInfo />Persönliche Daten
                             </h6>
                             <div>
-                                <label for="first_name">Vorname</label>
-                                <input class="booking_input" type="text" name="first_name" onChange={this.handleChange} required/>
+                                <label for="firstName">Vorname</label>
+                                <input class="booking_input" type="text" name="firstName" onChange={this.handleChange, this.handleID} required />
                             </div>
                             <div>
-                                <label for="last_name">Nachname</label>
-                                <input class="booking_input" type="text" name="last_name" onChange={this.handleChange} required/>
+                                <label for="lastName">Nachname</label>
+                                <input class="booking_input" type="text" name="lastName" onChange={this.handleChange} required />
                             </div>
+                            {/*
                             <div>
                                 <label for="street">Straße</label>
                                 <input class="booking_input" type="text" name="street" onChange={this.handleChange} required/>
@@ -146,9 +129,17 @@ const test = {
                                 <label for="zip">PLZ</label>
                                 <input class="booking_input" type="text" name="zip" onChange={this.handleChange} required/>
                             </div>
+                           */}
                             <div>
                                 <label for="email">E-Mail Adresse</label>
-                                <input class="booking_input" type="text" name="email" onChange={this.handleChange} required/>
+                                <input class="booking_input" type="text" name="email" onChange={this.handleChange} required />
+                            </div>
+                            <div>
+                                <label for="dateOfBirth">Geburtsdatum</label>
+                                <input class="booking_input" type="text" name="dateOfBirth" onChange={this.handleChange} required />
+                            </div>                            <div>
+                                <label for="phoneNumber">Telefonnummer</label>
+                                <input class="booking_input" type="text" name="phoneNumber" onChange={this.handleChange} required />
                             </div>
 
                             <h6 class="headline">
@@ -157,25 +148,25 @@ const test = {
                             <div class="input-container">
                                 <div className="radio">
                                     <label>
-                                        <input name="pay_method" type="radio" value="Kreditkarte" checked={this.state.pay_method === 'Kreditkarte'} onChange={this.handleChange} />
+                                        <input name="paymentMethod" type="radio" value="Kreditkarte" checked={this.state.paymentMethod === 'Kreditkarte'} onChange={this.handleChange} />
                                         Kreditkarte
                                     </label>
                                 </div>
                                 <div className="radio">
                                     <label>
-                                        <input name="pay_method" type="radio" value="PayPal" checked={this.state.pay_method === 'PayPal'} onChange={this.handleChange} />
+                                        <input name="paymentMethod" type="radio" value="PayPal" checked={this.state.paymentMethod === 'PayPal'} onChange={this.handleChange} />
                                         PayPal
                                     </label>
                                 </div>
                                 <div className="radio">
                                     <label>
-                                        <input name="pay_method" type="radio" value="Rechnung" checked={this.state.pay_method === 'Rechnung'} onChange={this.handleChange} />
+                                        <input name="paymentMethod" type="radio" value="Rechnung" checked={this.state.paymentMethod === 'Rechnung'} onChange={this.handleChange} />
                                         Rechnung
                                     </label>
                                 </div>
                                 <div className="radio">
                                     <label>
-                                        <input name="pay_method" type="radio" value="Bar" checked={this.state.pay_method === 'Bar'} onChange={this.handleChange} />
+                                        <input name="paymentMethod" type="radio" value="Bar" checked={this.state.paymentMethod === 'Bar'} onChange={this.handleChange} />
                                         Bar
                                     </label>
                                 </div>
@@ -185,7 +176,6 @@ const test = {
                                 <FaShoppingCart /> Bestellübersicht
                             </h6>
                             {ShoppingCart}
-
 
                             <div class="btns">
                                 <Link to='/shoppingCart' className="btn-primary">Zurück zum Warenkorb</Link>
@@ -199,8 +189,8 @@ const test = {
     }
 }
 
-const mapStateToProps = (state)=>{
-    return{
+const mapStateToProps = (state) => {
+    return {
         items: state.addedItems,
         //addedItems: state.addedItems
     }

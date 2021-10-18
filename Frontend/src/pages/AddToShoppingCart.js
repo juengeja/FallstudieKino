@@ -52,7 +52,7 @@ class AddToShoppingCart extends Component {
     } else {
       
       const seat_reservation_post = {
-        bookingID: Date().toLocaleString(),
+        bookingID: entry.bookingID,
         showEventInfo: entry.eventID,
         seatInfo: entry.seats
       }
@@ -103,8 +103,8 @@ render() {
 
   const { movieName, presentation_date, img } = movie;
 
-  //Change Hardcoded values
-  var entry = { id: this.props.items.length, event: this.state.cart_entry_event, eventID: this.state.cart_entry_eventID, movie: movieName, seats: ["AstraG14", "AstraG15"], price: 8, img: img }
+  //Change Hardcoded values Date().toLocaleString()
+  var entry = { id: this.props.items.length, bookingID: 'test', event: this.state.cart_entry_event, eventID: this.state.cart_entry_eventID, movie: movieName, seats: ["AstraG14", "AstraG15"], price: 8, img: img }
   return (
     <>
 
