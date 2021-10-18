@@ -3,7 +3,7 @@ import {Link} from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 export default function Movie({movie}) {
-    const{name,domain,img,duration} = movie;
+    const{movieName,domain,img,duration} = movie;
     return (
         <article className="movie">
             <div className="img-container">
@@ -15,7 +15,7 @@ export default function Movie({movie}) {
                     Details
                 </Link>
             </div>
-            <p className="movie-info">{name}</p>
+            <p className="movie-info">{movieName}</p>
         </article>
     );
 }

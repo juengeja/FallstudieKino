@@ -26,11 +26,11 @@ export default class SingleMovie extends Component {
                 </Link>
             </div>
         }
-        const {name,description,free_seats,release_date,duration,extras,menu,night_event,trailer,img} = movie;
+        const {movieName,description,free_seats,release_date,duration,extras,menu,night_event,trailer,img} = movie;
         return (
             <>
         <Hero hero = 'programHero'>
-            <Banner title={`${name}`}>
+            <Banner title={`${movieName}`}>
                 <Link to='/program' className="btn-primary">
                     Zurück zum Programm
                 </Link>
@@ -38,7 +38,7 @@ export default class SingleMovie extends Component {
         </Hero>
             <section className="single-movie">             
                 <div class="single-movie-info">
-                    <img src={img} alt={name} className="single-movie-cover-image"/>
+                    <img src={img} alt={movieName} className="single-movie-cover-image"/>
                     <article className="info">
                         <h3>Infos</h3>
                         <h6>Länge : {duration}min</h6>

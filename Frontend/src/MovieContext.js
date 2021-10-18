@@ -13,14 +13,9 @@ class MovieProvider extends Component{
         featuredMovies: [],
         loading: true,
         genre: 'Alle',
-        free_seats: 0,
-        minSeats: 0,
-        maxSeats: 0,
         duration: 0,
         minDuration: 0,
         maxDuration: 0,
-        menu: false,
-        night_event: false
     }
     };
 
@@ -29,15 +24,12 @@ class MovieProvider extends Component{
         .then((response) => {
             let movies = this.formatData(response.data);
             let featuredMovies = movies.filter(movie => movie.featured === true);
-            let maxSeats = Math.max(...movies.map(item => item.free_seats));
             let maxDuration = Math.max(...movies.map(item => item.duration));
             this.setState({ 
                 movies,
                 featuredMovies, 
                 sortedMovies: movies,
                 loading: false,
-                free_seats: maxSeats,
-                maxSeats,
                 duration: maxDuration,
                 maxDuration,
             })
@@ -47,7 +39,8 @@ class MovieProvider extends Component{
     formatData(items){
         let tempItems = items.map(item  =>{
         let id = item.movieId;
-        let movie = {...item, id};
+        let domain = item.movieName;
+        let movie = {...item, domain, id};
         return movie;
     });
     return tempItems;
@@ -67,32 +60,18 @@ class MovieProvider extends Component{
     };
 
     filterMovies = () => {
-        let{movies, genre, free_seats, duration, menu, night_event} = this.state;
+        let{movies, mainGenre, duration} = this.state;
         let tempMovies = [...movies];
         //transform value
-        free_seats = parseInt(free_seats);
         duration = parseInt(duration);
 
         //filter by genre
-        if(genre !== 'Alle'){
-            tempMovies = tempMovies.filter(movie => movie.genre === genre);
+        if(mainGenre !== 'Alle'){
+            tempMovies = tempMovies.filter(movie => movie.mainGenre === mainGenre);
         }
-/*gibt es noch nicht 
-        //filter by Seats
-        tempMovies = tempMovies.filter(movie => movie.free_seats <= free_seats);
-*/
         //filter by Duration
         tempMovies = tempMovies.filter(movie => movie.duration <= duration);
 
-        //filter by menu
-        if(menu){
-            tempMovies = tempMovies.filter(movie => movie.menu === true);
-        }
-        //filter by night_event
-        if(night_event){
-            tempMovies = tempMovies.filter(movie => movie.night_event === true);
-        }
-        
         //change state
         this.setState({
             sortedMovies: tempMovies,

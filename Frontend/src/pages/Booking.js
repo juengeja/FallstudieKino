@@ -11,15 +11,16 @@ class Booking extends Component {
         super(props);
 
         this.state = {
-            first_name: '',
-            last_name: '',
-            street: '',
+            customerID: null,         
+            lastName: null,
+            firstName: null,
+            dateOfBirth: null,
+            email: null,       
+            phoneNumber: null,
             number: '',
             city: '',
             zip: '',
-            email: '',
             pay_method: 'Kreditkarte',
-            ShoppingCart: this.props.items,
         }
     };
 
@@ -33,7 +34,7 @@ class Booking extends Component {
     handleSubmit = event => {
         event.preventDefault();
 
-        axios.post('http://localhost:3000/api/booking', this.state)
+        axios.post('http://5.45.107.109:4000/api/reservation/successfulpayment', this.state)
             .then(res => {
                 console.log(res);
                 console.log(res.data);
@@ -42,7 +43,7 @@ class Booking extends Component {
 
     render() {
         
-        let ShoppingCart = this.state.ShoppingCart.length ?
+        let ShoppingCart = this.props.items.length ?
         ( 
             this.props.items.map(item=>{
                     return(

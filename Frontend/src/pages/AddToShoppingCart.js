@@ -11,20 +11,21 @@ import { Link } from 'react-router-dom'
  class AddToShoppingCart extends Component {
     constructor(props){
         super(props);
-
         this.state = {
             slug: this.props.match.params.slug,
             events: [],
             cart_entry_event: '',
             showPopup: false,
-            error: false
+            error: false,
+            
         };
     }
 
     
     componentDidMount(){
-            //xios.get('http://5.45.107.109:4000/api/eventdata')
-            axios.get('http://5.45.107.109:4000/api/moviedata')
+            let url =  'http://5.45.107.109:4000/api/moviedata/showeventdates/' + this.state.slug
+            axios.get(url)
+            //axios.get('http://5.45.107.109:4000/api/moviedata')
             .then((response) => {
                 let events = this.formatData(response.data);
                 this.setState({
@@ -35,8 +36,9 @@ import { Link } from 'react-router-dom'
         
     formatData(items){
             let tempItems = items.map(item  =>{
-            let id = item.movieId;
-            let event = {...item, id};
+            let showEventID = item.showEventID;
+            let eventStart = item.eventStart;
+            let event = {...item, eventStart, showEventID};
             return event;
         });
     return tempItems;
@@ -50,15 +52,48 @@ import { Link } from 'react-router-dom'
       }else{
         this.props.addItem(entry);
         this.props.addToCart(entry.id);
-        const seat_reservation_post= {seats: entry.seats}
-        axios.post('https://httpbin.org/post', seat_reservation_post)
+        const seat_reservation_post= {bookingID: '', showEvent: entry.event, seats: entry.seats}
+
+/*
+        axios({
+          method: 'post',
+          url: 'http://5.45.107.109:4000/api/reservation',
+          headers: {}, 
+          data: {
+            bookingID: null,
+            showEventID: entry.event,
+            seats: entry.seats
+          }
+        });
+*/
+
+      axios({
+        method: 'post',
+        url: 'http://5.45.107.109:4000/api/reservation',
+        data: {
+          showEvent: entry.event, 
+          seats: entry.seats
+        },
+        validateStatus: (status) => {
+          return true; // I'm always returning true, you may want to do it depending on the status received
+        },
+      }).catch(error => {
+  
+      }).then(response => {
+          // this is now called!
+      });
+/*
+        axios.post('http://5.45.107.109:4000/api/reservation', seat_reservation_post)
         .then(res => {
-          console.log(res);
-          console.log(res.data);
+          	if(res.data !=  null){
+              alert("hat funktioniert")
+            }
         })
+        
         this.setState({
           showPopup: !this.state.showPopup
         })
+        */
       }
   }
 
@@ -84,23 +119,23 @@ import { Link } from 'react-router-dom'
             );
         }
     
-        const {name, presentation_date, img} = movie;
+        const {movieName, img} = movie;
 
         //Change Hardcoded values
-        var entry = { id: this.props.items.length, event: this.state.cart_entry_event, movie: name, seats: "2A", price: 8, img: img}
+        var entry = { id: this.props.items.length, event: this.state.cart_entry_event, movie: movieName, seats: "AstraG14", price: 8, img: img}
         return (
            <>
             
             <Hero hero = 'programHero'>
-                <Banner title={name}>
+                <Banner title={movieName}>
                 </Banner>
             </Hero>   
      
             <div className="movie-extras">
                 <h6>Vorführungsdatum - Bitte auswählen!</h6>
  
-                {presentation_date.map((item) =>{
-                         return <button class="btn-primary" value={item} onClick={ () => { this.handleEventPicker(item)}  }>- {item}</button>
+                {this.state.events.map((item) =>{
+                         return <button class="btn-primary" value={item.eventStart} onClick={ () => { this.handleEventPicker(item.eventStart)}  }>- {item.eventStart}</button>
                 })}
 
                 <BookMySeats/>
