@@ -11,17 +11,22 @@ class Booking extends Component {
         super(props);
 
         this.state = {
-            customerID: null,         
-            lastName: null,
-            firstName: null,
-            dateOfBirth: null,
-            email: null,       
-            phoneNumber: null,
-            number: '',
-            city: '',
-            zip: '',
-            pay_method: 'Kreditkarte',
-        }
+            bookingID: "booking2021",
+            customerInfo: {
+                customerID: null,
+                lastName: "Fitzke",
+                firstName: "Tobias",
+                dateOfBirth: null,
+                email: null,
+                phoneNumber: null,
+                user: null,
+                username: null,
+                password: null
+                },
+            showEventInfo: "secondEvent",
+            seatInfo: [],
+            paymentMethod: null
+            }
     };
 
 
@@ -31,13 +36,54 @@ class Booking extends Component {
         });
     }
 
+
+
+
+
     handleSubmit = event => {
         event.preventDefault();
+        
+        const test = {
+            bookingID: "booking2021",
+            customerInfo: {
+                customerID: null,
+                lastName: "Fitzke",
+                firstName: "Tobias",
+                dateOfBirth: null,
+                email: null,
+                phoneNumber: "0123456",
+                user: null,
+                username: null,
+                password: null
+                },
+            showEventInfo: "secondEvent",
+            paymentMethod: null
+            }
+/*
+const test = {
+    "bookingID": "booking2021",
+    "customerInfo": {
+        "customerID": null,
+        "lastName": "Fitzke",
+        "firstName": "Tobias",
+        "dateOfBirth": null,
+        "email": null,
+        "phoneNumber": null,
+        "user": null,
+        "username": null,
+        "password": null
+        },
+    "showEventInfo": "secondEvent",
+    "seatInfo": ["AstraC12"],
+    "paymentMethod": null
+    }
+*/
 
-        axios.post('http://5.45.107.109:4000/api/reservation/successfulpayment', this.state)
+        axios.put('http://5.45.107.109:4000/api/reservation/successfulpayment', test)
             .then(res => {
-                console.log(res);
-                console.log(res.data);
+                if (res.data != null) {
+                    alert("hat funktioniert")
+                  }
             })
     }
 
