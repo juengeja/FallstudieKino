@@ -604,8 +604,8 @@ h6 {
 .li-container{
   justify-content: center;
   display: inline-block;
-  background: linear-gradient(to bottom right, rgb(97, 97, 97), rgb(161, 161, 161));
-  border-radius: 7px;
+  background-image: url(./images/ticket-bg.jpg);
+  border-radius: 5px;
   color: var(--mainWhite);
   padding: 1rem;
   text-align: center;
@@ -621,6 +621,7 @@ h6 {
   width: 20%;
   float: left;
   padding: 1rem;
+  border-radius: 5px;
 }
 .cart-entry-details{
   width: 60%;
@@ -697,18 +698,27 @@ text-align: center;
   margin-right: auto;
   margin-top: 4%;
   margin-bottom: 4%;
-  width: 60%;
+  width: 70%;
   display: flex;
   justify-content: center;
   -webkit-box-shadow: 9px 13px 25px 0px rgba(0, 0, 0, 0.18);
   -moz-box-shadow: 9px 13px 25px 0px rgba(0, 0, 0, 0.18);
   box-shadow: 9px 13px 25px 0px rgba(0, 0, 0, 0.18);
-  background: linear-gradient(to bottom right, rgb(97, 97, 97), rgb(161, 161, 161));
-  border-radius: 7px;
+  background: url(./images/booking-bg.jpg) no-repeat;
+  border-radius: 5px;
+  color: var(--mainWhite);
 }
+
+.booking-container-right{
+  width: 35%;
+  padding: 2%;
+  float: right;
+}
+
 .booking-container {
-  width: 65%;
-  padding: 5% 10%;
+  width: 45%;
+  padding: 2%;
+  float: left;
 }
 
 .booking_input {
@@ -723,8 +733,37 @@ text-align: center;
 
 .input-container {
   justify-content: space-between;
-  display: flex;
+  display: inline-block;
   width: 100%;
+  margin: 1%;
+}
+
+.booking-btn {
+  margin: 2%;
+  display: inline-block;
+  text-decoration: none;
+  letter-spacing: var(--mainSpacing);
+  color: var(--mainBlack);
+  background: var(--primaryColor);
+  padding: 0.4rem 0.9rem;
+  border: 3px solid var(--primaryColor);
+  transition: var(--mainTransition);
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.booking-btn-unselected {
+  margin: 2%;
+  display: inline-block;
+  text-decoration: none;
+  letter-spacing: var(--mainSpacing);
+  color: var(--mainBlack);
+  background: var(--mainGrey);
+  padding: 0.4rem 0.9rem;
+  border: 3px solid var(--mainGrey);
+  transition: var(--mainTransition);
+  text-transform: uppercase;
+  cursor: pointer;
 }
 
 .btns {
@@ -733,6 +772,9 @@ text-align: center;
   align-items: flex;
 }
 .headline {
+  text-align: center;
+  margin-bottom: 4%;
+  font-weight: bold;
   font-size: 24px;
   line-height: 10px;
   letter-spacing: 1px;

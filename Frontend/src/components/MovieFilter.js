@@ -10,7 +10,7 @@ const getUnique = (items, value) => {
 
 export default function ProgramContainer({movies}) {
     const context = useContext(MovieContext);
-    const {handleChange, mainGenre, duration, minDuration, maxDuration} = context;
+    const {handleChange, mainGenre, duration, minDuration, maxDuration, movieName} = context;
 
     //get unique genres
     let genres = getUnique(movies, 'mainGenre');
@@ -25,10 +25,16 @@ export default function ProgramContainer({movies}) {
     <section className="filter-container">
         <Title title="Filter" />
         <form className="filter-form">
+            {/*select name */}
+            <div className="form-group">
+                <label htmlFor="movieName">Filmname</label>
+                <input type="text" name="movieName" id="movieName" value={movieName} className="form-control" onChange={handleChange} />
+            </div>
+            {/* end select name*/}
             {/*select genre */}
             <div className="form-group">
-                <label htmlFor="genre">Genre</label>
-                <select name="genre" id="genre" value={mainGenre} className="form-control" onChange={handleChange}>
+                <label htmlFor="mainGenre">Genre</label>
+                <select name="mainGenre" id="mainGenre" value={mainGenre} className="form-control" onChange={handleChange}>
                     {genres}
                 </select>
             </div>

@@ -11,7 +11,7 @@ class Booking extends Component {
         super(props);
 
         this.state = {
-            bookingID: '',
+            bookingID: 'Tue Oct 19 2021 09:01:14 GMT+0200 (Central European Summer Time)',
             customerInfo: {
                 customerID: null,
                 lastName: null,
@@ -23,7 +23,7 @@ class Booking extends Component {
                 username: null,
                 password: null
             },
-            showEventInfo: '',
+            showEventInfo: 'secondEvent',
             paymentMethod: 'Kreditkarte'
         }
     };
@@ -34,7 +34,7 @@ class Booking extends Component {
             this.setState({
                 [e.target.name]: e.target.value
             })
-        }else {
+        } else {
             var entry = `${e.target.value}`
             this.setState(prevState => ({
                 customerInfo: {
@@ -46,18 +46,18 @@ class Booking extends Component {
     }
 
     handleID = () => {
-        
+
         (this.props.items).map(item => {
-        this.setState({
-            bookingID: [...this.state.bookingID, item.bookingID],
-            showEventInfo: [...this.state.showEventInfo, item.eventID]
-        });
-    })
+            this.setState({
+                bookingID: [...this.state.bookingID, item.bookingID],
+                showEventInfo: [...this.state.showEventInfo, item.eventID]
+            });
+        })
     }
 
     handleSubmit = event => {
         event.preventDefault();
-
+        console.log('Json : ' + JSON.stringify(this.state));
         axios.put('http://5.45.107.109:4000/api/reservation/successfulpayment', this.state)
             .then(res => {
                 if (res.data != null) {
@@ -101,12 +101,12 @@ class Booking extends Component {
                 <div className="booking-wrapper">
                     <div class="booking-container">
                         <form onSubmit={this.handleSubmit}>
-                            <h6 class="headline">
+                            <div class="headline">
                                 <FaInfo />Persönliche Daten
-                            </h6>
+                            </div>
                             <div>
                                 <label for="firstName">Vorname</label>
-                                <input class="booking_input" type="text" name="firstName" onChange={this.handleChange, this.handleID} required />
+                                <input class="booking_input" type="text" name="firstName" onChange={this.handleChange/*, this.handleID*/} required />
                             </div>
                             <div>
                                 <label for="lastName">Nachname</label>
@@ -142,46 +142,28 @@ class Booking extends Component {
                                 <input class="booking_input" type="text" name="phoneNumber" onChange={this.handleChange} required />
                             </div>
 
-                            <h6 class="headline">
+                            <div class="headline">
                                 <FaCreditCard /> Zahlungsart
-                            </h6>
-                            <div class="input-container">
-                                <div className="radio">
-                                    <label>
-                                        <input name="paymentMethod" type="radio" value="Kreditkarte" checked={this.state.paymentMethod === 'Kreditkarte'} onChange={this.handleChange} />
-                                        Kreditkarte
-                                    </label>
-                                </div>
-                                <div className="radio">
-                                    <label>
-                                        <input name="paymentMethod" type="radio" value="PayPal" checked={this.state.paymentMethod === 'PayPal'} onChange={this.handleChange} />
-                                        PayPal
-                                    </label>
-                                </div>
-                                <div className="radio">
-                                    <label>
-                                        <input name="paymentMethod" type="radio" value="Rechnung" checked={this.state.paymentMethod === 'Rechnung'} onChange={this.handleChange} />
-                                        Rechnung
-                                    </label>
-                                </div>
-                                <div className="radio">
-                                    <label>
-                                        <input name="paymentMethod" type="radio" value="Bar" checked={this.state.paymentMethod === 'Bar'} onChange={this.handleChange} />
-                                        Bar
-                                    </label>
-                                </div>
                             </div>
-
-                            <h6 class="headline">
-                                <FaShoppingCart /> Bestellübersicht
-                            </h6>
-                            {ShoppingCart}
-
-                            <div class="btns">
-                                <Link to='/shoppingCart' className="btn-primary">Zurück zum Warenkorb</Link>
-                                <button class="btn-primary" type="submit">Zahlungspflichtig bestellen</button>
+                            <div class="input-container">
+                                <button className={this.state.paymentMethod === "Kreditkarte" ? "booking-btn" : "booking-btn-unselected"} name="paymentMethod" value="Kreditkarte" onClick={this.handleChange}>Kreditkarte</button>
+                                <button className={this.state.paymentMethod === "PayPal" ? "booking-btn" : "booking-btn-unselected"} name="paymentMethod" value="PayPal" onClick={this.handleChange}>PayPal</button>
+                                <button className={this.state.paymentMethod === "Rechnung" ? "booking-btn" : "booking-btn-unselected"} name="paymentMethod" value="Rechnung" onClick={this.handleChange}>Rechnung</button>
+                                <button className={this.state.paymentMethod === "Bar" ? "booking-btn" : "booking-btn-unselected"} name="paymentMethod" value="Bar" onClick={this.handleChange}>Bar</button>
                             </div>
                         </form>
+                    </div>
+                    <div class="booking-container-right">
+                        <div class="headline">
+                            <FaShoppingCart /> Bestellübersicht
+                        </div>
+                        {ShoppingCart}
+
+                        <div class="btns">
+                            <Link to='/shoppingCart' className="booking-btn">Zurück zum Warenkorb</Link>
+                            <button class="booking-btn" type="submit">Zahlungspflichtig bestellen</button>
+                        </div>
+
                     </div>
                 </div>
             </>

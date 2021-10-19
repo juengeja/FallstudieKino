@@ -60,15 +60,19 @@ class MovieProvider extends Component{
     };
 
     filterMovies = () => {
-        let{movies, mainGenre, duration} = this.state;
+        let{movies, mainGenre, duration, movieName} = this.state;
         let tempMovies = [...movies];
         //transform value
         duration = parseInt(duration);
-
+/*
+        //filter by name
+        tempMovies = tempMovies.filter(movie => movie.movieName.includes(movieName));
+*/
         //filter by genre
         if(mainGenre !== 'Alle'){
             tempMovies = tempMovies.filter(movie => movie.mainGenre === mainGenre);
         }
+        
         //filter by Duration
         tempMovies = tempMovies.filter(movie => movie.duration <= duration);
 

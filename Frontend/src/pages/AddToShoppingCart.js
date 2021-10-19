@@ -22,6 +22,9 @@ class AddToShoppingCart extends Component {
     };
   }
 
+  getSlug(){
+    return this.state.slug
+  }
 
   componentDidMount() {
     let url = 'http://5.45.107.109:4000/api/moviedata/showeventdates/' + this.state.slug;
@@ -101,10 +104,10 @@ render() {
     );
   }
 
-  const { movieName, presentation_date, img } = movie;
+  const { movieName, img } = movie;
 
-  //Change Hardcoded values Date().toLocaleString()
-  var entry = { id: this.props.items.length, bookingID: 'test', event: this.state.cart_entry_event, eventID: this.state.cart_entry_eventID, movie: movieName, seats: ["AstraG14", "AstraG15"], price: 8, img: img }
+  //Change Hardcoded values 
+  var entry = { id: this.props.items.length, bookingID: Date().toLocaleString('de-DE'), event: this.state.cart_entry_event, eventID: this.state.cart_entry_eventID, movie: movieName, seats: ["AstraG14", "AstraG15"], price: 8, img: img }
   return (
     <>
 
@@ -169,12 +172,11 @@ class SuccessfulPopup extends Component {
 
 class ErrorPopup extends Component {
   render() {
-    const url ='/addToShoppingCart/'+this.state.slug
     return (
       <div className='popup'>
         <div className='popup_inner'>
           <h6>Ihr gewählter Sitzpltz ist leider bereits vergeben</h6>
-          <Link to={url} className="btn-primary">Bitte wählen sie einen anderen</Link>
+          <Link to='/program' className="btn-primary">Bitte wählen sie einen anderen</Link>
         </div>
       </div>
     );
