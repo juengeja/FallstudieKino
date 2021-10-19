@@ -615,7 +615,6 @@ h6 {
   -webkit-box-shadow: 9px 13px 25px 0px rgba(0, 0, 0, 0.18);
   -moz-box-shadow: 9px 13px 25px 0px rgba(0, 0, 0, 0.18);
   box-shadow: 9px 13px 25px 0px rgba(0, 0, 0, 0.18);
-  
 }
 .cart-entry-img{
   width: 20%;
@@ -708,6 +707,21 @@ text-align: center;
   border-radius: 5px;
   color: var(--mainWhite);
 }
+.booking-shoppingcart{
+  justify-content: center;
+  display: inline-block;
+  background-color: rgb(#4805ff); 
+  border-radius: 5px;
+  color: var(--mainWhite);
+  padding: 1rem;
+  text-align: center;
+  text-transform: capitalize;
+  letter-spacing: var(--mainSpacing);
+  margin-bottom : 1rem;
+  -webkit-box-shadow: 9px 13px 25px 0px rgba(0, 0, 0, 0.18);
+  -moz-box-shadow: 9px 13px 25px 0px rgba(0, 0, 0, 0.18);
+  box-shadow: 9px 13px 25px 0px rgba(0, 0, 0, 0.18);
+}
 
 .booking-container-right{
   width: 35%;
@@ -766,11 +780,6 @@ text-align: center;
   cursor: pointer;
 }
 
-.btns {
-  display: flex;
-  flex-direction: column;
-  align-items: flex;
-}
 .headline {
   text-align: center;
   margin-bottom: 4%;
@@ -784,3 +793,4 @@ text-align: center;
   padding: 1rem;
 }
 /* End Booking Form */
+

@@ -1,40 +1,59 @@
 import axios from 'axios';
-import React, { Component } from 'react'
+import React, { Component } from 'react';
 import Hero from '../components/Hero';
 import Banner from '../components/Banner';
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router-dom';
 import { FaInfo, FaCreditCard, FaShoppingCart } from 'react-icons/fa';
-import { connect } from 'react-redux'
+import { connect } from 'react-redux';
+import DayPickerInput from "react-day-picker/DayPickerInput";
+import "react-day-picker/lib/style.css"
 
 class Booking extends Component {
     constructor(props) {
         super(props);
 
         this.state = {
-            bookingID: 'Tue Oct 19 2021 09:01:14 GMT+0200 (Central European Summer Time)',
+            bookingID: "",
             customerInfo: {
-                customerID: null,
-                lastName: null,
-                firstName: null,
-                dateOfBirth: null,
-                email: null,
-                phoneNumber: null,
-                user: null,
-                username: null,
-                password: null
+                customerID: "",
+                lastName: "",
+                firstName: "",
+                dateOfBirth: "",
+                email: "",
+                phoneNumber: "",
+                user: false,
+                username: "",
+                password: ""
             },
-            showEventInfo: 'secondEvent',
+            showEventInfo: "",
             paymentMethod: 'Kreditkarte'
         }
     };
-
+componentDidMount(){
+    (this.props.items).map(item => {
+        this.setState({
+            bookingID: [...this.state.bookingID, item.bookingID],
+            showEventInfo: [...this.state.showEventInfo, item.eventID]
+        });
+    })
+}
 
     handleChange = (e) => {
         if (e.target.name === "paymentMethod") {
             this.setState({
                 [e.target.name]: e.target.value
             })
-        } else {
+        }else if(e.target.name === "lastName"){
+            var entry = `${e.target.value}`
+            this.setState(prevState => ({
+                customerInfo: {
+                    ...prevState.customerInfo,
+                    [e.target.name]: entry,
+                    customerID: entry + Date().toLocaleString('de-DE')
+                }
+            }))
+        }
+        else {
             var entry = `${e.target.value}`
             this.setState(prevState => ({
                 customerInfo: {
@@ -45,15 +64,20 @@ class Booking extends Component {
         }
     }
 
-    handleID = () => {
-
-        (this.props.items).map(item => {
-            this.setState({
-                bookingID: [...this.state.bookingID, item.bookingID],
-                showEventInfo: [...this.state.showEventInfo, item.eventID]
-            });
-        })
-    }
+    changeDate = (date) =>{
+        
+        var splittedDate = `${date}`
+        alert(splittedDate)
+        splittedDate.split("  ");
+        //var newDate = date.split(" ");
+        alert(splittedDate[1])
+        this.setState(prevState => ({
+            customerInfo: {
+                ...prevState.customerInfo,
+                dateOfBirth: date
+            }
+        }))
+      }
 
     handleSubmit = event => {
         event.preventDefault();
@@ -75,7 +99,7 @@ class Booking extends Component {
             (
                 this.props.items.map(item => {
                     return (
-                        <li class="li-container" key={item.id}>
+                        <li class="booking-shoppingcart" key={item.id}>
                             <div className="booking-cart-entry-container">
                                 <h6 className="title">{item.movie}</h6>
                                 <h6>{item.event}</h6>
@@ -99,14 +123,15 @@ class Booking extends Component {
                 </Hero>
 
                 <div className="booking-wrapper">
-                    <div class="booking-container">
-                        <form onSubmit={this.handleSubmit}>
+
+                    <form onSubmit={this.handleSubmit}>
+                        <div class="booking-container">
                             <div class="headline">
                                 <FaInfo />Persönliche Daten
                             </div>
                             <div>
                                 <label for="firstName">Vorname</label>
-                                <input class="booking_input" type="text" name="firstName" onChange={this.handleChange/*, this.handleID*/} required />
+                                <input class="booking_input" type="text" name="firstName" onChange={this.handleChange} required />
                             </div>
                             <div>
                                 <label for="lastName">Nachname</label>
@@ -136,8 +161,10 @@ class Booking extends Component {
                             </div>
                             <div>
                                 <label for="dateOfBirth">Geburtsdatum</label>
-                                <input class="booking_input" type="text" name="dateOfBirth" onChange={this.handleChange} required />
-                            </div>                            <div>
+
+                                <DayPickerInput onDayChange={this.changeDate} dateFormat="dd-MM-yyyy"/>
+                            </div>                            
+                            <div>
                                 <label for="phoneNumber">Telefonnummer</label>
                                 <input class="booking_input" type="text" name="phoneNumber" onChange={this.handleChange} required />
                             </div>
@@ -151,20 +178,18 @@ class Booking extends Component {
                                 <button className={this.state.paymentMethod === "Rechnung" ? "booking-btn" : "booking-btn-unselected"} name="paymentMethod" value="Rechnung" onClick={this.handleChange}>Rechnung</button>
                                 <button className={this.state.paymentMethod === "Bar" ? "booking-btn" : "booking-btn-unselected"} name="paymentMethod" value="Bar" onClick={this.handleChange}>Bar</button>
                             </div>
-                        </form>
-                    </div>
-                    <div class="booking-container-right">
-                        <div class="headline">
-                            <FaShoppingCart /> Bestellübersicht
-                        </div>
-                        {ShoppingCart}
 
-                        <div class="btns">
-                            <Link to='/shoppingCart' className="booking-btn">Zurück zum Warenkorb</Link>
-                            <button class="booking-btn" type="submit">Zahlungspflichtig bestellen</button>
                         </div>
+                        <div class="booking-container-right">
+                            <div class="headline">
+                                <FaShoppingCart /> Bestellübersicht
+                            </div>
+                            {ShoppingCart}
+                                <Link to='/shoppingCart' className="booking-btn">Zurück zum Warenkorb</Link>
+                                <button class="booking-btn" type="submit">Zahlungspflichtig bestellen</button>
 
-                    </div>
+                        </div>
+                    </form>
                 </div>
             </>
         );
