@@ -5,20 +5,41 @@ import Banner from '../components/Banner';
 import { Link } from 'react-router-dom';
 import { FaInfo, FaCreditCard, FaShoppingCart } from 'react-icons/fa';
 import { connect } from 'react-redux';
-import DayPickerInput from "react-day-picker/DayPickerInput";
-import "react-day-picker/lib/style.css"
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import { format } from 'date-fns'
+
+/*
+const booking_json_template = {
+    bookingID: "",
+    customerInfo: {
+        customerID: "",
+        lastName: "",
+        firstName: "",
+        dateOfBirth: [],
+        email: "",
+        phoneNumber: "",
+        user: false,
+        username: "",
+        password: ""
+    },
+    showEventInfo: "",
+    paymentMethod: ""
+}*/
 
 class Booking extends Component {
     constructor(props) {
         super(props);
 
         this.state = {
+
+            
             bookingID: "",
             customerInfo: {
                 customerID: "",
                 lastName: "",
                 firstName: "",
-                dateOfBirth: "",
+                dateOfBirth: [],
                 email: "",
                 phoneNumber: "",
                 user: false,
@@ -29,6 +50,8 @@ class Booking extends Component {
             paymentMethod: 'Kreditkarte'
         }
     };
+
+    
 componentDidMount(){
     (this.props.items).map(item => {
         this.setState({
@@ -64,19 +87,15 @@ componentDidMount(){
         }
     }
 
-    changeDate = (date) =>{
-        
-        var splittedDate = `${date}`
-        alert(splittedDate)
-        splittedDate.split("  ");
-        //var newDate = date.split(" ");
-        alert(splittedDate[1])
+    changeDate = (date) => {
+        var newDate = format(date, 'yyyy-MM-dd').split("-");
         this.setState(prevState => ({
             customerInfo: {
                 ...prevState.customerInfo,
-                dateOfBirth: date
+                dateOfBirth: [parseInt(newDate[0]), parseInt(newDate[1]), parseInt(newDate[2])]
             }
         }))
+       
       }
 
     handleSubmit = event => {
@@ -161,8 +180,7 @@ componentDidMount(){
                             </div>
                             <div>
                                 <label for="dateOfBirth">Geburtsdatum</label>
-
-                                <DayPickerInput onDayChange={this.changeDate} dateFormat="dd-MM-yyyy"/>
+                                <DatePicker onChange={this.changeDate}/>
                             </div>                            
                             <div>
                                 <label for="phoneNumber">Telefonnummer</label>

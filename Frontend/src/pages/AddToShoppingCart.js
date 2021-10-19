@@ -68,7 +68,9 @@ class AddToShoppingCart extends Component {
               this.props.addToCart(entry.id);
               this.setState({
               showSuccessfulPopup: !this.state.showSuccessfulPopup
-            })}else{
+            })
+            console.log(res.data)
+          }else{
               this.setState({
               showErrorPopup: !this.state.showErrorPopup
             })}
