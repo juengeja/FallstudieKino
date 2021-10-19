@@ -9,31 +9,26 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { format } from 'date-fns'
 
-/*
-const booking_json_template = {
-    bookingID: "",
-    customerInfo: {
-        customerID: "",
-        lastName: "",
-        firstName: "",
-        dateOfBirth: [],
-        email: "",
-        phoneNumber: "",
-        user: false,
-        username: "",
-        password: ""
-    },
-    showEventInfo: "",
-    paymentMethod: ""
-}*/
+
+
 
 class Booking extends Component {
     constructor(props) {
         super(props);
 
         this.state = {
+            bookings: [],
+            bookingIDs: [],
+            showEventInfos: [],
+            paymentMethod: 'Kreditkarte',
+            showSuccessfulPopup: false,
+            showErrorPopup: false,
+        }
+    };
 
-            
+
+    componentDidMount() {
+        const booking_json_template = {
             bookingID: "",
             customerInfo: {
                 customerID: "",
@@ -47,74 +42,122 @@ class Booking extends Component {
                 password: ""
             },
             showEventInfo: "",
-            paymentMethod: 'Kreditkarte'
+            paymentMethod: ""
         }
-    };
 
-    
-componentDidMount(){
-    (this.props.items).map(item => {
-        this.setState({
-            bookingID: [...this.state.bookingID, item.bookingID],
-            showEventInfo: [...this.state.showEventInfo, item.eventID]
-        });
-    })
-}
+        this.props.items.map(item => {
+            this.setState(prevState => ({
+                bookingIDs: [...prevState.bookingIDs, item.bookingID],
+                showEventInfos: [...prevState.showEventInfos, item.eventID]
+            }));
+        })
+
+        for (var i = 0; i < this.props.items.length; i++) {
+            this.setState(prevState => ({
+                bookings: [...prevState.bookings, booking_json_template]
+            }))
+        }
+
+            }
+
+    handleID = () => {
+        const newArr = [...this.state.bookings]
+        for (var i = 0; i < this.state.bookings.length; i++) {
+
+            newArr[i].bookingID = this.state.bookingIDs[i]
+            newArr[i].showEventInfo = this.state.showEventInfos[i]
+            console.log('Json'+[i]+' : ' + JSON.stringify(newArr[i]));
+            this.setState({
+                bookings: newArr
+            })
+        }
+    }
 
     handleChange = (e) => {
         if (e.target.name === "paymentMethod") {
-            this.setState({
-                [e.target.name]: e.target.value
-            })
-        }else if(e.target.name === "lastName"){
+
+            const newArr = [...this.state.bookings]
+            for (var i = 0; i < this.state.bookings.length; i++) {
+
+                newArr[i].customerInfo[e.target.name] = e.target.value
+
+                this.setState({
+                    bookings: newArr,
+                    paymentMethod: e.target.value
+                })
+            }
+        } else if (e.target.name === "lastName") {
             var entry = `${e.target.value}`
-            this.setState(prevState => ({
-                customerInfo: {
-                    ...prevState.customerInfo,
-                    [e.target.name]: entry,
-                    customerID: entry + Date().toLocaleString('de-DE')
-                }
-            }))
-        }
-        else {
+
+            const newArr = [...this.state.bookings]
+            for (var i = 0; i < this.state.bookings.length; i++) {
+
+                //aua aua  aua
+                newArr[i].bookingID = this.state.bookingIDs[i]
+            newArr[i].showEventInfo = this.state.showEventInfos[i]
+            //
+                newArr[i].customerInfo[e.target.name] = entry
+                newArr[i].customerInfo.customerID = entry + Date().toLocaleString('de-DE')
+
+                this.setState({
+                    bookings: newArr
+                })
+            }
+        } else {
             var entry = `${e.target.value}`
-            this.setState(prevState => ({
-                customerInfo: {
-                    ...prevState.customerInfo,
-                    [e.target.name]: entry
-                }
-            }))
+            const newArr = [...this.state.bookings]
+            for (var i = 0; i < this.state.bookings.length; i++) {
+
+                newArr[i].customerInfo[e.target.name] = entry
+
+                this.setState({
+                    bookings: newArr
+                })
+            }
         }
     }
 
     changeDate = (date) => {
         var newDate = format(date, 'yyyy-MM-dd').split("-");
-        this.setState(prevState => ({
-            customerInfo: {
-                ...prevState.customerInfo,
-                dateOfBirth: [parseInt(newDate[0]), parseInt(newDate[1]), parseInt(newDate[2])]
-            }
-        }))
-       
-      }
 
-    handleSubmit = event => {
-        event.preventDefault();
-        console.log('Json : ' + JSON.stringify(this.state));
-        axios.put('http://5.45.107.109:4000/api/reservation/successfulpayment', this.state)
-            .then(res => {
-                if (res.data != null) {
-                    alert("hat funktioniert")
-                    console.log(res.data)
-                }
+        const newArr = [...this.state.bookings]
+        for (var i = 0; i < this.state.bookings.length; i++) {
+
+            newArr[i].customerInfo.dateOfBirth = [parseInt(newDate[0]), parseInt(newDate[1]), parseInt(newDate[2])]
+
+            this.setState({
+                bookings: newArr
             })
+        }
     }
 
 
+    handleSubmit = event => {
+        event.preventDefault();
+        console.log(this.state.bookingIDs)
+        for (var i = 0; i < this.state.bookings.length; i++) {
+            console.log('Json'+[i]+' : ' + JSON.stringify(this.state.bookings[i]));
+            axios.put('http://5.45.107.109:4000/api/reservation/successfulpayment', this.state.bookings[i])
+            .then(res => {
+                if (res.data != null) {
+                    //change  value
+                  if (res.data.bookingStatus === "reserved") {
+                    this.setState({
+                    showSuccessfulPopup: !this.state.showSuccessfulPopup
+                  })
+                }else{
+                    this.setState({
+                    showErrorPopup: !this.state.showErrorPopup
+                  })}
+                }else{
+                  alert("Ein Fehler ist aufgetreten")
+                }
+              })
+        }
+    }
 
     render() {
-
-        let ShoppingCart = this.props.items.length ?
+         let ShoppingCart = this.props.items.length ?
             (
                 this.props.items.map(item => {
                     return (
@@ -136,13 +179,13 @@ componentDidMount(){
 
         return (
             <>
+           
                 <Hero hero='programHero'>
                     <Banner title="Buchung">
                     </Banner>
                 </Hero>
 
                 <div className="booking-wrapper">
-
                     <form onSubmit={this.handleSubmit}>
                         <div class="booking-container">
                             <div class="headline">
@@ -180,8 +223,8 @@ componentDidMount(){
                             </div>
                             <div>
                                 <label for="dateOfBirth">Geburtsdatum</label>
-                                <DatePicker onChange={this.changeDate}/>
-                            </div>                            
+                                <DatePicker onChange={this.changeDate} />
+                            </div>
                             <div>
                                 <label for="phoneNumber">Telefonnummer</label>
                                 <input class="booking_input" type="text" name="phoneNumber" onChange={this.handleChange} required />
@@ -203,11 +246,13 @@ componentDidMount(){
                                 <FaShoppingCart /> Bestellübersicht
                             </div>
                             {ShoppingCart}
-                                <Link to='/shoppingCart' className="booking-btn">Zurück zum Warenkorb</Link>
-                                <button class="booking-btn" type="submit">Zahlungspflichtig bestellen</button>
+                            <Link to='/shoppingCart' className="booking-btn">Zurück zum Warenkorb</Link>
+                            <button class="booking-btn" type="submit">Zahlungspflichtig bestellen</button>
 
                         </div>
                     </form>
+                    {this.state.showSuccessfulPopup ? <SuccessfulPopup /> : null}
+                    {this.state.showErrorPopup ? <ErrorPopup /> : null}
                 </div>
             </>
         );
@@ -221,3 +266,29 @@ const mapStateToProps = (state) => {
     }
 }
 export default connect(mapStateToProps)(Booking)
+
+class SuccessfulPopup extends Component {
+    render() {
+      return (
+        <div className='popup'>
+          <div className='popup_inner'>
+            <h6>Vielen Dank für Ihre Bestellung. Sie werden in Kürze eine Bestätigungs-Email erhalten.</h6>
+            <Link to='/home' className="btn-primary">Zum Startsete</Link>
+          </div>
+        </div>
+      );
+    }
+  }
+  
+  class ErrorPopup extends Component {
+    render() {
+      return (
+        <div className='popup'>
+          <div className='popup_inner'>
+            <h6>Leider ist etwas schiefgelaufen. Bitte versuchen sie es erneut</h6>
+            <Link to='/home' className="btn-primary">Zum Startsete</Link>
+          </div>
+        </div>
+      );
+    }
+  }

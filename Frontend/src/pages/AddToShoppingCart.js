@@ -173,12 +173,16 @@ class SuccessfulPopup extends Component {
 }
 
 class ErrorPopup extends Component {
+
   render() {
+    function refreshPage(){
+      window.location.reload(); 
+    }
     return (
       <div className='popup'>
         <div className='popup_inner'>
           <h6>Ihr gewählter Sitzpltz ist leider bereits vergeben</h6>
-          <Link to='/program' className="btn-primary">Bitte wählen sie einen anderen</Link>
+          <button onClick={refreshPage} className="btn-primary">Bitte wählen sie einen anderen</button>
         </div>
       </div>
     );
