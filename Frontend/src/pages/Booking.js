@@ -23,6 +23,7 @@ class Booking extends Component {
             paymentMethod: 'Kreditkarte',
             showSuccessfulPopup: false,
             showErrorPopup: false,
+            selectedDate: new Date('2001-01-01')
         }
     };
 
@@ -58,28 +59,15 @@ class Booking extends Component {
             }))
         }
 
-            }
-
-    handleID = () => {
-        const newArr = [...this.state.bookings]
-        for (var i = 0; i < this.state.bookings.length; i++) {
-
-            newArr[i].bookingID = this.state.bookingIDs[i]
-            newArr[i].showEventInfo = this.state.showEventInfos[i]
-            console.log('Json'+[i]+' : ' + JSON.stringify(newArr[i]));
-            this.setState({
-                bookings: newArr
-            })
-        }
     }
+
 
     handleChange = (e) => {
         if (e.target.name === "paymentMethod") {
-
             const newArr = [...this.state.bookings]
             for (var i = 0; i < this.state.bookings.length; i++) {
 
-                newArr[i].customerInfo[e.target.name] = e.target.value
+                newArr[i][e.target.name] = e.target.value
 
                 this.setState({
                     bookings: newArr,
@@ -94,8 +82,8 @@ class Booking extends Component {
 
                 //aua aua  aua
                 newArr[i].bookingID = this.state.bookingIDs[i]
-            newArr[i].showEventInfo = this.state.showEventInfos[i]
-            //
+                newArr[i].showEventInfo = this.state.showEventInfos[i]
+                //
                 newArr[i].customerInfo[e.target.name] = entry
                 newArr[i].customerInfo.customerID = entry + Date().toLocaleString('de-DE')
 
@@ -118,6 +106,10 @@ class Booking extends Component {
     }
 
     changeDate = (date) => {
+        this.setState({
+            selectedDate:date
+        })
+
         var newDate = format(date, 'yyyy-MM-dd').split("-");
 
         const newArr = [...this.state.bookings]
@@ -126,7 +118,7 @@ class Booking extends Component {
             newArr[i].customerInfo.dateOfBirth = [parseInt(newDate[0]), parseInt(newDate[1]), parseInt(newDate[2])]
 
             this.setState({
-                bookings: newArr
+                bookings: newArr,
             })
         }
     }
@@ -136,28 +128,29 @@ class Booking extends Component {
         event.preventDefault();
         console.log(this.state.bookingIDs)
         for (var i = 0; i < this.state.bookings.length; i++) {
-            console.log('Json'+[i]+' : ' + JSON.stringify(this.state.bookings[i]));
+            console.log('Json' + [i] + ' : ' + JSON.stringify(this.state.bookings[i]));
             axios.put('http://5.45.107.109:4000/api/reservation/successfulpayment', this.state.bookings[i])
-            .then(res => {
-                if (res.data != null) {
-                    //change  value
-                  if (res.data.bookingStatus === "reserved") {
-                    this.setState({
-                    showSuccessfulPopup: !this.state.showSuccessfulPopup
-                  })
-                }else{
-                    this.setState({
-                    showErrorPopup: !this.state.showErrorPopup
-                  })}
-                }else{
-                  alert("Ein Fehler ist aufgetreten")
-                }
-              })
+                .then(res => {
+                    if (res.data != null) {
+                        //change  value
+                        if (res.data.bookingStatus === "reserved") {
+                            this.setState({
+                                showSuccessfulPopup: !this.state.showSuccessfulPopup
+                            })
+                        } else {
+                            this.setState({
+                                showErrorPopup: !this.state.showErrorPopup
+                            })
+                        }
+                    } else {
+                        alert("Ein Fehler ist aufgetreten")
+                    }
+                })
         }
     }
 
     render() {
-         let ShoppingCart = this.props.items.length ?
+        let ShoppingCart = this.props.items.length ?
             (
                 this.props.items.map(item => {
                     return (
@@ -179,7 +172,7 @@ class Booking extends Component {
 
         return (
             <>
-           
+
                 <Hero hero='programHero'>
                     <Banner title="Buchung">
                     </Banner>
@@ -223,21 +216,21 @@ class Booking extends Component {
                             </div>
                             <div>
                                 <label for="dateOfBirth">Geburtsdatum</label>
-                                <DatePicker onChange={this.changeDate} />
+                                <DatePicker selected={this.state.selectedDate} onChange={this.changeDate} dateFormat='dd.MM.yyyy'/>
                             </div>
                             <div>
                                 <label for="phoneNumber">Telefonnummer</label>
                                 <input class="booking_input" type="text" name="phoneNumber" onChange={this.handleChange} required />
                             </div>
 
-                            <div class="headline">
+                            <div class="headline" style={{'margin-top':'5%'}}>
                                 <FaCreditCard /> Zahlungsart
                             </div>
                             <div class="input-container">
-                                <button className={this.state.paymentMethod === "Kreditkarte" ? "booking-btn" : "booking-btn-unselected"} name="paymentMethod" value="Kreditkarte" onClick={this.handleChange}>Kreditkarte</button>
-                                <button className={this.state.paymentMethod === "PayPal" ? "booking-btn" : "booking-btn-unselected"} name="paymentMethod" value="PayPal" onClick={this.handleChange}>PayPal</button>
-                                <button className={this.state.paymentMethod === "Rechnung" ? "booking-btn" : "booking-btn-unselected"} name="paymentMethod" value="Rechnung" onClick={this.handleChange}>Rechnung</button>
-                                <button className={this.state.paymentMethod === "Bar" ? "booking-btn" : "booking-btn-unselected"} name="paymentMethod" value="Bar" onClick={this.handleChange}>Bar</button>
+                                <button className={this.state.paymentMethod === "Kreditkarte" ? "booking-btn" : "booking-btn-unselected"} name="paymentMethod" type="button" value="Kreditkarte" onClick={this.handleChange}>Kreditkarte</button>
+                                <button className={this.state.paymentMethod === "PayPal" ? "booking-btn" : "booking-btn-unselected"} name="paymentMethod" type="button" value="PayPal" onClick={this.handleChange}>PayPal</button>
+                                <button className={this.state.paymentMethod === "Rechnung" ? "booking-btn" : "booking-btn-unselected"} name="paymentMethod" type="button" value="Rechnung" onClick={this.handleChange}>Rechnung</button>
+                                <button className={this.state.paymentMethod === "Bar" ? "booking-btn" : "booking-btn-unselected"} name="paymentMethod" type="button" value="Bar" onClick={this.handleChange}>Bar</button>
                             </div>
 
                         </div>
@@ -269,26 +262,26 @@ export default connect(mapStateToProps)(Booking)
 
 class SuccessfulPopup extends Component {
     render() {
-      return (
-        <div className='popup'>
-          <div className='popup_inner'>
-            <h6>Vielen Dank für Ihre Bestellung. Sie werden in Kürze eine Bestätigungs-Email erhalten.</h6>
-            <Link to='/home' className="btn-primary">Zum Startsete</Link>
-          </div>
-        </div>
-      );
+        return (
+            <div className='popup'>
+                <div className='popup_inner'>
+                    <h6>Vielen Dank für Ihre Bestellung. Sie werden in Kürze eine Bestätigungs-Email erhalten.</h6>
+                    <Link to='/home' className="btn-primary">Zum Startsete</Link>
+                </div>
+            </div>
+        );
     }
-  }
-  
-  class ErrorPopup extends Component {
+}
+
+class ErrorPopup extends Component {
     render() {
-      return (
-        <div className='popup'>
-          <div className='popup_inner'>
-            <h6>Leider ist etwas schiefgelaufen. Bitte versuchen sie es erneut</h6>
-            <Link to='/home' className="btn-primary">Zum Startsete</Link>
-          </div>
-        </div>
-      );
+        return (
+            <div className='popup'>
+                <div className='popup_inner'>
+                    <h6>Leider ist etwas schiefgelaufen. Bitte versuchen sie es erneut</h6>
+                    <Link to='/home' className="btn-primary">Zum Startsete</Link>
+                </div>
+            </div>
+        );
     }
-  }
+}

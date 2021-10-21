@@ -659,6 +659,7 @@ text-align: center;
 
 }
 .popup_inner {
+  color: var(--mainBlack);
   position: absolute;
   left: 30%;
   right: 30%;
@@ -692,7 +693,7 @@ text-align: center;
 /*Ende Slideshow */
 /*Booking Form */
 .booking-wrapper {
-  padding:2rem 5rem;
+  padding:2rem;
   margin-left: auto;
   margin-right: auto;
   margin-top: 4%;
@@ -710,7 +711,7 @@ text-align: center;
 .booking-shoppingcart{
   justify-content: center;
   display: inline-block;
-  background-color: rgb(#4805ff); 
+  background-color: rgba(66, 153, 211, 0.616);
   border-radius: 5px;
   color: var(--mainWhite);
   padding: 1rem;
@@ -723,16 +724,38 @@ text-align: center;
   box-shadow: 9px 13px 25px 0px rgba(0, 0, 0, 0.18);
 }
 
+.booking-shoppingcart h6{
+margin-bottom: 0em;
+}
+
 .booking-container-right{
-  width: 35%;
+  width: 48%;
   padding: 2%;
   float: right;
 }
 
 .booking-container {
-  width: 45%;
+  width: 48%;
   padding: 2%;
   float: left;
+}
+.booking-container .react-datepicker-wrapper {
+  width: 100%;
+  min-height: 30px;
+  border: 0;
+  font-size: 1rem;
+  letter-spacing: .15rem;
+  margin-bottom: 4%;
+  border-radius: 4px;
+}
+
+.booking-container .react-datepicker-wrapper input {
+  width: 100%;
+  min-height: 30px;
+  border: 0;
+  font-size: 1rem;
+  letter-spacing: .15rem;
+  border-radius: 4px;
 }
 
 .booking_input {
@@ -790,7 +813,7 @@ text-align: center;
 }
 .booking-cart-entry-container{
   float: left;
-  padding: 1rem;
+  padding: 0.5rem;
 }
 /* End Booking Form */
 

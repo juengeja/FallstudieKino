@@ -4,11 +4,12 @@ import { Link } from 'react-router-dom'
 
 class Recipe extends Component{
     
+    /*
     componentWillUnmount() {
          if(this.refs.shipping.checked)
               this.props.substractShipping()
     }
-
+*/
     handleChecked = (e)=>{
         if(e.target.checked){
             this.props.addShipping();
@@ -22,6 +23,7 @@ class Recipe extends Component{
   
         return(
             <div className="container">
+                {/* Erstmal irrelevant
                 <div className="collection">
                     <li className="collection-item">
                             <label>
@@ -31,10 +33,11 @@ class Recipe extends Component{
                         </li>
                         <li className="collection-item"><b>Gesamtsumme: {this.props.total} €</b></li>
                     </div>
+                */}
                     <div className="checkout">
                         <Link to='/booking' className="btn-primary">Zur Kasse</Link>
                     </div>
-                 </div>
+            </div>
         )
     }
 }

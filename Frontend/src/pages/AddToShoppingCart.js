@@ -109,7 +109,7 @@ render() {
   const { movieName, img } = movie;
 
   //Change Hardcoded values 
-  var entry = { id: this.props.items.length, bookingID: Date().toLocaleString('de-DE'), event: this.state.cart_entry_event, eventID: this.state.cart_entry_eventID, movie: movieName, seats: ["AstraG14", "AstraG15"], price: 8, img: img }
+  var entry = { id: this.props.items.length, bookingID: Date().toLocaleString('de-DE'), event: this.state.cart_entry_event, eventID: this.state.cart_entry_eventID, movie: movieName, seats: ["AstraH14", "AstraH15"], price: 8, img: img }
   return (
     <>
 
