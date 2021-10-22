@@ -130,7 +130,7 @@ render() {
         <h6>EventID: {entry.eventID}</h6>
         <h6>Event: {entry.event}</h6>
         <h6>Film: {entry.movie}</h6>
-        <h6>Sitze: {entry.seats}</h6>
+        <h6>Sitze: {entry.seats.join(', ')}</h6>
 
         <button onClick={() => { this.handleSubmit(entry) }} class="btn-primary">Zum Warenkorb hinzufügen</button>
         {this.state.showSuccessfulPopup ? <SuccessfulPopup /> : null}

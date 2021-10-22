@@ -159,7 +159,7 @@ class Booking extends Component {
                                 <h6 className="title">{item.movie}</h6>
                                 <h6>{item.event}</h6>
                                 <h6>Preis: {item.price}€</h6>
-                                <h6>Gewählte Sitze: {item.seats}</h6>
+                                <h6>Gewählte Sitze: {item.seats.join(', ')}</h6>
                             </div>
                         </li>
                     )
