@@ -1,8 +1,9 @@
-import React, { Component } from 'react';
+import React,{ Component } from 'react';
 import { MovieContext } from '../MovieContext';
 import Hero from '../components/Hero';
 import Banner from '../components/Banner';
 import BookMySeats from '../components/BookMySeats';
+import SeatMatrix from '../components/SeatMatrix';
 import { connect } from 'react-redux';
 import { addToCart, addItem } from '../components/actions/cartActions';
 import axios from 'axios';
@@ -19,6 +20,7 @@ class AddToShoppingCart extends Component {
       showSuccessfulPopup: false,
       showErrorPopup: false,
       error: false,
+      selectedSeats: []
     };
   }
 
@@ -124,7 +126,14 @@ render() {
           return <button class="btn-primary" value={item.eventStart} onClick={() => { this.handleEventPicker(item) }}>{item.eventStart}</button>
         })}
       
+      {/*}
         <BookMySeats />
+      
+*/}
+
+        <SeatMatrix />
+
+
 
         <h6>Zusammenfassung der Auswahl</h6>
         <h6>EventID: {entry.eventID}</h6>

@@ -817,3 +817,76 @@ margin-bottom: 0em;
 }
 /* End Booking Form */
 
+
+
+
+
+/* Seats */
+
+.movie-layout{
+  flex-wrap: nowrap;
+}
+.col-md-2{
+  padding: 0px 10px;
+}
+.col-md-6{
+  padding: 0px 25px;
+}
+.seat{
+  width: 25px;
+  height: 25px;
+  border-radius: 50% 50% 0px 0px;
+  margin: 3px;
+  cursor: pointer;
+}
+.seat:hover{
+  transform: scale(1.2);
+  background-color: crimson;
+}
+.row{
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.seat-grey{
+  background-color: #ddd;
+}
+.seat-black{
+  background-color: black;
+}
+.seat-undefined{
+  cursor: auto;
+  pointer-events: none;
+}
+.movie-complex p{
+  text-align: center;
+  font-size: 30px;
+}
+.movie-selector{
+  width: 250px;
+}
+
+.leinwand{
+  background-color: black;
+  margin-left: 45px;
+  color: white;
+  width: 600px;
+  margin-bottom: 40px;
+}
+
+.gang{
+  background-color: #f3f3f3;
+  color: #f3f3f3;
+  font-size: xx-small;
+}
+
+.abstand{
+  margin-bottom: 15px;
+  color: #f3f3f3;
+}
+
+.schrift{
+  font-size: large;
+  font-weight: bold;
+}
+
