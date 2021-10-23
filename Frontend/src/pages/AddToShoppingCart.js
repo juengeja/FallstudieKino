@@ -232,9 +232,8 @@ render() {
   
         <p>
           <div className="abstand">hallo</div>
-          <div className="row">Frei : <Seat seatColor="seat-grey" /></div>
-          <div className="row">Belegt : <Seat seatColor="seat-black" /></div>
-          <div className="row">Ausgewählt : <Seat seatColor="seat-red" /></div>
+          <div className="row">Frei: <Seat seatColor="seat-grey"/> Belegt: <Seat seatColor="seat-black"/> Gewählt: <Seat seatColor="seat-red" /></div>
+          <div className="abstand">hallo</div>
         </p>
       </>
     )
@@ -248,7 +247,7 @@ render() {
         <Banner title={movieName}>
         </Banner>
       </Hero>
-      <div className="movie-extras">
+      <div className="addToCart-Container">
         <h6>Bitte eine Vorstellung auswählen:</h6>
 
         {this.state.events.map((item) => {
