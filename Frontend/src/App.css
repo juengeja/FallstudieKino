@@ -709,6 +709,7 @@ text-align: center;
   color: var(--mainWhite);
 }
 .booking-shoppingcart{
+  width: 100%;
   justify-content: center;
   display: inline-block;
   background-color: rgba(66, 153, 211, 0.616);
@@ -814,6 +815,7 @@ margin-bottom: 0em;
 .booking-cart-entry-container{
   float: left;
   padding: 0.5rem;
+  width: 100%;
 }
 /* End Booking Form */
 

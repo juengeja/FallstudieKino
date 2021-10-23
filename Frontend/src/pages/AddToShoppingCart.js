@@ -80,19 +80,20 @@ class AddToShoppingCart extends Component {
 
 
 handleEventPicker(newEvent){
-  let SeatArr = Object.values(newEvent.seatingTemplateInfo.seatMap)
+  let SeatArr = Object.entries(newEvent.seatingTemplateInfo.seatMap)
   let booked = []
   let room = newEvent.seatingTemplateInfo.eventRoomID
 
   SeatArr.map(seat => {
-    if(seat.booked)
-    booked = [...booked, room + seat.name]
+    if(seat[1].booked)
+    booked = [...booked, seat[0]]
   })
-  booked = [...booked, 'AstraA1', 'AstraA2']
+  console.log(booked)
+
 
   this.setState({
     cart_entry_eventID: newEvent.showEventID,
-    bookedSeats: ['AstraA1', 'AstraA2'],
+    bookedSeats: booked,
     cart_entry_eventRoom: room
   })
   
@@ -120,7 +121,7 @@ render() {
   const { movieName, img } = movie;
 
   //Change Hardcoded values 
-  var entry = { id: this.props.items.length, bookingID: Date().toLocaleString('de-DE'), event: this.state.cart_entry_event, eventID: this.state.cart_entry_eventID, movie: movieName, seats: '', price: 8, img: img }
+  var entry = { id: this.props.items.length, bookingID: Date().toLocaleString('de-DE'), event: this.state.cart_entry_event, eventID: this.state.cart_entry_eventID, eventRoom:this.state.cart_entry_eventRoom, movie: movieName, seats: '', price: 8, img: img }
   
   const GenerateSeats = (seatNumbers) => {  
     return (
@@ -251,13 +252,9 @@ render() {
         <h6>Bitte eine Vorstellung auswählen:</h6>
 
         {this.state.events.map((item) => {
-          return <button class="btn-primary" value={item.eventStart} onClick={() => { this.handleEventPicker(item) }}>{item.eventStart}</button>
+          return <button className={this.state.cart_entry_eventID !== '' ? "booking-btn" : "booking-btn-unselected"} value={item.eventStart} onClick={() => { this.handleEventPicker(item) }}>{item.eventStart}</button>
         })}
-      
-      {/*}
-        <BookMySeats />
-      
-*/}
+
         {this.state.cart_entry_eventID === '' ? null : <SeatMatrix />}
         
         <button onClick={() => { this.handleSubmit(entry) }} class="btn-primary">Zum Warenkorb hinzufügen</button>

@@ -132,8 +132,7 @@ class Booking extends Component {
             axios.put('http://5.45.107.109:4000/api/reservation/successfulpayment', this.state.bookings[i])
                 .then(res => {
                     if (res.data != null) {
-                        //change  value
-                        if (res.data.bookingStatus === "reserved") {
+                        if (res.data.bookingStatus === "paid") {
                             this.setState({
                                 showSuccessfulPopup: !this.state.showSuccessfulPopup
                             })
@@ -153,13 +152,15 @@ class Booking extends Component {
         let ShoppingCart = this.props.items.length ?
             (
                 this.props.items.map(item => {
+                    let seats = item.seats.join(', ')
+                    let splitSeats = seats.split(item.eventRoom).join('')
                     return (
                         <li class="booking-shoppingcart" key={item.id}>
                             <div className="booking-cart-entry-container">
                                 <h6 className="title">{item.movie}</h6>
                                 <h6>{item.event}</h6>
                                 <h6>Preis: {item.price}€</h6>
-                                <h6>Gewählte Sitze: {item.seats.join(', ')}</h6>
+                                <h6>Gewählte Sitze: {splitSeats}</h6>
                             </div>
                         </li>
                     )
@@ -266,7 +267,7 @@ class SuccessfulPopup extends Component {
             <div className='popup'>
                 <div className='popup_inner'>
                     <h6>Vielen Dank für Ihre Bestellung. Sie werden in Kürze eine Bestätigungs-Email erhalten.</h6>
-                    <Link to='/home' className="btn-primary">Zum Startsete</Link>
+                    <Link to='/' className="btn-primary">Zum Startsete</Link>
                 </div>
             </div>
         );
@@ -279,7 +280,7 @@ class ErrorPopup extends Component {
             <div className='popup'>
                 <div className='popup_inner'>
                     <h6>Leider ist etwas schiefgelaufen. Bitte versuchen sie es erneut</h6>
-                    <Link to='/home' className="btn-primary">Zum Startsete</Link>
+                    <Link to='/' className="btn-primary">Zum Startsete</Link>
                 </div>
             </div>
         );
