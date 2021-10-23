@@ -848,11 +848,25 @@ margin-bottom: 0em;
   align-items: flex-start;
 }
 
+.bookedseat{
+  width: 25px;
+  height: 25px;
+  border-radius: 50% 50% 0px 0px;
+  margin: 3px;
+  cursor: pointer;
+}
+.bookedseat:hover{
+  pointer-events: none;
+}
+
 .seat-grey{
   background-color: #ddd;
 }
 .seat-black{
   background-color: black;
+}
+.seat-red{
+  background-color: var(--primaryColor);
 }
 .seat-undefined{
   cursor: auto;
@@ -888,5 +902,20 @@ margin-bottom: 0em;
 .schrift{
   font-size: large;
   font-weight: bold;
+}
+
+.col-2 {
+	position: relative;
+	width: 100%;
+	padding-right: 15px;
+	padding-left: 15px
+}
+
+.container{
+  width: 100%;
+	padding-right: 15px;
+	padding-left: 15px;
+	margin-right: auto;
+	margin-left: auto
 }
 
