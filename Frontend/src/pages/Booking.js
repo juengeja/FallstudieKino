@@ -9,9 +9,6 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { format } from 'date-fns'
 
-
-
-
 class Booking extends Component {
     constructor(props) {
         super(props);
@@ -80,14 +77,12 @@ class Booking extends Component {
     handleSubmit = event => {
         event.preventDefault();
 
-        console.log(this.props.items[0])
         var booking = this.props.items[0]
         for (var i = 0; i < booking.reservations.length; i++) {
             booking.customerInfo = this.state.customerInfo
             booking.paymentMethod = this.state.paymentMethod
         }    
 
-        console.log(booking)
           axios.put('http://5.45.107.109:4000/api/reservation/successfulpayment', booking)
                 .then(res => {
                     if (res.data != null) {
@@ -104,35 +99,12 @@ class Booking extends Component {
                         alert("Ein Fehler ist aufgetreten")
                     }
                 })
-        
-        /*
-        for (var i = 0; i < this.state.bookings.length; i++) {
-            console.log('Json' + [i] + ' : ' + JSON.stringify(this.state.bookings[i]));
-            axios.put('http://5.45.107.109:4000/api/reservation/successfulpayment', this.state.bookings[i])
-                .then(res => {
-                    if (res.data != null) {
-                        if (res.data.bookingStatus === "paid") {
-                            this.setState({
-                                showSuccessfulPopup: !this.state.showSuccessfulPopup
-                            })
-                        } else {
-                            this.setState({
-                                showErrorPopup: !this.state.showErrorPopup
-                            })
-                        }
-                    } else {
-                        alert("Ein Fehler ist aufgetreten")
-                    }
-                })
-        }
-        */
     }
 
     render() {
         let ShoppingCart = this.props.items.length ?
             (
                 this.props.items.map(item => {
-                    console.log(item.reservations)
 
                     for (var i = 0; i < item.reservations.length; i++) {
                     
@@ -180,24 +152,7 @@ class Booking extends Component {
                                 <label for="lastName">Nachname</label>
                                 <input class="booking_input" type="text" name="lastName" onChange={this.handleChange} required />
                             </div>
-                            {/*
-                            <div>
-                                <label for="street">Straße</label>
-                                <input class="booking_input" type="text" name="street" onChange={this.handleChange} required/>
-                            </div>
-                            <div>
-                                <label for="number">Hausnummer</label>
-                                <input class="booking_input" type="text" name="number" onChange={this.handleChange} required/>
-                            </div>
-                            <div>
-                                <label for="city">Stadt</label>
-                                <input class="booking_input" type="text" name="city" onChange={this.handleChange} required/>
-                            </div>
-                            <div>
-                                <label for="zip">PLZ</label>
-                                <input class="booking_input" type="text" name="zip" onChange={this.handleChange} required/>
-                            </div>
-                           */}
+
                             <div>
                                 <label for="email">E-Mail Adresse</label>
                                 <input class="booking_input" type="text" name="email" onChange={this.handleChange} required />

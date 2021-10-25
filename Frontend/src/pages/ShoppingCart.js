@@ -8,14 +8,11 @@ import Banner from '../components/Banner';
 
 class ShoppingCart extends Component {
 
-    //to remove the item completely
     handleRemove = (id) => {
         this.props.removeItem(id);
     }
 
     render() {
-
-
         let addedItems = this.props.items.length ?
             (
                 this.props.items.map(item => {
