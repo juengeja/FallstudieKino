@@ -10,7 +10,6 @@ class MovieProvider extends Component{
     this.state={
         movies: [],
         sortedMovies: [],
-        featuredMovies: [],
         loading: true,
         genre: 'Alle',
         duration: 0,
@@ -23,11 +22,9 @@ class MovieProvider extends Component{
         axios.get('http://5.45.107.109:4000/api/moviedata')
         .then((response) => {
             let movies = this.formatData(response.data);
-            let featuredMovies = movies.filter(movie => movie.featured === true);
             let maxDuration = Math.max(...movies.map(item => item.duration));
             this.setState({ 
                 movies,
-                featuredMovies, 
                 sortedMovies: movies,
                 loading: false,
                 duration: maxDuration,
@@ -39,7 +36,7 @@ class MovieProvider extends Component{
     formatData(items){
         let tempItems = items.map(item  =>{
         let id = item.movieId;
-        let domain = item.movieName;
+        let domain = item.movieId;
         let movie = {...item, domain, id};
         return movie;
     });
@@ -64,10 +61,12 @@ class MovieProvider extends Component{
         let tempMovies = [...movies];
         //transform value
         duration = parseInt(duration);
-/*
+
+  
+
         //filter by name
         tempMovies = tempMovies.filter(movie => movie.movieName.includes(movieName));
-*/
+
         //filter by genre
         if(mainGenre !== 'Alle'){
             tempMovies = tempMovies.filter(movie => movie.mainGenre === mainGenre);

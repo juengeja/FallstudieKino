@@ -19,20 +19,23 @@ class ShoppingCart extends Component {
         let addedItems = this.props.items.length ?
             (
                 this.props.items.map(item => {
-                    let seats = item.seats.join(', ')
-                    let splitSeats = seats.split(item.eventRoom).join('')
+
+                    for (var i = 0; i < item.reservations.length; i++) {
+                    
+                    let seats = item.reservations[i].seats.join(', ')
+                    let splitSeats = seats.split('Astra').join('')
+                    
                     return (
                         <>
-                            <li class="li-container" key={item.id}>
+                            <li class="li-container" >
                                 <div class="cart-entry-img">
-                                    <img src={item.img} alt={item.img} width="100%" />
+                                    <img src={item.reservations[i].moviePoster} alt={item.reservations[i].moviePoster} width="100%" />
                                 </div>
 
                                 <div className="cart-entry-details">
-                                    <h6 className="title">{item.movie}</h6>
-                                    <h6>{item.event}</h6>
-                                    <h6>Gewählte Sitze: {splitSeats}</h6>
-                                    <h6>Preis: {item.price}€</h6>         
+                                    <h6 className="title">{item.reservations[i].moviename}</h6>
+                                    <h6>{item.reservations[i].eventStart}</h6>
+                                    <h6>Gewählte Sitze: {splitSeats}</h6>     
                                 </div>
                                 <div class="cart-entry-buttons">
                                 <button className="btn-primary" onClick={() => { this.handleRemove(item.id) }}>Löschen</button>
@@ -40,6 +43,7 @@ class ShoppingCart extends Component {
                             </li>
                         </>
                     )
+                    }
                 })
             ) :
 
@@ -55,7 +59,7 @@ class ShoppingCart extends Component {
             )
 
 
-        let showRecipe = this.props.items.length ? <Recipe /> : null
+        let showRecipe = this.props.items.length ? <><Recipe /><h6>Gesamtpreis: {this.props.items.price}€</h6></> : null
         return (
             <>
                 <Hero hero='programHero'>
@@ -64,7 +68,7 @@ class ShoppingCart extends Component {
                 <section class="movielist">
                     <div class="cart-entry-container">
                         <ul class="collection">
-                            {addedItems}                           
+                            {addedItems}                             
                         </ul>
                         <div class="recipe">
                             {showRecipe}

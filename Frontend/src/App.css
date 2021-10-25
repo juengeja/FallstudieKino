@@ -821,10 +821,11 @@ margin-bottom: 0em;
 
 
 .addToCart-Container{
-  display: flex;
+  display: block;
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
+  text-align: center;
 	width: 80%;
 	justify-content: space-evenly;
 	margin: 3% auto;
@@ -836,6 +837,8 @@ margin-bottom: 0em;
 	margin-right: auto;
 	margin-left: auto
 }
+
+
 
 
 /* Seats */

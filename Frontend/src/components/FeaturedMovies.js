@@ -7,8 +7,9 @@ import Title from './Title';
 export default class FeaturedMovies extends Component{
     static contextType = MovieContext;
     render(){
-        let {loading, featuredMovies : movies} = this.context;
-        movies = movies.map(movie  => {
+        let {loading, movies} = this.context;
+        var featuredMovies = movies.slice(0,3) 
+        featuredMovies = featuredMovies.map(movie  => {
             return <Movie key={movie.id} movie={movie}/>
         });
 
@@ -16,7 +17,7 @@ export default class FeaturedMovies extends Component{
             <section className="featured-movies">
                 <Title title="Filmhighlights" />
                 <div className="featured-movies-center">
-                    {loading ? <Loading/> : movies}
+                    {loading ? <Loading/> : featuredMovies}
                 </div>
             </section>
         );

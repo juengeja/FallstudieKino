@@ -17,20 +17,10 @@ class Booking extends Component {
         super(props);
 
         this.state = {
-            bookings: [],
-            bookingIDs: [],
-            showEventInfos: [],
-            paymentMethod: 'Kreditkarte',
+            paymentMethod: "Kreditkarte",
             showSuccessfulPopup: false,
             showErrorPopup: false,
-            selectedDate: new Date('2001-01-01')
-        }
-    };
-
-
-    componentDidMount() {
-        const booking_json_template = {
-            bookingID: "",
+            selectedDate: new Date('2001-01-01'),
             customerInfo: {
                 customerID: "",
                 lastName: "",
@@ -42,66 +32,33 @@ class Booking extends Component {
                 username: "",
                 password: ""
             },
-            showEventInfo: "",
-            paymentMethod: ""
         }
-
-        this.props.items.map(item => {
-            this.setState(prevState => ({
-                bookingIDs: [...prevState.bookingIDs, item.bookingID],
-                showEventInfos: [...prevState.showEventInfos, item.eventID]
-            }));
-        })
-
-        for (var i = 0; i < this.props.items.length; i++) {
-            this.setState(prevState => ({
-                bookings: [...prevState.bookings, booking_json_template]
-            }))
-        }
-
-    }
-
+    };
 
     handleChange = (e) => {
         if (e.target.name === "paymentMethod") {
-            const newArr = [...this.state.bookings]
-            for (var i = 0; i < this.state.bookings.length; i++) {
 
-                newArr[i][e.target.name] = e.target.value
-
-                this.setState({
-                    bookings: newArr,
-                    paymentMethod: e.target.value
+            this.setState({
+                    paymentMethod: e.target.value,
                 })
-            }
         } else if (e.target.name === "lastName") {
             var entry = `${e.target.value}`
 
-            const newArr = [...this.state.bookings]
-            for (var i = 0; i < this.state.bookings.length; i++) {
+            var tempJSON = this.state.customerInfo
+            tempJSON[e.target.name] = entry
+            tempJSON.customerID = entry + Date().toLocaleString('de-DE')
 
-                //aua aua  aua
-                newArr[i].bookingID = this.state.bookingIDs[i]
-                newArr[i].showEventInfo = this.state.showEventInfos[i]
-                //
-                newArr[i].customerInfo[e.target.name] = entry
-                newArr[i].customerInfo.customerID = entry + Date().toLocaleString('de-DE')
-
-                this.setState({
-                    bookings: newArr
-                })
-            }
+            this.setState({
+                customerInfo: tempJSON 
+            })
         } else {
             var entry = `${e.target.value}`
-            const newArr = [...this.state.bookings]
-            for (var i = 0; i < this.state.bookings.length; i++) {
-
-                newArr[i].customerInfo[e.target.name] = entry
+            var tempJSON = this.state.customerInfo
+            tempJSON[e.target.name] = entry
 
                 this.setState({
-                    bookings: newArr
+                    customerInfo: tempJSON
                 })
-            }
         }
     }
 
@@ -112,21 +69,43 @@ class Booking extends Component {
 
         var newDate = format(date, 'yyyy-MM-dd').split("-");
 
-        const newArr = [...this.state.bookings]
-        for (var i = 0; i < this.state.bookings.length; i++) {
-
-            newArr[i].customerInfo.dateOfBirth = [parseInt(newDate[0]), parseInt(newDate[1]), parseInt(newDate[2])]
-
+        var tempJSON = this.state.customerInfo
+        tempJSON.dateOfBirth = [parseInt(newDate[0]), parseInt(newDate[1]), parseInt(newDate[2])]
             this.setState({
-                bookings: newArr,
+                customerInfo: tempJSON
             })
-        }
     }
 
 
     handleSubmit = event => {
         event.preventDefault();
-        console.log(this.state.bookingIDs)
+
+        console.log(this.props.items[0])
+        var booking = this.props.items[0]
+        for (var i = 0; i < booking.reservations.length; i++) {
+            booking.customerInfo = this.state.customerInfo
+            booking.paymentMethod = this.state.paymentMethod
+        }    
+
+        console.log(booking)
+          axios.put('http://5.45.107.109:4000/api/reservation/successfulpayment', booking)
+                .then(res => {
+                    if (res.data != null) {
+                        if (res.data.bookingStatus === "paid") {
+                            this.setState({
+                                showSuccessfulPopup: !this.state.showSuccessfulPopup
+                            })
+                        } else {
+                            this.setState({
+                                showErrorPopup: !this.state.showErrorPopup
+                            })
+                        }
+                    } else {
+                        alert("Ein Fehler ist aufgetreten")
+                    }
+                })
+        
+        /*
         for (var i = 0; i < this.state.bookings.length; i++) {
             console.log('Json' + [i] + ' : ' + JSON.stringify(this.state.bookings[i]));
             axios.put('http://5.45.107.109:4000/api/reservation/successfulpayment', this.state.bookings[i])
@@ -146,24 +125,32 @@ class Booking extends Component {
                     }
                 })
         }
+        */
     }
 
     render() {
         let ShoppingCart = this.props.items.length ?
             (
                 this.props.items.map(item => {
-                    let seats = item.seats.join(', ')
-                    let splitSeats = seats.split(item.eventRoom).join('')
+                    console.log(item.reservations)
+
+                    for (var i = 0; i < item.reservations.length; i++) {
+                    
+                    let seats = item.reservations[i].seats.join(', ')
+                    let splitSeats = seats.split('Astra').join('')
+                    
                     return (
-                        <li class="booking-shoppingcart" key={item.id}>
-                            <div className="booking-cart-entry-container">
-                                <h6 className="title">{item.movie}</h6>
-                                <h6>{item.event}</h6>
-                                <h6>Preis: {item.price}€</h6>
-                                <h6>Gewählte Sitze: {splitSeats}</h6>
-                            </div>
-                        </li>
+                        <>
+                            <li class="booking-shoppingcart" >
+                                <div className="booking-cart-entry-container">
+                                    <h6 className="title">{item.reservations[i].moviename}</h6>
+                                    <h6>{item.reservations[i].eventStart}</h6>
+                                    <h6>Gewählte Sitze: {splitSeats}</h6>     
+                                </div>
+                            </li>
+                        </>
                     )
+                    }
                 })
             ) :
 
@@ -280,7 +267,7 @@ class ErrorPopup extends Component {
             <div className='popup'>
                 <div className='popup_inner'>
                     <h6>Leider ist etwas schiefgelaufen. Bitte versuchen sie es erneut</h6>
-                    <Link to='/' className="btn-primary">Zum Startsete</Link>
+                    <Link to='/' className="btn-primary">Zum Startseite</Link>
                 </div>
             </div>
         );

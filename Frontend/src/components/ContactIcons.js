@@ -12,16 +12,18 @@ export default class Contact extends Component {
             },
             {
                 icon:<FaPhoneAlt/>,
-                title:"0123 / 456789",
-                info:'Mo - Fr: 10 - 18 Uhr / Sa, So: 14 - 18 Uhr'
+                title:"Telefonnummer",
+                info:"0123 / 456789"
             },
             {
                 icon:<FaMailBulk/>,
-                title:"kino@kino.de",
+                title:"E-Mail",
+                info:"kino@kino.de"
             },
             {
                 icon:<FaLocationArrow/>,
-                title:"Am Kino 1, 12345 Kinohausen",
+                title:"Adresse",
+                info:"Am Kino 1, 12345 Kinohausen"
             }
         ]
     };

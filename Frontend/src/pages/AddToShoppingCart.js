@@ -45,32 +45,65 @@ class AddToShoppingCart extends Component {
   }
 
   handleSubmit(entry){
-    if (entry.event === '' || entry.seats === '') {
-      alert('Event oder Sitzplatz wurde nicht  ausgewählt')
-    } else if (this.props.items.find(item => item.movie === entry.movie && item.event === entry.event)) {
-      alert('Diese Vorstellung mit diesem Film befindet sich bereits im Warenkorb')
+    if (entry.seats === '') {
+      alert('Event oder Sitzplatz wurde nicht ausgewählt')
     } else {
       
       const seat_reservation_post = {
-        bookingID: entry.bookingID,
+        bookingInfo: entry.bookingInfo,
+        reservationID: entry.reservationID,
         showEventInfo: entry.eventID,
-        seatInfo: entry.seats
+        seats: entry.seats
       }
 
       axios.post('http://5.45.107.109:4000/api/reservation', seat_reservation_post)
         .then(res => {
           if (res.data != null) {
+
             if (res.data.bookingStatus === "reserved") {
+              entry = res.data
               this.props.addItem(entry);
-              this.props.addToCart(entry.id);
+              this.props.addToCart(entry.reservationID);
               this.setState({
-              showSuccessfulPopup: !this.state.showSuccessfulPopup
+                showSuccessfulPopup: !this.state.showSuccessfulPopup,
             })
-            console.log(res.data)
           }else{
               this.setState({
               showErrorPopup: !this.state.showErrorPopup
             })}
+          }else{
+            alert("Ein Fehler ist aufgetreten")
+          }
+        })   
+    }
+  }
+
+  handleSubmitQuick(entry){
+    
+    if (entry.event === '' || entry.seats === '') {
+      alert('Event oder Sitzplatz wurde nicht ausgewählt')
+    } else if (this.props.items.find(item => item.movie === entry.movie && item.event === entry.event)) {
+      alert('Diese Vorstellung mit diesem Film befindet sich bereits im Warenkorb')
+    } else {
+      
+      const seat_reservation_post = {
+        quickCheckout: true,
+        bookingInfo: entry.bookingInfo,
+        reservationID: entry.reservationID,
+        showEventInfo: entry.eventID,
+        seats: entry.seats
+      }
+      axios.post('http://5.45.107.109:4000/api/reservation', seat_reservation_post)
+        .then(res => {
+          if (res.data != null) {
+            if (res.data.bookingStatus === "reserved") {
+              entry.bookingInfo = res.data.bookingID;
+              entry.price = res.data.totalPrice;
+              this.props.addItem(entry);
+              this.props.addToCart(entry.id);
+              window.location.href = "localhost:3000/booking";
+          }else{
+              alert('Fehler')}
           }else{
             alert("Ein Fehler ist aufgetreten")
           }
@@ -88,8 +121,6 @@ handleEventPicker(newEvent){
     if(seat[1].booked)
     booked = [...booked, seat[0]]
   })
-  console.log(booked)
-
 
   this.setState({
     cart_entry_eventID: newEvent.showEventID,
@@ -121,7 +152,8 @@ render() {
   const { movieName, img } = movie;
 
   //Change Hardcoded values 
-  var entry = { id: this.props.items.length, bookingID: Date().toLocaleString('de-DE'), event: this.state.cart_entry_event, eventID: this.state.cart_entry_eventID, eventRoom:this.state.cart_entry_eventRoom, movie: movieName, seats: '', price: 8, img: img }
+  var tempEntry = {bookingInfo: this.props.items.bookingInfo, reservationID: Date().toLocaleString('de-DE'), eventID: this.state.cart_entry_eventID,  seats: ''}
+
   
   const GenerateSeats = (seatNumbers) => {  
     return (
@@ -150,13 +182,11 @@ render() {
     const seatClickHandler = (event, seatNumber) => {
       event.stopPropagation()
       const seatColor = document.querySelector(`.seat-${seatNumber}`).classList
-      console.log(this.state.bookedSeats)
-      if (entry.seats.includes(roomId+seatNumber)) {
+      if (tempEntry.seats.includes(roomId+seatNumber)) {
   
         seatColor.remove("seat-red")
         seatColor.add("seat-grey")
-        let newArr = entry.seats.filter(e => e !== roomId+seatNumber)
-        entry.seats = newArr
+        tempEntry.seats = tempEntry.seats.filter(e => e !== roomId+seatNumber)
 
       } else if(this.state.bookedSeats.includes(roomId+seatNumber)){
         //damit nicht ausgewählt werden kann
@@ -165,9 +195,8 @@ render() {
       } else {
         seatColor.remove("seat-grey")
         seatColor.add("seat-red")
-        entry.seats = [...entry.seats, roomId+seatNumber]
+        tempEntry.seats = [...tempEntry.seats, roomId+seatNumber]
       }
-      console.log(entry)
     }
   
     return (
@@ -199,8 +228,8 @@ render() {
               {GenerateSeats(['F1', 'F2', 'F3', 'F4', 'F5'])}
               {GenerateSeats(['G1', 'G2', 'G3', 'G4', 'G5'])}
               {GenerateSeats(['H1', 'H2', 'H3', 'H4', 'H5'])}
-              {GenerateSeats(['J1', 'J2', 'J3', 'J4', 'J5'])}
-              {GenerateSeats(['K1', 'K2', 'K3', 'K4', 'K5'])}
+              {GenerateSeats(['I1', 'I2', 'I3', 'I4', 'I5'])}
+              {GenerateSeats(['J1', 'J2', 'J3', 'J4', 'J5'])}  
             </div>
             <div className="gang">hallo</div>
             <div className="movie-column-2">
@@ -212,8 +241,8 @@ render() {
               {GenerateSeats(['F6', 'F7', 'F8', 'F9', 'F10'])}
               {GenerateSeats(['G6', 'G7', 'G8', 'G9', 'G10'])}
               {GenerateSeats(['H6', 'H7', 'H8', 'H9', 'H10'])}
+              {GenerateSeats(['I6', 'I7', 'I8', 'I9', 'I10'])}
               {GenerateSeats(['J6', 'J7', 'J8', 'J9', 'J10'])}
-              {GenerateSeats(['K6', 'K7', 'K8', 'K9', 'K10'])}
             </div>
             <div className="gang">hallo</div>
             <div className="movie-column-3">
@@ -225,8 +254,8 @@ render() {
               {GenerateSeats(['F11', 'F12', 'F13', 'F14', 'F15'])}
               {GenerateSeats(['G11', 'G12', 'G13', 'G14', 'G15'])}
               {GenerateSeats(['H11', 'H12', 'H13', 'H14', 'H15'])}
-              {GenerateSeats(['J11', 'J12', 'J13', 'J14', 'J15'])}
-              {GenerateSeats(['K11', 'K12', 'K13', 'K14', 'K15'])}
+              {GenerateSeats(['I11', 'I12', 'I13', 'I14', 'I15'])}
+              {GenerateSeats(['J11', 'J12', 'J13', 'J14', 'J15'])}        
             </div>
           </div>
         </div>
@@ -252,12 +281,18 @@ render() {
         <h6>Bitte eine Vorstellung auswählen:</h6>
 
         {this.state.events.map((item) => {
-          return <button className={this.state.cart_entry_eventID !== '' ? "booking-btn" : "booking-btn-unselected"} value={item.eventStart} onClick={() => { this.handleEventPicker(item) }}>{item.eventStart}</button>
+          return <button className={this.state.cart_entry_eventID === item.showEventID ? "booking-btn" : "booking-btn-unselected"} value={item.eventStart} onClick={() => { this.handleEventPicker(item) }}>{item.eventStart}</button>
         })}
 
-        {this.state.cart_entry_eventID === '' ? null : <SeatMatrix />}
+        {this.state.cart_entry_eventID === '' ? null : 
+        <>
+          <SeatMatrix />
         
-        <button onClick={() => { this.handleSubmit(entry) }} class="btn-primary">Zum Warenkorb hinzufügen</button>
+          <button onClick={() => { this.handleSubmit(tempEntry) }} class="booking-btn">Zum Warenkorb hinzufügen</button>
+          <button onClick={() => { this.handleSubmitQuick(tempEntry) }} class="booking-btn">Direkt zur Kasse</button>
+        </>
+        }
+
         {this.state.showSuccessfulPopup ? <SuccessfulPopup /> : null}
         {this.state.showErrorPopup ? <ErrorPopup /> : null}
       </div>
@@ -306,7 +341,7 @@ class ErrorPopup extends Component {
     return (
       <div className='popup'>
         <div className='popup_inner'>
-          <h6>Ihr gewählter Sitzpltz ist leider bereits vergeben</h6>
+          <h6>Ihr gewählter Sitzplatz ist leider bereits vergeben</h6>
           <button onClick={refreshPage} className="btn-primary">Bitte wählen sie einen anderen</button>
         </div>
       </div>
