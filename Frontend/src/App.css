@@ -793,6 +793,7 @@ margin-bottom: 0em;
 }
 
 .booking-btn {
+  width: 45%;
   margin: 2%;
   display: inline-block;
   text-decoration: none;
@@ -807,6 +808,7 @@ margin-bottom: 0em;
 }
 
 .booking-btn-unselected {
+  width: 45%;
   margin: 2%;
   display: inline-block;
   text-decoration: none;

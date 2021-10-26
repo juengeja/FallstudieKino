@@ -6,7 +6,6 @@ import Services from '../components/Services';
 import FeaturedMovies from '../components/FeaturedMovies';
 import Slideshow from '../components/slideshow';
 
-
 export default function Home() {
     return (
     <>
@@ -23,3 +22,4 @@ export default function Home() {
     </>
     );
 }
+

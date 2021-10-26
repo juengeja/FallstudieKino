@@ -5,7 +5,7 @@ import Banner from '../components/Banner';
 import { connect } from 'react-redux';
 import { addToCart, addItem, removeItem } from '../components/actions/cartActions';
 import axios from 'axios';
-import { Link, Redirect } from 'react-router-dom';
+import { Link} from 'react-router-dom';
 
 class AddToShoppingCart extends Component {
   constructor(props) {

@@ -54,7 +54,7 @@ class ShoppingCart extends Component {
             )
 
 
-        let showRecipe = this.props.items.length ? <><Recipe /></> : null
+        let showRecipe = this.props.items.length ? <><h6>Gesamtsumme: {this.props.items[this.props.items.length-1].totalPrice}€</h6><Recipe /></> : null
         return (
             <>
                 <Hero hero='programHero'>

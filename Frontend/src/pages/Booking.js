@@ -17,7 +17,7 @@ class Booking extends Component {
         this.state = {
             paymentMethod: "Kreditkarte",
             showSuccessfulPopup: false,
-            showErrorPopup: false,
+            showErrorPopup: this.props.items.length ? false : true,
             selectedDate: new Date('2001-01-01'),
             customerInfo: {
                 customerID: "",
@@ -130,7 +130,7 @@ class Booking extends Component {
 
         ) :    
             (
-                <h6>Ein Fehler ist aufgetreten</h6>
+                <h6>Kein Film im Warenkorb</h6>
             )
 
         return (
@@ -185,7 +185,7 @@ class Booking extends Component {
                                 <FaShoppingCart /> Bestellübersicht
                             </div>
                             {ShoppingCart}
-                            <Link to='/shoppingCart' className="booking-btn">Zurück zum Warenkorb</Link>
+                            <button className="booking-btn" onClick={() =>  this.props.history.push('/shoppingCart') }>Zurück zum Warenkorb</button>
                             <button class="booking-btn" type="submit">Zahlungspflichtig bestellen</button>
 
                         </div>
