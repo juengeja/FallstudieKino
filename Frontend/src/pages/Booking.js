@@ -54,9 +54,8 @@ class Booking extends Component {
                 customerInfo: tempJSON 
             })
         } else {
-            var entry = `${e.target.value}`
             var tempJSON = this.state.customerInfo
-            tempJSON[e.target.name] = entry
+            tempJSON[e.target.name] = `${e.target.value}`
 
                 this.setState({
                     customerInfo: tempJSON
@@ -185,8 +184,8 @@ class Booking extends Component {
                                 <FaShoppingCart /> Bestellübersicht
                             </div>
                             {ShoppingCart}
-                            <button className="event-btn" onClick={() =>  this.props.history.push('/shoppingCart') }>Zurück zum Warenkorb</button>
-                            <button class="event-btn" type="submit">Verbindlich bestellen</button>
+                            <button className="booking-btn_100" onClick={() =>  this.props.history.push('/shoppingCart') }>Zurück zum Warenkorb</button>
+                            <button class="booking-btn_100" type="submit">Verbindlich bestellen</button>
 
                         </div>
                     </form>

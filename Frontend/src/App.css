@@ -807,6 +807,21 @@ margin-bottom: 0em;
   cursor: pointer;
 }
 
+.booking-btn_100 {
+  width: 100%;
+  margin: 2%;
+  display: inline-block;
+  text-decoration: none;
+  letter-spacing: var(--mainSpacing);
+  color: var(--mainBlack);
+  background: var(--primaryColor);
+  padding: 0.4rem 0.9rem;
+  border: 3px solid var(--primaryColor);
+  transition: var(--mainTransition);
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
 .booking-btn-unselected {
   width: 45%;
   margin: 2%;
