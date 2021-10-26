@@ -63,8 +63,11 @@ class MovieProvider extends Component {
         duration = parseInt(duration);
 
         //filter by name
-        tempMovies = tempMovies.filter(movie => movie.movieName.includes(movieName));
-
+        if(movieName !== undefined){
+            console.log(movieName)
+            tempMovies = tempMovies.filter(movie => movie.movieName.includes(movieName));
+        }
+        
         //filter by genre
         if (mainGenre !== 'Alle') {
             tempMovies = tempMovies.filter(movie => movie.mainGenre === mainGenre);
@@ -72,6 +75,8 @@ class MovieProvider extends Component {
 
         //filter by Duration
         tempMovies = tempMovies.filter(movie => movie.duration <= duration);
+
+
 
         //change state
         this.setState({
