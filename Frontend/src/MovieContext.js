@@ -65,7 +65,7 @@ class MovieProvider extends Component{
   
 
         //filter by name
-        tempMovies = tempMovies.filter(movie => movie.movieName.includes(movieName));
+        //tempMovies = tempMovies.filter(movie => movie.movieName.includes(movieName));
 
         //filter by genre
         if(mainGenre !== 'Alle'){

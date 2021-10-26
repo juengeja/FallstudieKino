@@ -26,7 +26,7 @@ export default class SingleMovie extends Component {
                 </Link>
             </div>
         }
-        const {movieName,description,free_seats,release_date,duration,extras,menu,night_event,trailer,img} = movie;
+        const {movieName,description,duration,trailer,img} = movie;
         return (
             <>
         <Hero hero = 'programHero'>
@@ -42,10 +42,8 @@ export default class SingleMovie extends Component {
                     <article className="info">
                         <h3>Infos</h3>
                         <h6>Länge : {duration}min</h6>
-                        <h6>Erscheinungsdatum : {release_date}</h6>
-                        <h6>Freie Plätze : {free_seats}</h6>
-                        <h6>{night_event ? "Diesen Film gibt es auch als Nachtvorstellung" : "Diesen Film gibt es nicht als Nachtvorstellung"}</h6>
-                        <h6>{menu ? "Für diesen Film existiert ein spezielles Menü" : "Für diesen Film existiert kein spezielles Menü"}</h6>
+                        <h6>Genre : </h6>
+                        <h6>Regisseur : </h6>
                         <Link to={`/addToShoppingCart/${this.state.slug}`} className="btn-primary">
                             Buchen
                         </Link>
@@ -58,18 +56,6 @@ export default class SingleMovie extends Component {
                         <p>{description}</p>
                     </article>
             </section>
-            <section className="movie-extras">  
-                <h6>Extras</h6>
-                <ul className="extras">
-                    {extras}
-                    {/*
-                    {extras.map((item, index) =>{
-                        return <li key={index}>- {item}</li>
-                    })}
-                */}
-                </ul>
-            </section>
-
             <section className="movie-extras"> 
                 <Title title="Trailer" />
                 <iframe className="single-movie-trailer" src={trailer} title="Trailer" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe> 

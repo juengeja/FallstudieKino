@@ -1,4 +1,4 @@
-import {ADD_ITEM,ADD_TO_CART,REMOVE_ITEM,ADD_SHIPPING} from './action-types/cart-actions'
+import {ADD_ITEM,ADD_TO_CART,REMOVE_ITEM,REMOVE_ALL} from './action-types/cart-actions'
 
 
 //add cart action
@@ -19,6 +19,13 @@ export const addItem=(id)=>{
 export const removeItem=(id)=>{
     return{
         type: REMOVE_ITEM,
+        id
+    }
+}
+//remove all items
+export const removeAll=(id)=>{
+    return{
+        type: REMOVE_ALL,
         id
     }
 }

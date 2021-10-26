@@ -8,6 +8,7 @@ import { connect } from 'react-redux';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { format } from 'date-fns'
+import { removeAll } from '../components/actions/cartActions'
 
 class Booking extends Component {
     constructor(props) {
@@ -31,6 +32,10 @@ class Booking extends Component {
             },
         }
     };
+
+    handleRemove = (id) => {
+        this.props.removeAll(id);
+    }
 
     handleChange = (e) => {
         if (e.target.name === "paymentMethod") {
@@ -77,7 +82,7 @@ class Booking extends Component {
     handleSubmit = event => {
         event.preventDefault();
 
-        var booking = this.props.items[0]
+        var booking = this.props.items[this.props.items.length-1]
         for (var i = 0; i < booking.reservations.length; i++) {
             booking.customerInfo = this.state.customerInfo
             booking.paymentMethod = this.state.paymentMethod
@@ -86,6 +91,7 @@ class Booking extends Component {
           axios.put('http://5.45.107.109:4000/api/reservation/successfulpayment', booking)
                 .then(res => {
                     if (res.data != null) {
+                        this.handleRemove()
                         if (res.data.bookingStatus === "paid") {
                             this.setState({
                                 showSuccessfulPopup: !this.state.showSuccessfulPopup
@@ -156,7 +162,7 @@ class Booking extends Component {
                             </div>
                             <div>
                                 <label for="dateOfBirth">Geburtsdatum</label>
-                                <DatePicker selected={this.state.selectedDate} onChange={this.changeDate} dateFormat='dd.MM.yyyy'/>
+                                <DatePicker selected={this.state.selectedDate} onChange={this.changeDate} dateFormat='dd.MM.yyyy' required/>
                             </div>
                             <div>
                                 <label for="phoneNumber">Telefonnummer</label>
@@ -198,7 +204,12 @@ const mapStateToProps = (state) => {
         //addedItems: state.addedItems
     }
 }
-export default connect(mapStateToProps)(Booking)
+const mapDispatchToProps = (dispatch) => {
+    return {
+        removeAll: (id) => { dispatch(removeAll(id)) },
+    }
+}
+export default connect(mapStateToProps,mapDispatchToProps)(Booking)
 
 class SuccessfulPopup extends Component {
     render() {
