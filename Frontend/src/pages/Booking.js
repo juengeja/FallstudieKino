@@ -118,7 +118,7 @@ class Booking extends Component {
                         <>
                             <li class="booking-shoppingcart"  >
                                 <div className="booking-cart-entry-container">
-                                    <h6 className="title">{reservation.movieName}</h6>
+                                    <h6 className="booking_title">{reservation.movieName}</h6>
                                     <h6>{reservation.eventStart}</h6>
                                     <h6>Gewählte Sitze: {splitSeats}</h6>
                                 </div>
@@ -184,8 +184,9 @@ class Booking extends Component {
                                 <FaShoppingCart /> Bestellübersicht
                             </div>
                             {ShoppingCart}
+                            {this.props.items.length ? <h6>Gesamtsumme: {this.props.items[this.props.items.length - 1].totalPrice}€</h6> : null}
                             <button className="booking-btn_100" onClick={() => this.props.history.push('/shoppingCart')}>Zurück zum Warenkorb</button>
-                            <button class="booking-btn_100" type="submit">Verbindlich bestellen</button>
+                            <button class="booking-btn_100" type="submit">Kostenpflichtig bestellen</button>
 
                         </div>
                     </form>

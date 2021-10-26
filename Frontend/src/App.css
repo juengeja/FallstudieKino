@@ -749,6 +749,7 @@ margin-bottom: 0em;
   width: 48%;
   padding: 2%;
   float: right;
+  text-align: center
 }
 
 .booking-container {
@@ -783,6 +784,13 @@ margin-bottom: 0em;
   letter-spacing: .15rem;
   margin-bottom: 4%;
   border-radius: 4px;
+}
+
+.booking_title{
+  font-size: 1.2em;
+  font-weight: bold;
+  margin-bottom: 1.5em;
+  color: var(--primaryColor);
 }
 
 .input-container {

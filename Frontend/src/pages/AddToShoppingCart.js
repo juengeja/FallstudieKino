@@ -61,10 +61,9 @@ class AddToShoppingCart extends Component {
           if (res.data != null) {
 
             if (res.data.bookingStatus === "reserved") {
-
-              //entry.id = res.data.bookingID
-
+              
               if (!this.props.items.length) {
+                
                 entry = res.data
                 this.props.addItem(entry);
                 this.props.addToCart(entry.id);
@@ -72,6 +71,7 @@ class AddToShoppingCart extends Component {
                 this.props.items[0] = res.data
                 this.props.addToCart(this.props.items[0].id);
               }
+              
               this.setState({
                 showSuccessfulPopup: !this.state.showSuccessfulPopup,
               })

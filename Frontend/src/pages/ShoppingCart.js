@@ -1,19 +1,36 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
-import { removeItem } from '../components/actions/cartActions'
+import { addToCart, addItem, removeAll} from '../components/actions/cartActions';
 import Recipe from '../components/Recipe'
 import Hero from '../components/Hero';
 import Banner from '../components/Banner';
+import axios from 'axios';
 
 class ShoppingCart extends Component {
 
-    handleRemove = (id) => {
-        this.props.removeItem(id);
-    }
+    
+    removeReservtion(reservationID) {
+        console.log(reservationID)
+    let url = 'http://5.45.107.109:4000/api/remove/' + reservationID;
+    axios.put(url)
+    .then(res => {
+        if (res.data != null) {
+            if (res.data.bookingStatus === "reserved") {
+                this.props.items[this.props.items.length-1] = res.data
+                this.props.history.push('/shoppingCart');
+                //this.props.addToCart(this.props.items[this.props.items.length].id);
+            } else {
+                alert('Fehler')
+            }
+          } else {
+            alert("Ein Fehler ist aufgetreten")
+          }
+      })
+  }
 
     render() {
-        let addedItems = this.props.items.length ?
+        let addedItems = this.props.items.length && this.props.items[this.props.items.length - 1].reservations.length ?
             (
                 this.props.items[this.props.items.length - 1].reservations.map(reservation => {
                     let seats = reservation.seats.join(', ')
@@ -27,12 +44,12 @@ class ShoppingCart extends Component {
                                 </div>
 
                                 <div className="cart-entry-details">
-                                    <h6 className="title">{reservation.movieName}</h6>
+                                    <h6 className="title">{reservation.movieName}</h6>               
                                     <h6>{reservation.eventStart}</h6>
                                     <h6>Gewählte Sitze: {splitSeats}</h6>
                                 </div>
                                 <div class="cart-entry-buttons">
-                                    <button className="btn-primary" onClick={() => { this.handleRemove(/*item.id*/) }}>Löschen</button>
+                                    <button className="btn-primary" onClick={() => { this.removeReservtion(reservation.reservationID) }}>Löschen</button>
                                 </div>
                             </li>
                         </>
@@ -53,7 +70,7 @@ class ShoppingCart extends Component {
             )
 
 
-        let showRecipe = this.props.items.length ? <><h6>Gesamtsumme: {this.props.items[this.props.items.length - 1].totalPrice}€</h6><Recipe /></> : null
+        let showRecipe = this.props.items.length && this.props.items[this.props.items.length - 1].reservations.length ? <><h6>Gesamtsumme: {this.props.items[this.props.items.length - 1].totalPrice}€</h6><Recipe /></> : null
         return (
             <>
                 <Hero hero='programHero'>
@@ -81,9 +98,14 @@ const mapStateToProps = (state) => {
         //addedItems: state.addedItems
     }
 }
+
 const mapDispatchToProps = (dispatch) => {
+
     return {
-        removeItem: (id) => { dispatch(removeItem(id)) },
+      addToCart: (id) => { dispatch(addToCart(id)) },
+      addItem: (id) => { dispatch(addItem(id)) },
+      removeAll: (id) => { dispatch(removeAll(id)) },
     }
-}
+  }
+
 export default connect(mapStateToProps, mapDispatchToProps)(ShoppingCart)
