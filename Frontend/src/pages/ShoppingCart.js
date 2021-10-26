@@ -16,7 +16,7 @@ class ShoppingCart extends Component {
         let addedItems = this.props.items.length ?
             (
                 this.props.items[this.props.items.length-1].reservations.map(reservation =>{
-
+                    console.log(reservation)
                     let seats = reservation.seats.join(', ')
                     let splitSeats = seats.split('Astra').join('')
                 
@@ -28,7 +28,7 @@ class ShoppingCart extends Component {
                                 </div>
                                 
                                 <div className="cart-entry-details">
-                                    <h6 className="title">{reservation.moviename}</h6>
+                                    <h6 className="title">{reservation.movieName}</h6>
                                     <h6>{reservation.eventStart}</h6>
                                     <h6>Gewählte Sitze: {splitSeats}</h6>      
                                 </div>

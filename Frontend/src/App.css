@@ -977,3 +977,31 @@ margin-bottom: 0em;
 	margin-left: auto
 }
 
+.event-btn {
+  margin: 2%;
+  display: inline-block;
+  text-decoration: none;
+  letter-spacing: var(--mainSpacing);
+  color: var(--mainBlack);
+  background: var(--primaryColor);
+  padding: 0.4rem 0.9rem;
+  border: 3px solid var(--primaryColor);
+  transition: var(--mainTransition);
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.event-btn-unselected {
+  margin: 2%;
+  display: inline-block;
+  text-decoration: none;
+  letter-spacing: var(--mainSpacing);
+  color: var(--mainBlack);
+  background: var(--mainGrey);
+  padding: 0.4rem 0.9rem;
+  border: 3px solid var(--mainGrey);
+  transition: var(--mainTransition);
+  text-transform: uppercase;
+  cursor: pointer;
+}
+

@@ -290,15 +290,15 @@ render() {
         <h6>Bitte eine Vorstellung auswählen:</h6>
 
         {this.state.events.map((item) => {
-          return <button className={this.state.cart_entry_eventStart === item.eventStart ? "booking-btn" : "booking-btn-unselected"} value={item.eventStart} onClick={() => { this.handleEventPicker(item) }}>{item.eventStart}</button>
+          return <button className={this.state.cart_entry_eventStart === item.eventStart ? "event-btn" : "event-btn-unselected"} value={item.eventStart} onClick={() => { this.handleEventPicker(item) }}>{item.eventStart}</button>
         })}
 
         {this.state.cart_entry_eventID === '' ? null : 
         <>
           <SeatMatrix />
         
-          <button onClick={() => { this.handleSubmit(tempEntry) }} class="booking-btn">Zum Warenkorb hinzufügen</button>
-          <button onClick={() => { this.handleSubmitQuick(tempEntry) }} class="booking-btn">Direkt zur Kasse</button>
+          <button onClick={() => { this.handleSubmit(tempEntry) }} class="event-btn">Zum Warenkorb hinzufügen</button>
+          <button onClick={() => { this.handleSubmitQuick(tempEntry) }} class="event-btn">Direkt zur Kasse</button>
         </>
         }
 
