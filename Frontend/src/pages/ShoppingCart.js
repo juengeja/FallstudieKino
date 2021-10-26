@@ -15,33 +15,31 @@ class ShoppingCart extends Component {
     render() {
         let addedItems = this.props.items.length ?
             (
-                this.props.items.map(item => {
+                this.props.items[this.props.items.length-1].reservations.map(reservation =>{
 
-                    for (var i = 0; i < item.reservations.length; i++) {
-                    
-                    let seats = item.reservations[i].seats.join(', ')
+                    let seats = reservation.seats.join(', ')
                     let splitSeats = seats.split('Astra').join('')
-                    
+                
                     return (
                         <>
                             <li class="li-container" >
                                 <div class="cart-entry-img">
-                                    <img src={item.reservations[i].moviePoster} alt={item.reservations[i].moviePoster} width="100%" />
+                                    <img src={reservation.moviePoster} alt={reservation.moviePoster} width="100%" />
                                 </div>
-
+                                
                                 <div className="cart-entry-details">
-                                    <h6 className="title">{item.reservations[i].moviename}</h6>
-                                    <h6>{item.reservations[i].eventStart}</h6>
-                                    <h6>Gewählte Sitze: {splitSeats}</h6>     
+                                    <h6 className="title">{reservation.moviename}</h6>
+                                    <h6>{reservation.eventStart}</h6>
+                                    <h6>Gewählte Sitze: {splitSeats}</h6>      
                                 </div>
                                 <div class="cart-entry-buttons">
-                                <button className="btn-primary" onClick={() => { this.handleRemove(item.id) }}>Löschen</button>
+                                <button className="btn-primary" onClick={() => { this.handleRemove(/*item.id*/) }}>Löschen</button>
                                 </div>
                             </li>
                         </>
                     )
-                    }
-                })
+                    })
+
             ) :
 
             (
@@ -56,7 +54,7 @@ class ShoppingCart extends Component {
             )
 
 
-        let showRecipe = this.props.items.length ? <><Recipe /><h6>Gesamtpreis: {this.props.items.price}€</h6></> : null
+        let showRecipe = this.props.items.length ? <><Recipe /></> : null
         return (
             <>
                 <Hero hero='programHero'>

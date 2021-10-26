@@ -103,29 +103,26 @@ class Booking extends Component {
 
     render() {
         let ShoppingCart = this.props.items.length ?
-            (
-                this.props.items.map(item => {
+        (
+            this.props.items[this.props.items.length-1].reservations.map(reservation =>{
 
-                    for (var i = 0; i < item.reservations.length; i++) {
-                    
-                    let seats = item.reservations[i].seats.join(', ')
-                    let splitSeats = seats.split('Astra').join('')
-                    
-                    return (
-                        <>
-                            <li class="booking-shoppingcart" >
-                                <div className="booking-cart-entry-container">
-                                    <h6 className="title">{item.reservations[i].moviename}</h6>
-                                    <h6>{item.reservations[i].eventStart}</h6>
-                                    <h6>Gewählte Sitze: {splitSeats}</h6>     
-                                </div>
-                            </li>
-                        </>
-                    )
-                    }
+                let seats = reservation.seats.join(', ')
+                let splitSeats = seats.split('Astra').join('')
+            
+                return (
+                    <>
+                        <li class="booking-shoppingcart"  >                            
+                            <div className="booking-cart-entry-container">
+                                <h6 className="title">{reservation.moviename}</h6>
+                                <h6>{reservation.eventStart}</h6>
+                                <h6>Gewählte Sitze: {splitSeats}</h6>     
+                            </div>
+                        </li>
+                    </>
+                )
                 })
-            ) :
 
+        ) :    
             (
                 <h6>Ein Fehler ist aufgetreten</h6>
             )

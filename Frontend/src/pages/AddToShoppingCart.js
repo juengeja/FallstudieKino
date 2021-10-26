@@ -3,7 +3,7 @@ import { MovieContext } from '../MovieContext';
 import Hero from '../components/Hero';
 import Banner from '../components/Banner';
 import { connect } from 'react-redux';
-import { addToCart, addItem } from '../components/actions/cartActions';
+import { addToCart, addItem, removeItem } from '../components/actions/cartActions';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 
@@ -13,8 +13,8 @@ class AddToShoppingCart extends Component {
     this.state = {
       slug: this.props.match.params.slug,
       events: [],
-      cart_entry_event: '',
       cart_entry_eventRoom: '',
+      cart_entry_eventStart: '',
       cart_entry_eventID: '',
       showSuccessfulPopup: false,
       showErrorPopup: false,
@@ -46,27 +46,38 @@ class AddToShoppingCart extends Component {
 
   handleSubmit(entry){
     if (entry.seats === '') {
-      alert('Event oder Sitzplatz wurde nicht ausgewählt')
+      alert('Es wurde kein Sitzplatz ausgewählt')
     } else {
       
       const seat_reservation_post = {
-        bookingInfo: entry.bookingInfo,
+        bookingInfo: entry.bookingID,
         reservationID: entry.reservationID,
         showEventInfo: entry.eventID,
         seats: entry.seats
       }
+
+      console.log(seat_reservation_post)
 
       axios.post('http://5.45.107.109:4000/api/reservation', seat_reservation_post)
         .then(res => {
           if (res.data != null) {
 
             if (res.data.bookingStatus === "reserved") {
-              entry = res.data
-              this.props.addItem(entry);
-              this.props.addToCart(entry.reservationID);
+              
+              //entry.id = res.data.bookingID
+              
+              if(!this.props.items.length){
+                entry = res.data
+                this.props.addItem(entry);
+                this.props.addToCart(entry.id);
+              }else{
+                this.props.items[0] =  res.data 
+                this.props.addToCart(this.props.items[0].id);
+              }
               this.setState({
                 showSuccessfulPopup: !this.state.showSuccessfulPopup,
             })
+            console.log(this.props.items)
           }else{
               this.setState({
               showErrorPopup: !this.state.showErrorPopup
@@ -124,16 +135,12 @@ handleEventPicker(newEvent){
 
   this.setState({
     cart_entry_eventID: newEvent.showEventID,
+    cart_entry_eventStart: newEvent.eventStart,
     bookedSeats: booked,
     cart_entry_eventRoom: room
   })
-  
-  this.setState(prevState => {
-    let cart_entry_event = Object.assign({}, prevState.cart_entry_event);
-    cart_entry_event = newEvent.eventStart;
-    return { cart_entry_event };
-  })
 };
+
 
 static contextType = MovieContext;
    
@@ -149,12 +156,13 @@ render() {
     );
   }
 
-  const { movieName, img } = movie;
+  const { movieName } = movie;
 
   //Change Hardcoded values 
-  var tempEntry = {bookingInfo: this.props.items.bookingInfo, reservationID: Date().toLocaleString('de-DE'), eventID: this.state.cart_entry_eventID,  seats: ''}
+  var tempEntry = {id: this.props.items.length, bookingID: null, reservationID: Date().toLocaleString('de-DE'), eventID: this.state.cart_entry_eventID,  seats: ''}
 
-  
+  tempEntry.bookingID = this.props.items.length ? this.props.items[0].bookingID : null
+
   const GenerateSeats = (seatNumbers) => {  
     return (
       <div className="row">
@@ -281,7 +289,7 @@ render() {
         <h6>Bitte eine Vorstellung auswählen:</h6>
 
         {this.state.events.map((item) => {
-          return <button className={this.state.cart_entry_eventID === item.showEventID ? "booking-btn" : "booking-btn-unselected"} value={item.eventStart} onClick={() => { this.handleEventPicker(item) }}>{item.eventStart}</button>
+          return <button className={this.state.cart_entry_eventStart === item.eventStart ? "booking-btn" : "booking-btn-unselected"} value={item.eventStart} onClick={() => { this.handleEventPicker(item) }}>{item.eventStart}</button>
         })}
 
         {this.state.cart_entry_eventID === '' ? null : 
@@ -311,7 +319,8 @@ const mapDispatchToProps = (dispatch) => {
 
   return {
     addToCart: (id) => { dispatch(addToCart(id)) },
-    addItem: (id) => { dispatch(addItem(id)) }
+    addItem: (id) => { dispatch(addItem(id)) },
+    removeItem: (id) => { dispatch(removeItem(id)) }
   }
 }
 
