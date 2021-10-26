@@ -5,7 +5,7 @@ import Banner from '../components/Banner';
 import { connect } from 'react-redux';
 import { addToCart, addItem, removeItem } from '../components/actions/cartActions';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 
 class AddToShoppingCart extends Component {
   constructor(props) {
@@ -56,8 +56,6 @@ class AddToShoppingCart extends Component {
         seats: entry.seats
       }
 
-      console.log(seat_reservation_post)
-
       axios.post('http://5.45.107.109:4000/api/reservation', seat_reservation_post)
         .then(res => {
           if (res.data != null) {
@@ -77,7 +75,6 @@ class AddToShoppingCart extends Component {
               this.setState({
                 showSuccessfulPopup: !this.state.showSuccessfulPopup,
             })
-            console.log(this.props.items)
           }else{
               this.setState({
               showErrorPopup: !this.state.showErrorPopup
@@ -90,29 +87,33 @@ class AddToShoppingCart extends Component {
   }
 
   handleSubmitQuick(entry){
-    
-    if (entry.event === '' || entry.seats === '') {
-      alert('Event oder Sitzplatz wurde nicht ausgewählt')
-    } else if (this.props.items.find(item => item.movie === entry.movie && item.event === entry.event)) {
-      alert('Diese Vorstellung mit diesem Film befindet sich bereits im Warenkorb')
+     if (entry.seats === '') {
+      alert('Es wurde kein Sitzplatz ausgewählt')
     } else {
       
       const seat_reservation_post = {
         quickCheckout: true,
-        bookingInfo: entry.bookingInfo,
+        bookingInfo: entry.bookingID,
         reservationID: entry.reservationID,
         showEventInfo: entry.eventID,
         seats: entry.seats
       }
+
       axios.post('http://5.45.107.109:4000/api/reservation', seat_reservation_post)
         .then(res => {
           if (res.data != null) {
+
             if (res.data.bookingStatus === "reserved") {
-              entry.bookingInfo = res.data.bookingID;
-              entry.price = res.data.totalPrice;
-              this.props.addItem(entry);
-              this.props.addToCart(entry.id);
-              window.location.href = "localhost:3000/booking";
+
+              if(!this.props.items.length){
+                entry = res.data
+                this.props.addItem(entry);
+                this.props.addToCart(entry.id);
+              }else{
+                this.props.items[0] =  res.data 
+                this.props.addToCart(this.props.items[0].id);
+              }
+              this.props.history.push('/booking');
           }else{
               alert('Fehler')}
           }else{
