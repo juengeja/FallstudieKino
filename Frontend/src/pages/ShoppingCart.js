@@ -15,46 +15,45 @@ class ShoppingCart extends Component {
     render() {
         let addedItems = this.props.items.length ?
             (
-                this.props.items[this.props.items.length-1].reservations.map(reservation =>{
-                    console.log(reservation)
+                this.props.items[this.props.items.length - 1].reservations.map(reservation => {
                     let seats = reservation.seats.join(', ')
                     let splitSeats = seats.split('Astra').join('')
-                
+
                     return (
                         <>
                             <li class="li-container" >
                                 <div class="cart-entry-img">
                                     <img src={reservation.moviePoster} alt={reservation.moviePoster} width="100%" />
                                 </div>
-                                
+
                                 <div className="cart-entry-details">
                                     <h6 className="title">{reservation.movieName}</h6>
                                     <h6>{reservation.eventStart}</h6>
-                                    <h6>Gewählte Sitze: {splitSeats}</h6>      
+                                    <h6>Gewählte Sitze: {splitSeats}</h6>
                                 </div>
                                 <div class="cart-entry-buttons">
-                                <button className="btn-primary" onClick={() => { this.handleRemove(/*item.id*/) }}>Löschen</button>
+                                    <button className="btn-primary" onClick={() => { this.handleRemove(/*item.id*/) }}>Löschen</button>
                                 </div>
                             </li>
                         </>
                     )
-                    })
+                })
 
             ) :
 
             (
                 <>
-                <div class="recipe">
-                    <h6>Keine Filme im Warenkorb</h6>
-                    <Link to='/program' className="btn-primary">
-                        Zum Programm
-                    </Link>
-                </div>
+                    <div class="recipe">
+                        <h6>Keine Filme im Warenkorb</h6>
+                        <Link to='/program' className="btn-primary">
+                            Zum Programm
+                        </Link>
+                    </div>
                 </>
             )
 
 
-        let showRecipe = this.props.items.length ? <><h6>Gesamtsumme: {this.props.items[this.props.items.length-1].totalPrice}€</h6><Recipe /></> : null
+        let showRecipe = this.props.items.length ? <><h6>Gesamtsumme: {this.props.items[this.props.items.length - 1].totalPrice}€</h6><Recipe /></> : null
         return (
             <>
                 <Hero hero='programHero'>
@@ -63,7 +62,7 @@ class ShoppingCart extends Component {
                 <section class="movielist">
                     <div class="cart-entry-container">
                         <ul class="collection">
-                            {addedItems}                             
+                            {addedItems}
                         </ul>
                         <div class="recipe">
                             {showRecipe}

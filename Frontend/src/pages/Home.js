@@ -8,18 +8,18 @@ import Slideshow from '../components/slideshow';
 
 export default function Home() {
     return (
-    <>
-        <Hero>
-            <Banner title="Willkommen" subtitle="nur heute, jeder Film 8€">
-                <Link to='/program' className="btn-primary">
-                    Zum Programm
-                </Link>
-            </Banner>
-        </Hero>
-    <FeaturedMovies />
-    <Services />
-    <Slideshow />
-    </>
+        <>
+            <Hero>
+                <Banner title="Willkommen" subtitle="nur heute, jeder Film 8€">
+                    <Link to='/program' className="btn-primary">
+                        Zum Programm
+                    </Link>
+                </Banner>
+            </Hero>
+            <FeaturedMovies />
+            <Services />
+            <Slideshow />
+        </>
     );
 }
 

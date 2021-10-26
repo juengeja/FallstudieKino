@@ -41,8 +41,8 @@ class Booking extends Component {
         if (e.target.name === "paymentMethod") {
 
             this.setState({
-                    paymentMethod: e.target.value,
-                })
+                paymentMethod: e.target.value,
+            })
         } else if (e.target.name === "lastName") {
             var entry = `${e.target.value}`
 
@@ -51,83 +51,83 @@ class Booking extends Component {
             tempJSON.customerID = entry + Date().toLocaleString('de-DE')
 
             this.setState({
-                customerInfo: tempJSON 
+                customerInfo: tempJSON
             })
         } else {
             var tempJSON = this.state.customerInfo
             tempJSON[e.target.name] = `${e.target.value}`
 
-                this.setState({
-                    customerInfo: tempJSON
-                })
+            this.setState({
+                customerInfo: tempJSON
+            })
         }
     }
 
     changeDate = (date) => {
         this.setState({
-            selectedDate:date
+            selectedDate: date
         })
 
         var newDate = format(date, 'yyyy-MM-dd').split("-");
 
         var tempJSON = this.state.customerInfo
         tempJSON.dateOfBirth = [parseInt(newDate[0]), parseInt(newDate[1]), parseInt(newDate[2])]
-            this.setState({
-                customerInfo: tempJSON
-            })
+        this.setState({
+            customerInfo: tempJSON
+        })
     }
 
 
     handleSubmit = event => {
         event.preventDefault();
 
-        var booking = this.props.items[this.props.items.length-1]
+        var booking = this.props.items[this.props.items.length - 1]
         for (var i = 0; i < booking.reservations.length; i++) {
             booking.customerInfo = this.state.customerInfo
             booking.paymentMethod = this.state.paymentMethod
-        }    
+        }
 
-          axios.put('http://5.45.107.109:4000/api/reservation/successfulpayment', booking)
-                .then(res => {
-                    if (res.data != null) {
-                        this.handleRemove()
-                        if (res.data.bookingStatus === "paid") {
-                            this.setState({
-                                showSuccessfulPopup: !this.state.showSuccessfulPopup
-                            })
-                        } else {
-                            this.setState({
-                                showErrorPopup: !this.state.showErrorPopup
-                            })
-                        }
+        axios.put('http://5.45.107.109:4000/api/reservation/successfulpayment', booking)
+            .then(res => {
+                if (res.data != null) {
+                    this.handleRemove()
+                    if (res.data.bookingStatus === "paid") {
+                        this.setState({
+                            showSuccessfulPopup: !this.state.showSuccessfulPopup
+                        })
                     } else {
-                        alert("Ein Fehler ist aufgetreten")
+                        this.setState({
+                            showErrorPopup: !this.state.showErrorPopup
+                        })
                     }
-                })
+                } else {
+                    alert("Ein Fehler ist aufgetreten")
+                }
+            })
     }
 
     render() {
         let ShoppingCart = this.props.items.length ?
-        (
-            this.props.items[this.props.items.length-1].reservations.map(reservation =>{
+            (
+                this.props.items[this.props.items.length - 1].reservations.map(reservation => {
 
-                let seats = reservation.seats.join(', ')
-                let splitSeats = seats.split('Astra').join('')
-            
-                return (
-                    <>
-                        <li class="booking-shoppingcart"  >                            
-                            <div className="booking-cart-entry-container">
-                                <h6 className="title">{reservation.movieName}</h6>
-                                <h6>{reservation.eventStart}</h6>
-                                <h6>Gewählte Sitze: {splitSeats}</h6>     
-                            </div>
-                        </li>
-                    </>
-                )
+                    let seats = reservation.seats.join(', ')
+                    let splitSeats = seats.split('Astra').join('')
+
+                    return (
+                        <>
+                            <li class="booking-shoppingcart"  >
+                                <div className="booking-cart-entry-container">
+                                    <h6 className="title">{reservation.movieName}</h6>
+                                    <h6>{reservation.eventStart}</h6>
+                                    <h6>Gewählte Sitze: {splitSeats}</h6>
+                                </div>
+                            </li>
+                        </>
+                    )
                 })
 
-        ) :    
+            ) :
             (
                 <h6>Kein Film im Warenkorb</h6>
             )
@@ -161,14 +161,14 @@ class Booking extends Component {
                             </div>
                             <div>
                                 <label for="dateOfBirth">Geburtsdatum</label>
-                                <DatePicker selected={this.state.selectedDate} onChange={this.changeDate} dateFormat='dd.MM.yyyy' required/>
+                                <DatePicker selected={this.state.selectedDate} onChange={this.changeDate} dateFormat='dd.MM.yyyy' required />
                             </div>
                             <div>
                                 <label for="phoneNumber">Telefonnummer</label>
                                 <input class="booking_input" type="text" name="phoneNumber" onChange={this.handleChange} required />
                             </div>
 
-                            <div class="headline" style={{'margin-top':'5%'}}>
+                            <div class="headline" style={{ 'margin-top': '5%' }}>
                                 <FaCreditCard /> Zahlungsart
                             </div>
                             <div class="input-container">
@@ -184,7 +184,7 @@ class Booking extends Component {
                                 <FaShoppingCart /> Bestellübersicht
                             </div>
                             {ShoppingCart}
-                            <button className="booking-btn_100" onClick={() =>  this.props.history.push('/shoppingCart') }>Zurück zum Warenkorb</button>
+                            <button className="booking-btn_100" onClick={() => this.props.history.push('/shoppingCart')}>Zurück zum Warenkorb</button>
                             <button class="booking-btn_100" type="submit">Verbindlich bestellen</button>
 
                         </div>
@@ -208,7 +208,7 @@ const mapDispatchToProps = (dispatch) => {
         removeAll: (id) => { dispatch(removeAll(id)) },
     }
 }
-export default connect(mapStateToProps,mapDispatchToProps)(Booking)
+export default connect(mapStateToProps, mapDispatchToProps)(Booking)
 
 class SuccessfulPopup extends Component {
     render() {
