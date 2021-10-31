@@ -1,9 +1,10 @@
-import { ADD_TO_CART,ADD_ITEM,REMOVE_ITEM,REMOVE_ALL } from '../actions/action-types/cart-actions'
+import { ADD_TO_CART,ADD_ITEM,REMOVE_ITEM,REMOVE_ALL,CHANGE_STATE } from '../actions/action-types/store-actions'
 
 
 const initState = {
     items: [],
     addedItems:[],
+    loginState: false
 }
 const cartReducer= (state = initState,action)=>{
     //INSIDE HOME COMPONENT
@@ -39,6 +40,13 @@ const cartReducer= (state = initState,action)=>{
             items: new_items,
             addedItems: new_items,
         }
+    }
+
+    if(action.type === CHANGE_STATE){
+
+        return{
+            loginState: true,
+        }    
     }
     
   else{

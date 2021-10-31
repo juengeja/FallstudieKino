@@ -8,7 +8,7 @@ import { connect } from 'react-redux';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { format } from 'date-fns'
-import { removeAll } from '../components/actions/cartActions'
+import { removeAll } from '../components/actions/storeActions'
 
 class Booking extends Component {
     constructor(props) {
@@ -157,7 +157,7 @@ class Booking extends Component {
 
                             <div>
                                 <label for="email">E-Mail Adresse</label>
-                                <input class="booking_input" type="text" name="email" onChange={this.handleChange} required />
+                                <input class="booking_input" type="email" name="email" onChange={this.handleChange} required />
                             </div>
                             <div>
                                 <label for="dateOfBirth">Geburtsdatum</label>

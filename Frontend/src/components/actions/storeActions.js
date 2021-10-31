@@ -1,4 +1,4 @@
-import {ADD_ITEM,ADD_TO_CART,REMOVE_ITEM,REMOVE_ALL} from './action-types/cart-actions'
+import {ADD_ITEM,ADD_TO_CART,REMOVE_ITEM,REMOVE_ALL, CHANGE_STATE} from './action-types/store-actions'
 
 
 //add cart action
@@ -27,5 +27,11 @@ export const removeAll=(id)=>{
     return{
         type: REMOVE_ALL,
         id
+    }
+}
+//change LoginState
+export const changeState=() =>{
+    return{
+        type: CHANGE_STATE,
     }
 }

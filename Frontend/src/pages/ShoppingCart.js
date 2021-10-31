@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
-import { addToCart, addItem, removeAll} from '../components/actions/cartActions';
+import { addToCart, addItem, removeAll} from '../components/actions/storeActions';
 import Recipe from '../components/Recipe'
 import Hero from '../components/Hero';
 import Banner from '../components/Banner';

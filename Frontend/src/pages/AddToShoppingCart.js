@@ -3,7 +3,7 @@ import { MovieContext } from '../MovieContext';
 import Hero from '../components/Hero';
 import Banner from '../components/Banner';
 import { connect } from 'react-redux';
-import { addToCart, addItem, removeItem } from '../components/actions/cartActions';
+import { addToCart, addItem, removeItem } from '../components/actions/storeActions';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 
