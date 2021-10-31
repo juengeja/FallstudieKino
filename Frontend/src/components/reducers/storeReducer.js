@@ -4,7 +4,8 @@ import { ADD_TO_CART,ADD_ITEM,REMOVE_ITEM,REMOVE_ALL,CHANGE_STATE } from '../act
 const initState = {
     items: [],
     addedItems:[],
-    loginState: false
+    //TEMP auf true
+    loginState: true
 }
 const cartReducer= (state = initState,action)=>{
     //INSIDE HOME COMPONENT

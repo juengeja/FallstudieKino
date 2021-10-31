@@ -4,14 +4,15 @@ import {FaAlignRight} from 'react-icons/fa'
 import {FaShoppingCart} from 'react-icons/fa'
 import {FaUserAlt} from 'react-icons/fa'
 import {Link} from 'react-router-dom'
+import { connect } from 'react-redux';
 
-export default class Navbar extends Component {
+ class Navbar extends Component {
     state={
         isOpen:false
     }
     handleToggle = () => {
         this.setState({isOpen:!this.state.isOpen})
-    }
+    }    
     render (){
         return <nav className="navbar">
             <div className="nav-center">
@@ -34,7 +35,7 @@ export default class Navbar extends Component {
                         <Link to="/contact">Kontakt</Link>
                     </li>
                     <li>
-                        <Link to="/login"><FaUserAlt className="nav-icon-login"/></Link>
+                        {this.props.loginState ? <Link to="/adminpage"><FaUserAlt className="nav-icon-login"/></Link> : <Link to="/login"><FaUserAlt className="nav-icon-login"/></Link>}
                     </li>
                     <li>
                         <Link to="/shoppingCart"><FaShoppingCart className="nav-icon-shoppingCart"/></Link>
@@ -44,3 +45,10 @@ export default class Navbar extends Component {
         </nav>
     }
 }
+
+const mapStateToProps = (state) => {
+    return {
+        loginState: state.loginState
+    }
+}
+export default connect(mapStateToProps)(Navbar)
