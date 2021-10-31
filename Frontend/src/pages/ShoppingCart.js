@@ -19,7 +19,6 @@ class ShoppingCart extends Component {
             if (res.data.bookingStatus === "reserved") {
                 this.props.items[this.props.items.length-1] = res.data
                 this.props.history.push('/shoppingCart');
-                //this.props.addToCart(this.props.items[this.props.items.length].id);
             } else {
                 alert('Fehler')
             }
@@ -95,7 +94,6 @@ class ShoppingCart extends Component {
 const mapStateToProps = (state) => {
     return {
         items: state.addedItems,
-        //addedItems: state.addedItems
     }
 }
 
