@@ -8,21 +8,23 @@ const getUnique = (items, value) => {
     return [...new Set(items.map(item => item[value]))];
 };
 
-export default function ProgramContainer({movies}) {
+
+const MovieFilter = ({ movies }) => {
+    // react hooks
     const context = useContext(MovieContext);
     const {handleChange, mainGenre, duration, minDuration, maxDuration, movieName} = context;
-
-    //get unique genres
+  
+    // get unique types
     let genres = getUnique(movies, 'mainGenre');
-    //add all
-    genres = ['Alle' , ...genres];
-    //map to jsx
-    genres = genres.map((item, index) =>{
-        return <option value={item} key={index}>{item}</option>;
-    }) 
+    // add all
+    genres = ['Alle', ...genres];
+    // map to jsx
+    genres = genres.map((item, index) => (
+      <option key={index} value={item}>{item}</option>
+    ));
 
     return (
-    <section className="filter-container">
+      <section className="filter-container">
         <Title title="Filter" />
         <form className="filter-form">
             {/*select name */}
@@ -46,6 +48,9 @@ export default function ProgramContainer({movies}) {
             </div>
             {/* end duration */}
         </form>
-    </section>
+      </section>
     );
-}
+  };
+  
+  export default MovieFilter;
+

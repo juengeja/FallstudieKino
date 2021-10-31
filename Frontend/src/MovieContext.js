@@ -3,7 +3,7 @@ import axios from 'axios';
 
 const MovieContext = React.createContext();
 
-class MovieProvider extends Component {
+export default class MovieProvider extends Component {
 
     constructor(props) {
         super(props)
@@ -11,7 +11,8 @@ class MovieProvider extends Component {
             movies: [],
             sortedMovies: [],
             loading: true,
-            genre: 'Alle',
+            movieName: '',
+            mainGenre: 'Alle',
             duration: 0,
             minDuration: 0,
             maxDuration: 0,
@@ -23,12 +24,14 @@ class MovieProvider extends Component {
             .then((response) => {
                 let movies = this.formatData(response.data);
                 let maxDuration = Math.max(...movies.map(item => item.duration));
+                let minDuration = Math.min(...movies.map(item => item.duration));
                 this.setState({
                     movies,
                     sortedMovies: movies,
                     loading: false,
                     duration: maxDuration,
                     maxDuration,
+                    minDuration
                 })
             });
     };
@@ -51,7 +54,7 @@ class MovieProvider extends Component {
 
     handleChange = event => {
         const target = event.target;
-        const value = target.value;
+        const value = target.type === "checkbox" ? target.checked : target.value;
         const name = target.name;
         this.setState({ [name]: value }, this.filterMovies);
     };
@@ -62,21 +65,20 @@ class MovieProvider extends Component {
         //transform value
         duration = parseInt(duration);
 
-        //filter by name
-        if(movieName !== undefined){
+        //filter by name 
+        if(movieName !== ''){
             console.log(movieName)
             tempMovies = tempMovies.filter(movie => movie.movieName.includes(movieName));
         }
-        
+
         //filter by genre
-        if (mainGenre !== 'Alle') {
+
+        if (mainGenre !== "Alle") {
             tempMovies = tempMovies.filter(movie => movie.mainGenre === mainGenre);
         }
 
         //filter by Duration
         tempMovies = tempMovies.filter(movie => movie.duration <= duration);
-
-
 
         //change state
         this.setState({
@@ -95,6 +97,8 @@ class MovieProvider extends Component {
 
 const MovieConsumer = MovieContext.Consumer;
 
+export { MovieProvider, MovieConsumer, MovieContext };
+
 export function withMovieConsumer(Component) {
     return function ConsumerWrapper(props) {
         return <MovieConsumer>
@@ -103,4 +107,3 @@ export function withMovieConsumer(Component) {
     }
 }
 
-export { MovieProvider, MovieConsumer, MovieContext };
