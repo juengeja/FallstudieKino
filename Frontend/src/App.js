@@ -9,6 +9,7 @@ import Contact from './pages/Contact';
 import ShoppingCart from './pages/ShoppingCart';
 import Booking from './pages/Booking';
 import Login from './pages/Login';
+import AdminPage from './pages/AdminPage'
 
 import {Route, Switch} from 'react-router-dom';
 
@@ -27,6 +28,7 @@ function App() {
         <Route exact path="/shoppingCart" component={ShoppingCart}/>
         <Route exact path="/booking" component={Booking}/>
         <Route exact path="/login" component={Login}/>
+        <Route exact path="/adminpage" component={AdminPage}/>
         <Route component={Error} />
       </Switch>
   </>

@@ -1,37 +1,70 @@
 import React from 'react';
 import { connect } from 'react-redux'
 import { changeState} from '../components/actions/storeActions';
+import Hero from '../components/Hero';
+import Banner from '../components/Banner';
+import axios from 'axios';
 
 class Login extends React.Component{
 
-    handleChange = () =>{
-        this.props.changeState()
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            username: '',
+            password:''
+        }
+    };
+
+
+    handleChange = (e) => {
+        this.setState({
+            [e.target.name]: e.target.value
+        })
     }
 
-    handleSubmit = () => {
-        this.props.changeState()
+    handleSubmit = event => {
+        event.preventDefault();
+
+        const login_json = {
+            adminID: this.state.username,
+            username: this.state.username,
+            password: this.state.password,
+          }
+        console.log(login_json)
+        
+        axios.post('http://5.45.107.109:4000/api/login', login_json)
+        .then(res => {
+          if (res.data != null) {
+            res.data.successful ? this.props.changeState() : alert("Benutzername oder Passort falsch")
+            this.props.history.push('/adminpage')
+          } else {
+            alert("Ein Fehler ist aufgetreten")
+          }
+        })
     }
 
     render(){
-        console.log(this.props.loginState ? 'true' : ' false')
+
         return(
             <>
-            <div>
-                <h6>Login</h6>
-            </div>
-            <div>
+            <Hero hero='programHero'>
+                <Banner title="Login"></Banner>
+            </Hero>
+            <div className="login-Container">
                 <form onSubmit = {this.handleSubmit}>
                 <div>
                     <label>Benutzername</label>
-                    <input type="text" name="username" placeholder="Benutzername" required/>
+                    <br/>
+                    <input type="text" name="username" class="login_input" onChange={this.handleChange} required/>
                 </div>
                 <div>
                     <label>Passwort</label>
-                    <input type="password" name="password" placeholder="Passwort" required/>
+                    <br/>
+                    <input type="password" name="password" class="login_input"  onChange={this.handleChange} required/>
                 </div>
-                    
-                    
-                <button  class="booking-btn_100" type="submit">Login</button>
+                       
+                <button  class="booking-btn" type="submit">Login</button>
                 </form>
             </div>
             </>
