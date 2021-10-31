@@ -157,6 +157,12 @@ h6 {
     font-size: 1.5rem;
     color: var(--primaryColor);
     position: fixed;
+    right: 5.5rem;
+  }
+  .nav-icon-login {
+    font-size: 1.5rem;
+    color: var(--primaryColor);
+    position: fixed;
     right: 2rem;
   }
 }
