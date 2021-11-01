@@ -3,6 +3,9 @@ import Hero from '../components/Hero'
 import Banner from '../components/Banner'
 import { connect } from 'react-redux';
 import axios from 'axios';
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import { format } from 'date-fns'
 
 class AdminPage extends Component{
 
@@ -14,7 +17,8 @@ class AdminPage extends Component{
             selectedMovie: null,
             seatingTemplates:[],
             selectedTemplate: null,
-            eventStart: '',
+            eventStart: [],
+            selectedEventStart: new Date(),
             is3D: false,
 
             movieName: '',
@@ -62,9 +66,10 @@ class AdminPage extends Component{
             showEventId: this.state.selectedMovie.movieId + Date().toLocaleString('de-DE'),
             movieInfo: this.state.selectedMovie,
             seatingTemplateInfo: this.state.selectedTemplate,
-            eventStart: this.eventStart,
+            eventStart: this.state.eventStart,
             is3D: this.state.is3D
         }
+    console.log(showEvent_json)
 
 
     axios.post('http://5.45.107.109:4000/api/createshowevent', showEvent_json)
@@ -135,16 +140,32 @@ class AdminPage extends Component{
         }
     }
 
+    changeDate = (date) => {
+        
+        this.setState({
+            selectedEventStart: date
+        })
+
+        var newDate = format(date, 'yyyy-MM-dd-hh-mm').split("-");
+        var DateArr = [parseInt(newDate[0]), parseInt(newDate[1]), parseInt(newDate[2]), parseInt(newDate[3]), parseInt(newDate[4])]
+        this.setState({
+            eventStart: DateArr
+        })
+
+    }
+
     render(){
     if(!this.props.loginState) {
         this.props.history.push('/login')
     }
 
-    let movieList = this.state.movies.map((item) =>
+    let movieList = [ {movieName:"Bitte Wählen"}, ...this.state.movies ]
+    movieList = movieList.map((item) =>
         <option value={item.movieName}>{item.movieName}</option>
     );
 
-    let seatingTemplates = this.state.seatingTemplates.map((item) =>
+    let seatingTemplates = [ {name:"Bitte Wählen"}, ...this.state.seatingTemplates ]
+    seatingTemplates = seatingTemplates.map((item) =>
     <option value={item.name} >{item.name}</option>
 );
 
@@ -167,14 +188,13 @@ class AdminPage extends Component{
                 <div>
                     <label>Seating Template</label>
                     <br/>
-                    <select name="selectedTemplate" value={this.state.seatingTemplates.name} onChange={this.handleChange}>      
+                    <select name="selectedTemplate"  onChange={this.handleChange}>      
                         {seatingTemplates}  
                     </select>
                 </div>
                 <div>
-                    <label>eventStart</label>
-                    <br/>
-                    <input type="text" name="eventStart" class="login_input" onChange={this.handleChange} required/>
+                    <label for="eventStart">Eventstart</label>
+                    <DatePicker selected={this.state.selectedEventStart} onChange={this.changeDate} showTimeSelect dateFormat='dd.MM.yyyy HH:mm' required />
                 </div>
                 <div>
                     <label>3D</label>
