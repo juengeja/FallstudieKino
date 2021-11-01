@@ -1052,12 +1052,47 @@ text-align: center;
 	margin-left: auto
 }
 
-.login_input {
-  width: 45%;
+.login-Container .react-datepicker-wrapper {
+  width: 100%;
   min-height: 30px;
   border: 0;
   font-size: 1rem;
   letter-spacing: .15rem;
   margin-bottom: 4%;
   border-radius: 4px;
+}
+
+.login-Container .react-datepicker-wrapper input {
+  width: 45%;
+  min-height: 30px;
+  border: 0;
+  font-size: 1rem;
+  letter-spacing: .15rem;
+  margin-top: 1%;
+  border-radius: 4px;
+  text-align: center
+}
+
+.login_input {
+  width: 45%;
+  min-height: 30px;
+  border: 0;
+  font-size: 1rem;
+  letter-spacing: .15rem;
+  margin-top: 1%;
+  margin-bottom: 4%;
+  border-radius: 4px;
+  text-align: center
+}
+
+.admin_checkbox {
+  width: 45%;
+  min-height: 25px;
+  border: 0;
+  font-size: 1rem;
+  letter-spacing: .15rem;
+  margin-top: 1%;
+  margin-bottom: 4%;
+  border-radius: 4px;
+  text-align: center
 }

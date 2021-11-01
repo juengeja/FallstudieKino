@@ -27,13 +27,13 @@ class Login extends React.Component{
         event.preventDefault();
 
         const login_json = {
-            adminID: this.state.username,
-            username: this.state.username,
-            password: this.state.password,
-          }
+            'adminID': this.state.username,
+            'username': this.state.username,
+            'password': this.state.password
+        }
         console.log(login_json)
         
-        axios.post('http://5.45.107.109:4000/api/login', login_json)
+        axios.put('http://5.45.107.109:4000/api/login', login_json)
         .then(res => {
           if (res.data != null) {
             res.data.successful ? this.props.changeState() : alert("Benutzername oder Passort falsch")

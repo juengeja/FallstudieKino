@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import Hero from '../components/Hero'
 import Banner from '../components/Banner'
 import { connect } from 'react-redux';
+import { changeState} from '../components/actions/storeActions';
 import axios from 'axios';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
@@ -34,7 +35,7 @@ class AdminPage extends Component{
     };
 
     componentDidMount() {
-        axios.get('http://5.45.107.109:4000/api/moviedata')
+        axios.get('http://5.45.107.109:4000/api/dropdown/movies/IndigoBW')
             .then((response) => {
                 let movies = this.formatData(response.data);
                 this.setState({
@@ -42,7 +43,7 @@ class AdminPage extends Component{
                 })
             });
 
-        axios.get('http://5.45.107.109:4000/api/seatingTemplates')
+        axios.get('http://5.45.107.109:4000/api/dropdown/seatingtemplates/IndigoBW')
             .then((response) => {
                 let seatingTemplates = this.formatData(response.data);
                 this.setState({
@@ -63,7 +64,7 @@ class AdminPage extends Component{
         event.preventDefault();
 
         const showEvent_json  = {
-            showEventId: this.state.selectedMovie.movieId + Date().toLocaleString('de-DE'),
+            showEventID: this.state.selectedMovie.movieId + Date().toLocaleString('de-DE'),
             movieInfo: this.state.selectedMovie,
             seatingTemplateInfo: this.state.selectedTemplate,
             eventStart: this.state.eventStart,
@@ -72,13 +73,13 @@ class AdminPage extends Component{
     console.log(showEvent_json)
 
 
-    axios.post('http://5.45.107.109:4000/api/createshowevent', showEvent_json)
+    axios.post('http://5.45.107.109:4000/api/admin/createshowevent', showEvent_json)
     .then(res => {
         if (res.data != null) {
-            if (res.data.bookingStatus === "") {
+            if (res.data.live) {
                 alert('Erfolgreich hinzugefügt')
             } else {
-                alert('Fehler')
+                alert("Ein Fehler ist aufgetreten")
             }
           } else {
             alert("Ein Fehler ist aufgetreten")
@@ -93,9 +94,9 @@ class AdminPage extends Component{
             movieId: this.state.movieName.replace(" ", ""),
             movieName: this.state.movieName,
             mainGenre: this.state.mainGenre,
-            duration: this.state.duration,
+            duration: parseInt(this.state.duration),
             trailer: this.state.trailer,
-            actors: this.state.actors,
+            actors: [this.state.actors],
             producer: this.state.producer,
             director: this.state.director,
             img: this.state.img,
@@ -103,10 +104,10 @@ class AdminPage extends Component{
         }
     console.log(movie_json)
 
-    axios.post('http://5.45.107.109:4000/api/createsmovie', movie_json)
+    axios.post('http://5.45.107.109:4000/api/admin/createmovie', movie_json)
     .then(res => {
         if (res.data != null) {
-            if (res.data.bookingStatus === "") {
+            if (res.data.movieId !== '') {
                 alert('Erfolgreich hinzugefügt')
             } else {
                 alert('Fehler')
@@ -118,7 +119,6 @@ class AdminPage extends Component{
     }
 
     handleChange = (e) => {
-        console.log(e.target.name)
         if (e.target.name === 'is3D'){
             this.setState({
                 is3D: !this.state.is3D
@@ -129,7 +129,7 @@ class AdminPage extends Component{
                 selectedMovie
             })
         }else if (e.target.name === 'selectedTemplate'){
-            var selectedTemplate = this.state.movies.find(movie => movie.movieName === e.target.value)
+            var selectedTemplate = this.state.seatingTemplates.find(item => item.seatingTemplateID === e.target.value)
             this.setState({
                 selectedTemplate
             })
@@ -146,12 +146,17 @@ class AdminPage extends Component{
             selectedEventStart: date
         })
 
-        var newDate = format(date, 'yyyy-MM-dd-hh-mm').split("-");
+        var newDate = format(date, 'yyyy-MM-dd-HH-mm').split("-");
         var DateArr = [parseInt(newDate[0]), parseInt(newDate[1]), parseInt(newDate[2]), parseInt(newDate[3]), parseInt(newDate[4])]
         this.setState({
             eventStart: DateArr
         })
 
+    }
+
+    handleLogout = () =>{
+        this.props.changeState()
+        this.props.history.push('/login')
     }
 
     render(){
@@ -164,9 +169,9 @@ class AdminPage extends Component{
         <option value={item.movieName}>{item.movieName}</option>
     );
 
-    let seatingTemplates = [ {name:"Bitte Wählen"}, ...this.state.seatingTemplates ]
+    let seatingTemplates = [ {seatingTemplateID:"Bitte Wählen"}, ...this.state.seatingTemplates ]
     seatingTemplates = seatingTemplates.map((item) =>
-    <option value={item.name} >{item.name}</option>
+    <option value={item.seatingTemplateID} >{item.seatingTemplateID}</option>
 );
 
     return (
@@ -181,14 +186,14 @@ class AdminPage extends Component{
                 <div>
                     <label>Movie</label>
                     <br/>
-                    <select name="selectedMovie" onChange={this.handleChange}>      
+                    <select name="selectedMovie" class="login_input" onChange={this.handleChange}>      
                         {movieList} 
                     </select>
                 </div>
                 <div>
                     <label>Seating Template</label>
                     <br/>
-                    <select name="selectedTemplate"  onChange={this.handleChange}>      
+                    <select name="selectedTemplate" class="login_input" onChange={this.handleChange}>      
                         {seatingTemplates}  
                     </select>
                 </div>
@@ -199,12 +204,14 @@ class AdminPage extends Component{
                 <div>
                     <label>3D</label>
                     <br/>
-                    <input type="checkbox" onChange={this.handleChange}  name="is3D" checked={this.state.is3D}/>
+                    <input type="checkbox" onChange={this.handleChange} class="admin_checkbox" name="is3D" checked={this.state.is3D}/>
                 </div>
                        
                 <button  class="booking-btn" type="submit">ShowEvent erstellen</button>
                 </form>
 
+                <br />
+                <br />
 
                 <form onSubmit = {this.handleMovieSubmit}>
                 <h6>Movie hinzufügen</h6>
@@ -256,6 +263,7 @@ class AdminPage extends Component{
                        
                 <button  class="booking-btn" type="submit">Movie erstellen</button>
                 </form>
+                <button  class="booking-btn" onClick={this.handleLogout}>Abmelden</button>
             </div>
         </>
     );
@@ -267,4 +275,10 @@ const mapStateToProps = (state) => {
         loginState: state.loginState
     }
 }
-export default connect(mapStateToProps)(AdminPage)
+const mapDispatchToProps = (dispatch) => {
+
+    return {
+        changeState: () => { dispatch(changeState()) },
+    }
+}
+export default connect(mapStateToProps, mapDispatchToProps)(AdminPage)

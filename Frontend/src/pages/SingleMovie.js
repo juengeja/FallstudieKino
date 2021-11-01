@@ -26,7 +26,7 @@ export default class SingleMovie extends Component {
                 </Link>
             </div>
         }
-        const { movieName, mainGenre, producer, director, description, duration, trailer, img } = movie;
+        const { movieName, mainGenre, actors, producer, director, description, duration, trailer, img } = movie;
         return (
             <>
                 <Hero hero='programHero'>
@@ -43,6 +43,7 @@ export default class SingleMovie extends Component {
                             <h3>Infos</h3>
                             <h6>Länge : {duration}min</h6>
                             <h6>Genre : {mainGenre}</h6>
+                            <h6>Akteure : {actors}</h6>
                             <h6>Produzent : {producer}</h6>
                             <h6>Regisseur : {director}</h6>
                             <Link to={`/addToShoppingCart/${this.state.slug}`} className="btn-primary">

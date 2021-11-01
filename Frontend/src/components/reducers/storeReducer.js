@@ -4,7 +4,7 @@ import { ADD_TO_CART,ADD_ITEM,REMOVE_ITEM,REMOVE_ALL,CHANGE_STATE } from '../act
 const initState = {
     items: [],
     addedItems:[],
-    loginState: true
+    loginState: false
 }
 const cartReducer= (state = initState,action)=>{
     //INSIDE HOME COMPONENT
@@ -45,7 +45,7 @@ const cartReducer= (state = initState,action)=>{
     if(action.type === CHANGE_STATE){
 
         return{
-            loginState: true,
+            loginState: !state.loginState,
         }    
     }
     

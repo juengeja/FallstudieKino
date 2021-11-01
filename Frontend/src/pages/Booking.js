@@ -90,8 +90,9 @@ class Booking extends Component {
         axios.put('http://5.45.107.109:4000/api/reservation/successfulpayment', booking)
             .then(res => {
                 if (res.data != null) {
-                    this.handleRemove()
+
                     if (res.data.bookingStatus === "paid") {
+                        this.handleRemove()
                         this.setState({
                             showSuccessfulPopup: !this.state.showSuccessfulPopup
                         })
@@ -230,7 +231,7 @@ class ErrorPopup extends Component {
             <div className='popup'>
                 <div className='popup_inner'>
                     <h6>Leider ist etwas schiefgelaufen. Bitte versuchen sie es erneut</h6>
-                    <Link to='/' className="btn-primary">Zum Startseite</Link>
+                    <Link to='/' className="btn-primary">Zur Startseite</Link>
                 </div>
             </div>
         );
