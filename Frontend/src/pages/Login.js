@@ -4,6 +4,7 @@ import { changeState} from '../components/actions/storeActions';
 import Hero from '../components/Hero';
 import Banner from '../components/Banner';
 import axios from 'axios';
+import ScrollButton from '../components/ScrollButton';
 
 class Login extends React.Component{
 
@@ -31,8 +32,7 @@ class Login extends React.Component{
             'username': this.state.username,
             'password': this.state.password
         }
-        console.log(login_json)
-        
+
         axios.put('http://5.45.107.109:4000/api/login', login_json)
         .then(res => {
           if (res.data != null) {
@@ -67,6 +67,7 @@ class Login extends React.Component{
                 <button  class="booking-btn" type="submit">Login</button>
                 </form>
             </div>
+            <ScrollButton />
             </>
         )
     }

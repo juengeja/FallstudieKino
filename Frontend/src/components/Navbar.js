@@ -32,7 +32,13 @@ import { connect } from 'react-redux';
                         <Link to="/program">Programm</Link>
                     </li>
                     <li>
-                        <Link to="/contact">Kontakt</Link>
+                        <Link to="/gastro">Gastro</Link>
+                    </li>
+                    <li>
+                        <Link to="/contact">Info</Link>
+                    </li>
+                    <li>
+                        <Link to="/corona">Infektionsschutz</Link>
                     </li>
                     <li>
                         {this.props.loginState ? <Link to="/adminpage"><FaUserAlt className="nav-icon-login"/></Link> : <Link to="/login"><FaUserAlt className="nav-icon-login"/></Link>}

@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {FaCocktail, FaInstagram, FaBtc} from 'react-icons/fa';
 import Title from './Title';
+import { Link } from 'react-router-dom'
 
 export default class Services extends Component {
     state={
@@ -8,17 +9,20 @@ export default class Services extends Component {
             {
                 icon:<FaCocktail/>,
                 title:"Snacks und Getränke",
-                info:'Wir bieten die besten Snacks und Getränke, um Sie während einer Vorstellung bestmöglichst zu versorgen. '
+                info:'Essen und Trinken ist für uns nicht nur Nahrungsaufnahme. Es tut auch der Seele gut und sorgt für Gesellschaft. Bei uns gibt es die individuellsten Snacks zum Film!',
+                link:'/gastro'
             },
             {
                 icon:<FaInstagram/>,
                 title:"Social Media",
-                info:'Folge uns auf unseren Social Media Kanälen wie Instagram und Twitter um keine neuen Filme mehr zu verpassen.'
+                info:'Folge uns auf unseren Social Media Kanälen wie Instagram und Twitter um keine neuen Updates mehr von uns zu verpassen.',
+                link:"https://www.instagram.com/memes_dhbw_mannheim/"
             },
             {
                 icon:<FaBtc/>,
                 title:"Zahlungsweisen",
-                info:'Wir bieten dir eine entspannte Zahlung mit renomierten Cryptowährungen wir Bitcoin an'
+                info:'Wir bieten dir vielfältige Zahlungsarten an, damit der Kaufvorgang für dich so angenehm wie möglich ist.',
+                link:'/payment'
             }
         ]
     };
@@ -31,7 +35,9 @@ export default class Services extends Component {
                     {this.state.services.map((item,index) => {
                         return (
                             <article key={index} className="service">
+                                <a href={item.link}>
                                 <span>{item.icon}</span>
+                                </a>
                                 <h6>{item.title}</h6>
                                 <p>{item.info}</p>
                          </article>

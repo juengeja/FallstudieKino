@@ -67,7 +67,6 @@ export default class MovieProvider extends Component {
 
         //filter by name 
         if(movieName !== ''){
-            console.log(movieName)
             tempMovies = tempMovies.filter(movie => movie.movieName.includes(movieName));
         }
 

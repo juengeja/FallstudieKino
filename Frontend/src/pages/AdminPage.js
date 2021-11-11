@@ -7,6 +7,7 @@ import axios from 'axios';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { format } from 'date-fns'
+import ScrollButton from '../components/ScrollButton';
 
 class AdminPage extends Component{
 
@@ -35,6 +36,7 @@ class AdminPage extends Component{
     };
 
     componentDidMount() {
+        window.scrollTo(0, 0)
         axios.get('http://5.45.107.109:4000/api/dropdown/movies/IndigoBW')
             .then((response) => {
                 let movies = this.formatData(response.data);
@@ -63,6 +65,10 @@ class AdminPage extends Component{
     handleShowEventSubmit = event => {
         event.preventDefault();
 
+        if (!this.state.eventStart.length || this.state.selectedMovie === null || this.state.selectedEventStart === null) {
+            alert('Nicht alles ausgewählt')
+        }else{
+
         const showEvent_json  = {
             showEventID: this.state.selectedMovie.movieId + Date().toLocaleString('de-DE'),
             movieInfo: this.state.selectedMovie,
@@ -70,8 +76,6 @@ class AdminPage extends Component{
             eventStart: this.state.eventStart,
             is3D: this.state.is3D
         }
-    console.log(showEvent_json)
-
 
     axios.post('http://5.45.107.109:4000/api/admin/createshowevent', showEvent_json)
     .then(res => {
@@ -86,12 +90,13 @@ class AdminPage extends Component{
           }
       })
     }
+    }
 
     handleMovieSubmit = event => {
         event.preventDefault();
 
         const movie_json  = {
-            movieId: this.state.movieName.replace(" ", ""),
+            movieId: this.state.movieName.split(' ').join(''),
             movieName: this.state.movieName,
             mainGenre: this.state.mainGenre,
             duration: parseInt(this.state.duration),
@@ -102,7 +107,6 @@ class AdminPage extends Component{
             img: this.state.img,
             description: this.state.description
         }
-    console.log(movie_json)
 
     axios.post('http://5.45.107.109:4000/api/admin/createmovie', movie_json)
     .then(res => {
@@ -265,6 +269,7 @@ class AdminPage extends Component{
                 </form>
                 <button  class="booking-btn" onClick={this.handleLogout}>Abmelden</button>
             </div>
+            <ScrollButton />
         </>
     );
     }

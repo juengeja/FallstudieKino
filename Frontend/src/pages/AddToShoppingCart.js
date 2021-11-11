@@ -6,6 +6,9 @@ import { connect } from 'react-redux';
 import { addToCart, addItem, removeItem } from '../components/actions/storeActions';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import {HashLink} from 'react-router-hash-link';
+import loadingGif from '../images/gif/small-loading-arrow.gif';
+import ScrollButton from '../components/ScrollButton';
 
 class AddToShoppingCart extends Component {
   constructor(props) {
@@ -18,12 +21,14 @@ class AddToShoppingCart extends Component {
       cart_entry_eventID: '',
       showSuccessfulPopup: false,
       showErrorPopup: false,
+      showWaitingPopup: false,
       error: false,
       bookedSeats: []
     };
   }
-
+  
   componentDidMount() {
+    window.scrollTo(0, 0)
     let url = 'http://5.45.107.109:4000/api/moviedata/showeventdates/' + this.state.slug;
     axios.get(url)
       .then((response) => {
@@ -48,6 +53,8 @@ class AddToShoppingCart extends Component {
     if (entry.seats === '') {
       alert('Es wurde kein Sitzplatz ausgewählt')
     } else {
+
+      this.setState({showWaitingPopup: !this.state.showWaitingPopup})
 
       const seat_reservation_post = {
         bookingInfo: entry.bookingID,
@@ -91,6 +98,8 @@ class AddToShoppingCart extends Component {
     if (entry.seats === '') {
       alert('Es wurde kein Sitzplatz ausgewählt')
     } else {
+
+      this.setState({showWaitingPopup: !this.state.showWaitingPopup})
 
       const seat_reservation_post = {
         quickCheckout: true,
@@ -161,7 +170,6 @@ class AddToShoppingCart extends Component {
 
     const { movieName } = movie;
 
-    //Change Hardcoded values 
     var tempEntry = { id: this.props.items.length, bookingID: null, reservationID: Date().toLocaleString('de-DE'), eventID: this.state.cart_entry_eventID, seats: '' }
 
     tempEntry.bookingID = this.props.items.length ? this.props.items[0].bookingID : null
@@ -273,7 +281,7 @@ class AddToShoppingCart extends Component {
 
           <p>
             <div className="abstand">hallo</div>
-            <div className="row">Frei: <Seat seatColor="seat-grey" /> Belegt: <Seat seatColor="seat-black" /> Gewählt: <Seat seatColor="seat-red" /></div>
+            <div className="legende">Frei: <Seat seatColor="seat-grey" /> Belegt: <Seat seatColor="seat-black" /> Gewählt: <Seat seatColor="seat-red" /></div>
             <div className="abstand">hallo</div>
           </p>
         </>
@@ -292,7 +300,10 @@ class AddToShoppingCart extends Component {
           <h6>Bitte eine Vorstellung auswählen:</h6>
 
           {this.state.events.map((item) => {
-            return <button className={this.state.cart_entry_eventStart === item.eventStart ? "event-btn" : "event-btn-unselected"} value={item.eventStart} onClick={() => { this.handleEventPicker(item) }}>{item.eventStart}</button>
+            let splitedDate = item.eventStart.split('T')
+            let Date = splitedDate[0].split('-')
+            let newDate = Date[2] + "." + Date[1] + "." + Date[0] + " " + splitedDate[1] + " Uhr"
+            return <button className={this.state.cart_entry_eventStart === item.eventStart ? "event-btn" : "event-btn-unselected"} value={item.eventStart} onClick={() => { this.handleEventPicker(item) }}>{newDate}</button>
           })}
 
           {this.state.cart_entry_eventID === '' ? null :
@@ -304,9 +315,11 @@ class AddToShoppingCart extends Component {
             </>
           }
 
+          {this.state.showWaitingPopup ? <WaitingPopup /> : null}
           {this.state.showSuccessfulPopup ? <SuccessfulPopup /> : null}
           {this.state.showErrorPopup ? <ErrorPopup /> : null}
         </div>
+        <ScrollButton />
       </>
     );
   }
@@ -337,6 +350,8 @@ class SuccessfulPopup extends Component {
           <h6>Der Film wurde erfolgreich zum Warenkorb hinzugefügt!</h6>
           <Link to='/shoppingCart' className="btn-primary">Zum Warenkorb</Link>
           <h3 />
+          <HashLink to='/gastro/#menues' className="btn-primary">Menü hinzufügen</HashLink>
+          <h3 />
           <Link to='/program' className="btn-primary">Weiteren Film hinzufügen</Link>
         </div>
       </div>
@@ -358,6 +373,21 @@ class ErrorPopup extends Component {
         </div>
       </div>
     );
+  }
+}
+
+class WaitingPopup extends Component {
+  render() {
+      return (
+          <div className='popup'>
+              <div className='popup_inner'>
+                  <div className="loading" data-testid="loading-1">
+                        <h4>Daten werden verarbeitet...</h4>
+                        <img src={loadingGif} alt="" />
+                    </div>
+              </div>
+          </div>
+      );
   }
 }
 

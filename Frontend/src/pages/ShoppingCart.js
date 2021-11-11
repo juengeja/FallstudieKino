@@ -6,12 +6,15 @@ import Recipe from '../components/Recipe'
 import Hero from '../components/Hero';
 import Banner from '../components/Banner';
 import axios from 'axios';
+import ScrollButton from '../components/ScrollButton';
 
 class ShoppingCart extends Component {
 
+    componentDidMount(){
+        window.scrollTo(0, 0)
+    }
     
     removeReservtion(reservationID) {
-        console.log(reservationID)
     let url = 'http://5.45.107.109:4000/api/remove/' + reservationID;
     axios.put(url)
     .then(res => {
@@ -35,6 +38,10 @@ class ShoppingCart extends Component {
                     let seats = reservation.seats.join(', ')
                     let splitSeats = seats.split('Astra').join('')
 
+                    let splitedDate = reservation.eventStart.split('T')
+                    let Date = splitedDate[0].split('-')
+                    let newDate = Date[2] + "." + Date[1] + "." + Date[0] + " " + splitedDate[1] + " Uhr"
+
                     return (
                         <>
                             <li class="li-container" >
@@ -44,8 +51,8 @@ class ShoppingCart extends Component {
 
                                 <div className="cart-entry-details">
                                     <h6 className="title">{reservation.movieName}</h6>               
-                                    <h6>{reservation.eventStart}</h6>
-                                    <h6>Gewählte Sitze: {splitSeats}</h6>
+                                    <h6>{newDate}</h6>
+                                    <h6>Sitzplatz: {splitSeats}</h6>
                                 </div>
                                 <div class="cart-entry-buttons">
                                     <button className="btn-primary" onClick={() => { this.removeReservtion(reservation.reservationID) }}>Löschen</button>
@@ -70,9 +77,11 @@ class ShoppingCart extends Component {
 
 
         let showRecipe = this.props.items.length && this.props.items[this.props.items.length - 1].reservations.length ? <><h6>Gesamtsumme: {this.props.items[this.props.items.length - 1].totalPrice}€</h6><Recipe /></> : null
+        let menu = this.props.items.length && this.props.items[this.props.items.length - 1].reservations.length ? <><h6>Hinzugefügtes Menü: {this.props.items[this.props.items.length - 1].menue}</h6></> : null
+     
         return (
             <>
-                <Hero hero='programHero'>
+                <Hero hero='cartHero'>
                     <Banner title="Warenkorb"></Banner>
                 </Hero>
                 <section class="movielist">
@@ -81,10 +90,12 @@ class ShoppingCart extends Component {
                             {addedItems}
                         </ul>
                         <div class="recipe">
+                            {menu}
                             {showRecipe}
                         </div>
                     </div>
                 </section>
+                <ScrollButton />
             </>
         )
     }

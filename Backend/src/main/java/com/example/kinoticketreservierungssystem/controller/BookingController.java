@@ -39,13 +39,17 @@ public class BookingController {
 
     @PostMapping
     public ResponseEntity<Booking> seatsReserved(@RequestBody Reservation reservation){
-        return new ResponseEntity<Booking>(bookingProcess.reserveSeats(reservation), HttpStatus.OK);
+        return new ResponseEntity<>(bookingProcess.reserveSeats(reservation), HttpStatus.OK);
     }
 
     @PutMapping("/successfulpayment")
     public ResponseEntity<Booking> seatsBooked(@RequestBody Booking booking) throws MessagingException {
         Booking bookedSeats = bookingProcess.bookSeats(booking);
-        sendMail.ticketEmail(booking);
-        return new ResponseEntity<Booking>(bookedSeats, HttpStatus.OK);
+        if(!bookedSeats.getBookingStatus().equals("denied")){
+            bookedSeats.setBookingStatus("paid");
+            bookingRepository.save(bookedSeats);    
+            sendMail.ticketEmail(bookedSeats);
+        }
+        return new ResponseEntity<>(bookedSeats, HttpStatus.OK);
     }
 }

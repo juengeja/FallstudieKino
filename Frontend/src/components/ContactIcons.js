@@ -13,17 +13,19 @@ export default class Contact extends Component {
             {
                 icon:<FaPhoneAlt/>,
                 title:"Telefonnummer",
-                info:"0123 / 456789"
+                info:"(02229) 703739400",
+                link: "tel:+492229703739400"
             },
             {
                 icon:<FaMailBulk/>,
                 title:"E-Mail",
-                info:"kino@kino.de"
+                info:"info@indigo-bw.de",
+                link: "mailto:info@indigo-bw.de"
             },
             {
                 icon:<FaLocationArrow/>,
                 title:"Adresse",
-                info:"Am Kino 1, 12345 Kinohausen"
+                info:"Coblitzallee 1-9, 68163 Mannheim"
             }
         ]
     };
@@ -36,7 +38,9 @@ export default class Contact extends Component {
                     {this.state.services.map((item,index) => {
                         return (
                             <article key={index} className="service">
+                                <a href={item.link}>
                                 <span>{item.icon}</span>
+                                </a>
                                 <h6>{item.title}</h6>
                                 <p>{item.info}</p>
                          </article>

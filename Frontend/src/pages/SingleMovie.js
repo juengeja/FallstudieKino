@@ -4,17 +4,21 @@ import Banner from '../components/Banner';
 import { Link } from 'react-router-dom';
 import { MovieContext } from '../MovieContext';
 import Title from '../components/Title';
+import ScrollButton from '../components/ScrollButton';
 
 export default class SingleMovie extends Component {
     constructor(props) {
         super(props);
-        console.log(this.props);
         this.state = {
             slug: this.props.match.params.slug,
         };
     }
     static contextType = MovieContext;
-    //componentDidMount(){}
+
+    componentDidMount() {
+        window.scrollTo(0, 0)
+      }
+
     render() {
         const { getMovie } = this.context;
         const movie = getMovie(this.state.slug);
@@ -62,6 +66,7 @@ export default class SingleMovie extends Component {
                     <Title title="Trailer" />
                     <iframe className="single-movie-trailer" src={trailer} title="Trailer" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                 </section>
+                <ScrollButton />
             </>
         );
     }
