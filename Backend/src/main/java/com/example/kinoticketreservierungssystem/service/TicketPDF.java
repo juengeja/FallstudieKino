@@ -3,6 +3,7 @@ package com.example.kinoticketreservierungssystem.service;
 import com.example.kinoticketreservierungssystem.entity.Seat;
 import com.example.kinoticketreservierungssystem.entity.ShowEvent;
 import com.example.kinoticketreservierungssystem.entity.Ticket;
+import com.example.kinoticketreservierungssystem.repository.MenuRepository;
 import com.example.kinoticketreservierungssystem.repository.SeatRepository;
 import com.example.kinoticketreservierungssystem.repository.ShowEventRepository;
 import com.itextpdf.text.*;
@@ -22,6 +23,8 @@ public class TicketPDF {
     ShowEventRepository showEventRepository;
     @Autowired
     SeatRepository seatRepository;
+    @Autowired
+    MenuRepository menuRepository;
 
     private static String FILE = System.getProperty("user.home") + File.separator + "Tickets" + File.separator + "tickets.pdf";
     private static Font catFont = new Font(Font.FontFamily.TIMES_ROMAN, 40,
@@ -31,13 +34,15 @@ public class TicketPDF {
 
 
 
-    public File createTicketPDF(Set<Ticket> tickets) {
+    public File createTicketPDF(Set<Ticket> tickets, String menu) {
 
         Document document = new Document();
         File file = new File("webapps/ticket.pdf");
-        try {
 
+
+        try {
             PdfWriter.getInstance(document, new FileOutputStream(file));
+
 
             //open
             document.open();
@@ -45,10 +50,16 @@ public class TicketPDF {
                 Seat seat = seatRepository.findBySeatID(ticket.getSeatInfo()).get();
                 ShowEvent showEvent = showEventRepository.findByShowEventID(ticket.getShowEventInfo()).get();
                 Paragraph p = new Paragraph();
-                p.add("Movie Ticket");
+                p.add(showEvent.getMovieInfo().getMovieName());
                 p.setAlignment(Element.ALIGN_CENTER);
 
                 document.add(p);
+
+                Paragraph p1 = new Paragraph();
+                p1.add("Room: " + showEvent.getSeatingTemplateInfo().getEventRoomID());
+                p1.setAlignment(Element.ALIGN_CENTER);
+
+                document.add(p1);
 
                 Paragraph p2 = new Paragraph();
                 p2.add("Date: " + showEvent.getEventStart().toString());
@@ -75,15 +86,33 @@ public class TicketPDF {
                     document.newPage();
                 }
             }
+            if (menu != null) {
+                document.newPage();
+                Paragraph p5 = new Paragraph();
+                p5.add("Menu Voucher");
+                p5.setAlignment(Element.ALIGN_CENTER);
+                document.add(p5);
+
+                try {
+                    document.add(generateQRCodeImage(menuRepository.findById(menu).get().getMenuId()));
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
             //close
             document.close();
 
 
-        } catch (FileNotFoundException | DocumentException e) {
+            return file;
+        } catch (DocumentException e) {
             e.printStackTrace();
+            return null;
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+            return null;
         }
-    return file;
     }
+
 
     public static Image generateQRCodeImage(String barcodeText) throws Exception {
         ByteArrayOutputStream stream = QRCode

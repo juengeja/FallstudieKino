@@ -1,4 +1,4 @@
-package com.example.kinoticketreservierungssystem.blSupport;
+package com.example.kinoticketreservierungssystem.entity;
 
 import com.azure.spring.data.cosmos.core.mapping.Container;
 import com.azure.spring.data.cosmos.core.mapping.PartitionKey;

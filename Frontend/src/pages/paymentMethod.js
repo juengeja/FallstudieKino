@@ -9,7 +9,7 @@ export default function paymentMethod() {
 
     return (
         <>
-            <Hero hero="programHero">
+            <Hero hero="paymentHero">
                 <Banner title="Zahlungsmittel" />
             </Hero>
 
@@ -58,7 +58,7 @@ export default function paymentMethod() {
                     < br />
                 </div>
 
-                <img src={payment} />
+                <img src={payment} alt={payment} />
 
             </section>
             <ScrollButton />

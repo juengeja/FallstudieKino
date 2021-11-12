@@ -1,11 +1,8 @@
 package com.example.kinoticketreservierungssystem.controller;
 
-import com.example.kinoticketreservierungssystem.blSupport.Reservation;
+import com.example.kinoticketreservierungssystem.entity.Reservation;
 import com.example.kinoticketreservierungssystem.entity.*;
-import com.example.kinoticketreservierungssystem.repository.BookingRepository;
-import com.example.kinoticketreservierungssystem.repository.CustomerRepository;
-import com.example.kinoticketreservierungssystem.repository.ShowEventRepository;
-import com.example.kinoticketreservierungssystem.repository.TicketRepository;
+import com.example.kinoticketreservierungssystem.repository.*;
 import com.example.kinoticketreservierungssystem.service.BookingProcess;
 import com.example.kinoticketreservierungssystem.service.SeatingPlan;
 import com.example.kinoticketreservierungssystem.service.SendMail;
@@ -36,6 +33,8 @@ public class BookingController {
     TicketRepository ticketRepository;
     @Autowired
     SendMail sendMail;
+    @Autowired
+    MenuRepository menuRepository;
 
     @PostMapping
     public ResponseEntity<Booking> seatsReserved(@RequestBody Reservation reservation){

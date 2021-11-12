@@ -1,0 +1,78 @@
+{
+"food":[
+    {
+      "title":"Baconburger",
+      "description":"150g Rindfleisch, Zwiebeln, Bacon, Baconsauce, Käse, Salat, Tomate, Gurke",
+      "price": "9,90"
+    },
+    {
+        "title":"Pulled Pork Burger",
+        "description":"Pulled Pork, Salat, Tomate, Gurke, BBQ Sauce, Kartoffelstroh",
+        "price": "9,90"
+      },
+      {
+        "title":"Pommes",
+        "description":"inkl. Ketchup oder Mayo",
+        "price": "2,90"
+      },
+      {
+        "title":"Käse Ecken",
+        "description":"mit hausgemachter Panade gebackener Camembert mit Preiselbeeren",
+        "price": "5.50"
+      },
+      {
+        "title":"Schnitzel Wiener Art",
+        "description":"Schwein oder Hähnchen in selbstgemachter Panade mit Pommes",
+        "price": "9.90"
+      }
+],
+"snacks":[
+    {
+      "title":"Nachos klein",
+      "price": "5,50"
+    },
+    {
+        "title":"Nachos groß",
+        "price": "6,90"
+      },
+    {
+        "title":"Popcorn klein",
+        "price": "4,50"
+      },
+      {
+        "title":"Popcorn mittel",
+        "price": "5,50"
+      },
+      {
+        "title":"Popcorn groß",
+        "price": "6,50"
+      }
+],
+
+"drinks":[
+    {
+      "title":"Coca Cola, Cola Zero, Fanta, Sprite, Mezzo Mix 0,2l",
+      "price": "3,50"
+    },
+    {
+        "title":"Coca Cola, Cola Zero, Fanta, Sprite, Mezzo Mix 0,5l",
+        "price": "5,50"
+      },
+      {
+        "title":"Coca Cola, Cola Zero, Fanta, Sprite, Mezzo Mix 0,75l",
+        "price": "6,50"
+      },
+    {
+        "title":"Mineralwasser 0,25l",
+        "price": "2,00"
+      },
+      {
+        "title":"Arizona Eistee 0,5l",
+        "price": "3,50"
+      },
+      {
+        "title":"Bier 0,33l",
+        "price": "4,00"
+      }
+]
+}

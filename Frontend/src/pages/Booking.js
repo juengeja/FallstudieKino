@@ -2,15 +2,16 @@ import axios from 'axios';
 import React, { Component } from 'react';
 import Hero from '../components/Hero';
 import Banner from '../components/Banner';
-import { Link } from 'react-router-dom';
 import { FaInfo, FaCreditCard, FaShoppingCart } from 'react-icons/fa';
 import { connect } from 'react-redux';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { format } from 'date-fns'
 import { removeAll } from '../components/actions/storeActions'
-import loadingGif from '../images/gif/small-loading-arrow.gif';
 import ScrollButton from '../components/ScrollButton';
+import WaitingPopup from '../components/PopUps/Waiting'
+import BookingSuccessfulPopup from '../components/PopUps/BookingSuccessful'
+import BookingErrorPopup from '../components/PopUps/BookingError'
 
 class Booking extends Component {
     constructor(props) {
@@ -36,7 +37,7 @@ class Booking extends Component {
         }
     };
 
-    componentDidMount(){
+    componentDidMount() {
         window.scrollTo(0, 0)
     }
 
@@ -90,41 +91,58 @@ class Booking extends Component {
 
         if (!this.state.customerInfo.dateOfBirth.length) {
             alert('Geburtstag wählen')
-        }else{
+        } else {
 
-        this.setState({showWaitingPopup: !this.state.showWaitingPopup})
+            this.setState({ showWaitingPopup: !this.state.showWaitingPopup })
 
-        var booking = this.props.items[this.props.items.length - 1]
-        for (var i = 0; i < booking.reservations.length; i++) {
-            booking.customerInfo = this.state.customerInfo
-            booking.paymentMethod = this.state.paymentMethod
-        }
+            var booking = this.props.items[this.props.items.length - 1]
+            for (var i = 0; i < booking.reservations.length; i++) {
+                booking.customerInfo = this.state.customerInfo
+                booking.paymentMethod = this.state.paymentMethod
+            }
 
-        axios.put('http://5.45.107.109:4000/api/reservation/successfulpayment', booking)
-            .then(res => {
-                if (res.data != null) {
-                        console.log(res.data)
-                    if (res.data.bookingStatus === "paid") {
-                        this.handleRemove()
-                        this.setState({
-                            showSuccessfulPopup: !this.state.showSuccessfulPopup
-                        })
+            axios.put('http://5.45.107.109:4000/api/reservation/successfulpayment', booking)
+                .then(res => {
+                    if (res.data != null) {
+                        if (res.data.bookingStatus === "paid") {
+                            this.handleRemove()
+                            this.setState({
+                                showSuccessfulPopup: !this.state.showSuccessfulPopup
+                            })
+                        } else {
+                            this.handleRemove()
+                            this.setState({
+                                showErrorPopup: !this.state.showErrorPopup
+                            })
+                        }
                     } else {
-                        this.handleRemove()
-                        this.setState({
-                            showErrorPopup: !this.state.showErrorPopup
-                        })
+                        alert("Ein Fehler ist aufgetreten")
                     }
-                } else {
-                    alert("Ein Fehler ist aufgetreten")
-                }
-            })
+                })
+        }
     }
-}
 
-    render() {
-        let ShoppingCart = this.props.items.length ?
-            (
+    showMenu() {
+        if (this.props.items.length && this.props.items[this.props.items.length - 1].reservations.length && this.props.items[this.props.items.length - 1].menu !== null) {
+            let booking = this.props.items[this.props.items.length - 1]
+
+            return (
+                <>
+                    <li class="booking-shoppingcart" >
+                        <div className="booking-cart-entry-container">
+                            <h6 className="booking_title">{booking.menu.replace(/([A-Z])/g, ' $1').trim()}</h6>
+                        </div>
+                    </li>
+                </>
+            )
+        } else {
+            return null
+        }
+    }
+
+    showMovies() {
+        if (this.props.items.length) {
+            return (
                 this.props.items[this.props.items.length - 1].reservations.map(reservation => {
 
                     let seats = reservation.seats.join(', ')
@@ -145,16 +163,20 @@ class Booking extends Component {
                         </>
                     )
                 })
-
-            ) :
-            (
+            )
+        } else {
+            return (
                 <h6>Kein Film im Warenkorb</h6>
             )
+        }
+    }
+
+    render() {
 
         return (
             <>
 
-                <Hero hero='programHero'>
+                <Hero hero='bookingHero'>
                     <Banner title="Buchung" />
                 </Hero>
 
@@ -193,7 +215,7 @@ class Booking extends Component {
                                 <button className={this.state.paymentMethod === "Kreditkarte" ? "booking-btn" : "booking-btn-unselected"} name="paymentMethod" type="button" value="Kreditkarte" onClick={this.handleChange}>Kreditkarte</button>
                                 <button className={this.state.paymentMethod === "PayPal" ? "booking-btn" : "booking-btn-unselected"} name="paymentMethod" type="button" value="PayPal" onClick={this.handleChange}>PayPal</button>
                                 <button className={this.state.paymentMethod === "Klarna" ? "booking-btn" : "booking-btn-unselected"} name="paymentMethod" type="button" value="Klarna" onClick={this.handleChange}>Klarna</button>
-                                <button className={this.state.paymentMethod === "Klarna" ? "booking-btn" : "booking-btn-unselected"} name="paymentMethod" type="button" value="Klarna" onClick={this.handleChange}>Klarna</button>
+                                <button className={this.state.paymentMethod === "Uberweisung" ? "booking-btn" : "booking-btn-unselected"} name="paymentMethod" type="button" value="Uberweisung" onClick={this.handleChange}>Überweisung</button>
                                 <button className={this.state.paymentMethod === "Giropay" ? "booking-btn" : "booking-btn-unselected"} name="paymentMethod" type="button" value="Giropay" onClick={this.handleChange}>Giropay</button>
                                 <button className={this.state.paymentMethod === "Lastschrift" ? "booking-btn" : "booking-btn-unselected"} name="paymentMethod" type="button" value="Lastschrift" onClick={this.handleChange}>Lastschrift</button>
                                 <button className={this.state.paymentMethod === "Vorkasse" ? "booking-btn" : "booking-btn-unselected"} name="paymentMethod" type="button" value="Vorkasse" onClick={this.handleChange}>Vorkasse</button>
@@ -204,7 +226,8 @@ class Booking extends Component {
                             <div class="headline">
                                 <FaShoppingCart /> Bestellübersicht
                             </div>
-                            {ShoppingCart}
+                            {this.showMovies()}
+                            {this.showMenu()}
                             {this.props.items.length ? <h6>Gesamtsumme: {this.props.items[this.props.items.length - 1].totalPrice}€</h6> : null}
                             <button className="booking-btn_100" onClick={() => this.props.history.push('/shoppingCart')}>Zurück zum Warenkorb</button>
                             <button class="booking-btn_100" type="submit">Kostenpflichtig bestellen</button>
@@ -212,8 +235,8 @@ class Booking extends Component {
                         </div>
                     </form>
                     {this.state.showWaitingPopup ? <WaitingPopup /> : null}
-                    {this.state.showSuccessfulPopup ? <SuccessfulPopup /> : null}
-                    {this.state.showErrorPopup ? <ErrorPopup /> : null}
+                    {this.state.showSuccessfulPopup ? <BookingSuccessfulPopup /> : null}
+                    {this.state.showErrorPopup ? <BookingErrorPopup /> : null}
                 </div>
                 <ScrollButton />
             </>
@@ -224,7 +247,6 @@ class Booking extends Component {
 const mapStateToProps = (state) => {
     return {
         items: state.addedItems,
-        //addedItems: state.addedItems
     }
 }
 const mapDispatchToProps = (dispatch) => {
@@ -233,44 +255,3 @@ const mapDispatchToProps = (dispatch) => {
     }
 }
 export default connect(mapStateToProps, mapDispatchToProps)(Booking)
-
-class SuccessfulPopup extends Component {
-    render() {
-        return (
-            <div className='popup'>
-                <div className='popup_inner'>
-                    <h6>Vielen Dank für Ihre Bestellung. Sie werden in Kürze eine Bestätigungs-Email erhalten.</h6>
-                    <Link to='/' className="btn-primary">Zum Startseite</Link>
-                </div>
-            </div>
-        );
-    }
-}
-
-class ErrorPopup extends Component {
-    render() {
-        return (
-            <div className='popup'>
-                <div className='popup_inner'>
-                    <h6>Leider ist etwas schiefgelaufen. Bitte versuchen sie es erneut</h6>
-                    <Link to='/' className="btn-primary">Zur Startseite</Link>
-                </div>
-            </div>
-        );
-    }
-}
-
-class WaitingPopup extends Component {
-    render() {
-        return (
-            <div className='popup'>
-                <div className='popup_inner'>
-                    <div className="loading" data-testid="loading-1">
-                        <h4>Daten werden verarbeitet...</h4>
-                        <img src={loadingGif} alt="" />
-                    </div>
-                </div>
-            </div>
-        );
-    }
-}

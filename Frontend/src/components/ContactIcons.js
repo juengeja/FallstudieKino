@@ -19,8 +19,8 @@ export default class Contact extends Component {
             {
                 icon:<FaMailBulk/>,
                 title:"E-Mail",
-                info:"info@indigo-bw.de",
-                link: "mailto:info@indigo-bw.de"
+                info:"indigocinemabw@gmail.com",
+                link: "mailto:indigocinemabw@gmail.com"
             },
             {
                 icon:<FaLocationArrow/>,

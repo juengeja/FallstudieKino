@@ -180,7 +180,7 @@ class AdminPage extends Component{
 
     return (
         <>
-            <Hero hero="programHero">
+            <Hero hero="adminHero">
                 <Banner title="AdminPage" />
             </Hero>
 

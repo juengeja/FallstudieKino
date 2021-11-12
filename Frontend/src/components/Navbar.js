@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import logo from '../images/logo.svg'
+import logo from '../images/logo.png'
 import {FaAlignRight} from 'react-icons/fa'
 import {FaShoppingCart} from 'react-icons/fa'
 import {FaUserAlt} from 'react-icons/fa'

@@ -2,7 +2,6 @@ package com.example.kinoticketreservierungssystem.entity;
 
 import com.azure.spring.data.cosmos.core.mapping.Container;
 import com.azure.spring.data.cosmos.core.mapping.PartitionKey;
-import com.example.kinoticketreservierungssystem.blSupport.Reservation;
 import com.google.gson.Gson;
 import org.springframework.data.annotation.Id;
 
@@ -20,6 +19,7 @@ public class Booking {
     private String bookingStatus;
     private String couponCode;
     private String paymentMethod = "not paid yet";
+    private String menu;
     private double totalPrice;
 
     public Booking(String bookingID, Customer customerInfo, Set<String> ticketInfo, String couponCode, String paymentMethod, double totalPrice) {
@@ -115,6 +115,14 @@ public class Booking {
 
     public void setQuickCheckout(boolean quickCheckout) {
         this.quickCheckout = quickCheckout;
+    }
+
+    public String getMenu() {
+        return menu;
+    }
+
+    public void setMenu(String menu) {
+        this.menu = menu;
     }
 
     @Override

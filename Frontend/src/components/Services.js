@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import {FaCocktail, FaInstagram, FaBtc} from 'react-icons/fa';
 import Title from './Title';
-import { Link } from 'react-router-dom'
 
 export default class Services extends Component {
     state={

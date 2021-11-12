@@ -48,7 +48,7 @@ class Login extends React.Component{
 
         return(
             <>
-            <Hero hero='programHero'>
+            <Hero hero='loginHero'>
                 <Banner title="Login"></Banner>
             </Hero>
             <div className="login-Container">

@@ -173,7 +173,11 @@ h6 {
 .gastroHero,
 .infoHero,
 .coronaHero,
-.cartHero{
+.cartHero,
+.loginHero,
+.adminHero,
+.paymentHero,
+.bookingHero{
   min-height: calc(100vh - 66px);
   background: url("./images/defaultBcg.jpeg") center/cover no-repeat;
   display: flex;
@@ -200,6 +204,22 @@ h6 {
   background-image: url("./images/cart-banner.jpg");
   min-height: 30vh;
 }
+.loginHero {
+  background-image: url("./images/login-banner.jpg");
+  min-height: 30vh;
+}
+.adminHero {
+  background-image: url("./images/admin-banner.jpeg");
+  min-height: 30vh;
+}
+.paymentHero {
+  background-image: url("./images/payment-banner.jpg");
+  min-height: 30vh;
+}
+.bookingHero {
+  background-image: url("./images/sendBooking-banner.jpg");
+  min-height: 30vh;
+}
 
 
 @media screen and (min-width: 776px){
@@ -216,6 +236,18 @@ h6 {
     min-height: 40vh;
   }
   .cartHero {
+    min-height: 40vh;
+  }
+  .loginHero {
+    min-height: 40vh;
+  }
+  .adminHero {
+    min-height: 40vh;
+  }
+  .paymentHero {
+    min-height: 40vh;
+  }
+  .bookingHero {
     min-height: 40vh;
   }
 }
@@ -628,6 +660,7 @@ h6 {
 }
 
 .li-container{
+  width: 100%;
   justify-content: center;
   display: inline-block;
   background-image: url(./images/ticket-bg.jpg);
@@ -677,6 +710,13 @@ h6 {
     padding: 1rem;
     margin: auto;
     margin-top: 5rem
+  }
+  .cart-entry-buttons-menu{
+    width: 20%;
+    float: right;
+    padding: 1rem;
+    margin: auto;
+    margin-top: 2rem
   }
 }
 
@@ -1304,8 +1344,9 @@ text-align: center;
 .gastro-table {
   width: 100%;
   border-collapse: collapse;
-  margin: 25px 0;
+  margin-bottom: 80px;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+
 }
   
 .gastro-table thead tr {
